@@ -1,9 +1,9 @@
-from databases import SessionLocal
+# from databases import client
 
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+# def get_db():
+#     db = client["online_ticket"]
+#     try:
+#         yield db
+#     finally:
+#         #client.close()

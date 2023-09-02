@@ -3,7 +3,7 @@ import config
 
 
 if __name__ == "__main__":
-    uvicorn.run('config:app', host='127.0.0.1', port=8000)
+    uvicorn.run('config:app', host='127.0.0.1', port=8000,reload=True)
 
 # import asyncio, os
 # from os import environ
