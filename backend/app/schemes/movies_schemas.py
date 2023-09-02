@@ -15,14 +15,17 @@ class Movies(BaseModel):
     movie_description:str
     movie_review:str
     production_year:int
-    has_been_sold:int = 0
-    movie_rate:int=0
+    movie_images:List[str]
+    movie_poster:str
+    movie_type:str
+
     
 
 
-class movie_get(Movies):
-    id:int
-    movie_rate:int = 0 
-    sale:int
+class movie_get(BaseModel):
+    movie_id:int
+    # movie_rate:dict  
+    # has_been_sold:int
+    
 
 
