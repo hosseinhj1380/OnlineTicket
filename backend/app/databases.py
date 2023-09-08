@@ -21,6 +21,7 @@ movie_collection_info=db[os.environ.get("MOVIES_COLLECTION_INFO")]
 
 movies_comment_collection=db[os.environ.get("MOVIES_COMMENT_COLLECTION")]
 
+movies_genres_collection=db[os.environ.get("MOVIES_GENRES_COLLECTION")]
 
 
 
