@@ -19,13 +19,10 @@ class Movies(BaseModel):
     movie_poster:str
     movie_type:str
 
-    
 
 
-class movie_get(BaseModel):
+class MovieUpdate(Movies):
     movie_id:int
-    # movie_rate:dict  
-    # has_been_sold:int
     
 
 
