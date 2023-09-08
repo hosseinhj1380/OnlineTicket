@@ -1,12 +1,10 @@
-from fastapi import APIRouter, UploadFile, status
+from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from schemes.movies_schemas import Movies, MovieUpdate
-# from dependencies import get_db
 from crud.movies_crud import CRUDmovies
-from typing import List
+
 import base64
-from databases import MongoClient
-import json
+
 
 router = APIRouter()
 
@@ -42,7 +40,7 @@ def create_movie_info(movie: Movies):
 
 
 @router.get("/api/movie/movie_datails/{movie_id}")
-def movie_details(movie_id: int):
+def get_movie_details(movie_id: int):
 
     obj = CRUDmovies
     result = obj.movie_details(movie_id=movie_id)
@@ -53,8 +51,8 @@ def movie_details(movie_id: int):
         return JSONResponse(status_code=404, content="movie not found ")
 
 
-@router.put("/api/movie/movie_datails/")
-def movie_update(movie: MovieUpdate):
+@router.put("/api/movie/movie_update/")
+def movies_update(movie: MovieUpdate):
     if movie:
     # for movie_picture in  movie.movie_images:
     #     try:
@@ -83,8 +81,8 @@ def movie_update(movie: MovieUpdate):
         return JSONResponse(status_code=404, content="movie_id doesnt exist")
 
 
-@router.delete("/api/movie/movie_datails/{movie_id}")
-def movie_delete(movie_id: int):
+@router.delete("/api/movie/movie_delete/{movie_id}")
+def movies_delete(movie_id: int):
 
     obj = CRUDmovies
     result = obj.delete_movie(movie_id=movie_id)
