@@ -23,6 +23,9 @@ movies_comment_collection=db[os.environ.get("MOVIES_COMMENT_COLLECTION")]
 
 movies_genres_collection=db[os.environ.get("MOVIES_GENRES_COLLECTION")]
 
+movie_category_collection=db[os.environ.get("MOVIE_CATEGORY_COLLECTION")]
+
+
 
 
 
