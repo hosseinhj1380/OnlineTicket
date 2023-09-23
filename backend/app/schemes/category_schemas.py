@@ -1,9 +1,9 @@
 from pydantic import BaseModel
 
-class Genres(BaseModel):
+class Category(BaseModel):
     name:str
     
 
-class GenresUpdate(Genres):
+class CategoryUpdate(Category):
     new_name :str
     

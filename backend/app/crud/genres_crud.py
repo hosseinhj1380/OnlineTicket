@@ -1,7 +1,4 @@
-from databases import client
 
-from pymongo import MongoClient
-# db : MongoClient = Depends(get_db)
 from databases import movies_genres_collection
 
 
@@ -40,8 +37,31 @@ class CRUDgenres:
                 return None
 
 
-
     def get_genres_details(self):
 
         return  movies_genres_collection.find({},{"name": 1, "id": 1, "_id": 0})
+    
+    def update_genres(self,genres_new_name,genres_name):
+
+
+        if self.check_genres_availability(genre_name=genres_name):
+
+            try:
+
+
+                movies_genres_collection.update_one({"name":genres_name},
+                                                   {"$set": {"name": genres_new_name}})
+                return "Successfully Updated "
+
+            except:
+                return "Failed to update genres"
+            
+        else:
+            return "Genres_name doesnt exist "
         
+    def delete_genres(self,genres_name):
+        if self.check_genres_availability(genre_name=genres_name):
+            movies_genres_collection.delete_one({"name":genres_name})
+            return "successfully deleted"
+        else:
+            return "genres doesnt exist "
