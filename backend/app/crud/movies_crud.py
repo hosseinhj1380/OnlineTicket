@@ -1,11 +1,6 @@
-# from dependencies import get_db
 
-from databases import client
-
-from pymongo import MongoClient
-# db : MongoClient = Depends(get_db)
 from databases import movie_collection_info
-
+from .comment_crud import CRUDcommnet
 
 class CRUDmovies:
 
@@ -17,6 +12,13 @@ class CRUDmovies:
         else:
             movie_id = 1
 
+        obj=CRUDcommnet()
+        thread=obj.create()
+        
+
+         
+        
+
         movie_rate = {"movie_rate": 0,
                       "rates_count": 0
                       }
@@ -24,6 +26,7 @@ class CRUDmovies:
         movie_collection_info.insert_one({"movie_id": movie_id,
                                           "movie_info": movie_info,
                                           "movie_rate": movie_rate,
+                                          "thread":thread,
                                           "has_been_sold": 0})
 
     def movie_details(movie_id):

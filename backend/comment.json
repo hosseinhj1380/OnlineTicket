@@ -1,0 +1,543 @@
+{
+  "count": 2993,
+  "next": "https://cinematicket.org/api/v1/comment/comments/?page=2&thread=17746",
+  "previous": null,
+  "results": [
+    {
+      "id": 317807,
+      "user": {
+        "id": 3937932,
+        "avatar": {
+          "original": "https://static.cdn.asset.cinematicket.org/media/image/avatars/2022-07-21-16-26-49-532.jpeg",
+          "webp": "https://static.cdn.asset.cinematicket.org/media/cache/6c/04/6c04e9c3f77e44e018007b11b4e703e3.webp"
+        },
+        "username": "user-zol3bjmj",
+        "full_name": "فرزانه حسینی"
+      },
+      "text": "خیلی عالی بود .ممنونم از آقای افشاری بابت بازی خوبتون",
+      "created_at": "2023-09-25T11:47:49.101274Z",
+      "likes_count": 6,
+      "dislikes_count": 1,
+      "replies_count": 0,
+      "state": "approved",
+      "thread": 17746,
+      "replies": [],
+      "like": null
+    },
+    {
+      "id": 317686,
+      "user": {
+        "id": 3972325,
+        "avatar": {
+          "original": "None",
+          "webp": "None"
+        },
+        "username": "user-g34r58sa",
+        "full_name": "سارآی"
+      },
+      "text": "فیلم قشنگی بود برای خندیدن و افسوس خوردن برای ایران شاد گذشته",
+      "created_at": "2023-09-24T17:25:04.824491Z",
+      "likes_count": 12,
+      "dislikes_count": 3,
+      "replies_count": 0,
+      "state": "approved",
+      "thread": 17746,
+      "replies": [],
+      "like": null
+    },
+    {
+      "id": 317626,
+      "user": {
+        "id": 3477119,
+        "avatar": {
+          "original": "None",
+          "webp": "None"
+        },
+        "username": "user-u5pk77kf",
+        "full_name": "الهه فریدنی"
+      },
+      "text": "خیلیییییی خوبههههه👌🏻👌🏻",
+      "created_at": "2023-09-24T07:16:19.946190Z",
+      "likes_count": 7,
+      "dislikes_count": 1,
+      "replies_count": 0,
+      "state": "approved",
+      "thread": 17746,
+      "replies": [],
+      "like": null
+    },
+    {
+      "id": 317614,
+      "user": {
+        "id": 1607390,
+        "avatar": {
+          "original": "None",
+          "webp": "None"
+        },
+        "username": "user-ldcw0m4j",
+        "full_name": "A.a"
+      },
+      "text": "چرا این فیلم بر نمیدارن ؟؟؟!!!!",
+      "created_at": "2023-09-23T23:29:08.663587Z",
+      "likes_count": 8,
+      "dislikes_count": 4,
+      "replies_count": 0,
+      "state": "approved",
+      "thread": 17746,
+      "replies": [],
+      "like": null
+    },
+    {
+      "id": 317570,
+      "user": {
+        "id": 3923022,
+        "avatar": {
+          "original": "https://static.cdn.asset.cinematicket.org/media/image/avatars/fantasy-44.jpeg",
+          "webp": "https://static.cdn.asset.cinematicket.org/media/cache/15/14/1514c0bd3eff37cd37ea22d7eb920d3a.webp"
+        },
+        "username": "user-gp5oj8zr",
+        "full_name": "خرگوشک"
+      },
+      "text": "سللم میشه همیشه رو پرده سینما بمونه🤣😂🙏",
+      "created_at": "2023-09-23T14:01:50.403798Z",
+      "likes_count": 8,
+      "dislikes_count": 6,
+      "replies_count": 0,
+      "state": "approved",
+      "thread": 17746,
+      "replies": [],
+      "like": null
+    },
+    {
+      "id": 317423,
+      "user": {
+        "id": 3775025,
+        "avatar": {
+          "original": "None",
+          "webp": "None"
+        },
+        "username": "user-tvef6i8v",
+        "full_name": "نیلوفر محمدشاه"
+      },
+      "text": "خیلی حس و حال خوبی موقع دیدنش ایجاد شد. همین که باعث شد همه دور هم بخندیم و با حس و حال خوبی از سینما خارج بشیم یعنی به عنوان یه فیلم موفق بوده. ارزش چندبار دیده شدن رو هم داره و پایان بندی خوبی داشت.",
+      "created_at": "2023-09-22T12:34:41.501574Z",
+      "likes_count": 9,
+      "dislikes_count": 1,
+      "replies_count": 0,
+      "state": "approved",
+      "thread": 17746,
+      "replies": [],
+      "like": null
+    },
+    {
+      "id": 317287,
+      "user": {
+        "id": 3934967,
+        "avatar": {
+          "original": "None",
+          "webp": "None"
+        },
+        "username": "user-s1l77srf",
+        "full_name": "علی فصیحی"
+      },
+      "text": "فیلمی که ۲۶۰ میلیارد فروش داشته عجیبه برام یه عده میان هیتش میکنن عموم مردم به این فیلم نمره ۴.۵ دادن دیگه با چه رویی میایید میگین اشغال بود و... ؟؟؟ از نظر خودم تو سبک کمدی یه پنجره ی جدید و باز کرد این فیلم که تا سالها مشابهش نمیاد",
+      "created_at": "2023-09-21T15:52:07.586305Z",
+      "likes_count": 13,
+      "dislikes_count": 3,
+      "replies_count": 0,
+      "state": "approved",
+      "thread": 17746,
+      "replies": [],
+      "like": null
+    },
+    {
+      "id": 317274,
+      "user": {
+        "id": 2598411,
+        "avatar": {
+          "original": "None",
+          "webp": "None"
+        },
+        "username": "user-2xrbhlgb",
+        "full_name": "…"
+      },
+      "text": "اصلا فیلم خوبی نبود",
+      "created_at": "2023-09-21T14:56:02.048713Z",
+      "likes_count": 3,
+      "dislikes_count": 20,
+      "replies_count": 0,
+      "state": "approved",
+      "thread": 17746,
+      "replies": [],
+      "like": null
+    },
+    {
+      "id": 317273,
+      "user": {
+        "id": 1272211,
+        "avatar": {
+          "original": "None",
+          "webp": "None"
+        },
+        "username": "user-rnv8ftq6",
+        "full_name": "reza nowroozi"
+      },
+      "text": "یه فیلم داغون که معلومه با امتیاز سازی به این امتیاز ۴.۵ رسیده",
+      "created_at": "2023-09-21T14:53:04.691513Z",
+      "likes_count": 3,
+      "dislikes_count": 19,
+      "replies_count": 1,
+      "state": "approved",
+      "thread": 17746,
+      "replies": [
+        {
+          "id": 317766,
+          "user": {
+            "id": 469399,
+            "avatar": {
+              "original": "None",
+              "webp": "None"
+            },
+            "username": "user-aygalzr6",
+            "full_name": "عماد ظهیری"
+          },
+          "text": "فروشش هم حتماً خیلی اتفاقی با اختلاف اوله ؟",
+          "created_at": "2023-09-25T09:02:24.976270Z",
+          "likes_count": 12,
+          "dislikes_count": 1,
+          "replies_count": 0,
+          "state": "approved",
+          "thread": 17746,
+          "replies": [],
+          "like": null
+        }
+      ],
+      "like": null
+    },
+    {
+      "id": 317263,
+      "user": {
+        "id": 3957048,
+        "avatar": {
+          "original": "None",
+          "webp": "None"
+        },
+        "username": "user-xqr34jgo",
+        "full_name": "اوینا اقبالی"
+      },
+      "text": "یکی از معرکه ترین فیلمایی که دیدم یعنی اینقدر خندیدم که تمام عضلات صورتم درد گرفته بود بعداز فیلم .بازم میخام برم ببینم",
+      "created_at": "2023-09-21T13:14:24.758583Z",
+      "likes_count": 10,
+      "dislikes_count": 1,
+      "replies_count": 0,
+      "state": "approved",
+      "thread": 17746,
+      "replies": [],
+      "like": null
+    },
+    {
+      "id": 317248,
+      "user": {
+        "id": 3306957,
+        "avatar": {
+          "original": "None",
+          "webp": "None"
+        },
+        "username": "user-jwz5kdmm",
+        "full_name": "سوگند قزل ایاق"
+      },
+      "text": "عالییییییییییییی",
+      "created_at": "2023-09-21T11:45:34.959154Z",
+      "likes_count": 13,
+      "dislikes_count": 0,
+      "replies_count": 0,
+      "state": "approved",
+      "thread": 17746,
+      "replies": [],
+      "like": null
+    },
+    {
+      "id": 317247,
+      "user": {
+        "id": 3828942,
+        "avatar": {
+          "original": "https://static.cdn.asset.cinematicket.org/media/image/avatars/1000009455.jpeg",
+          "webp": "https://static.cdn.asset.cinematicket.org/media/cache/d5/03/d50311558a527c66f7ba38681a7f684c.webp"
+        },
+        "username": "user-cj1njxwa",
+        "full_name": "Artina"
+      },
+      "text": "از نظر من که عالی بود تو این دوره کمدی خوب و سالم ساختن خیلی عرضه میخواد",
+      "created_at": "2023-09-21T11:39:42.691095Z",
+      "likes_count": 10,
+      "dislikes_count": 0,
+      "replies_count": 0,
+      "state": "approved",
+      "thread": 17746,
+      "replies": [],
+      "like": null
+    },
+    {
+      "id": 317221,
+      "user": {
+        "id": 3962117,
+        "avatar": {
+          "original": "None",
+          "webp": "None"
+        },
+        "username": "user-fl5mq0oi",
+        "full_name": "حسین فرحناک شندی"
+      },
+      "text": "از لحاظ متن نویسنده میشه گفت خوب بود ولی از لحاظ جلوها و طراحی صحنه ضعیف بیننده رو گیج میکرد",
+      "created_at": "2023-09-21T08:07:48.080093Z",
+      "likes_count": 0,
+      "dislikes_count": 10,
+      "replies_count": 0,
+      "state": "approved",
+      "thread": 17746,
+      "replies": [],
+      "like": null
+    },
+    {
+      "id": 317191,
+      "user": {
+        "id": 1485521,
+        "avatar": {
+          "original": "https://static.cdn.asset.cinematicket.org/media/image/avatars/Picsart_22-08-14_12-04-13-075.jpeg",
+          "webp": "https://static.cdn.asset.cinematicket.org/media/cache/91/a7/91a7d5d4d6833c49717ef56fe395ba51.webp"
+        },
+        "username": "user-q2fwjdu6",
+        "full_name": "HESAM.hjm"
+      },
+      "text": "بعضی از بخشهای طنز فیلم بنظرم جالب که هیچ بیشتر آزاردهنده بود",
+      "created_at": "2023-09-20T21:25:09.925789Z",
+      "likes_count": 0,
+      "dislikes_count": 9,
+      "replies_count": 0,
+      "state": "approved",
+      "thread": 17746,
+      "replies": [],
+      "like": null
+    },
+    {
+      "id": 317142,
+      "user": {
+        "id": 1533411,
+        "avatar": {
+          "original": "None",
+          "webp": "None"
+        },
+        "username": "user-1unh7u4x",
+        "full_name": "Me"
+      },
+      "text": "اقای افشاری شما لایق بهترین ها هستید :) ی بازیگر به تمام معنا !",
+      "created_at": "2023-09-20T15:06:09.166560Z",
+      "likes_count": 9,
+      "dislikes_count": 0,
+      "replies_count": 0,
+      "state": "approved",
+      "thread": 17746,
+      "replies": [],
+      "like": null
+    },
+    {
+      "id": 317130,
+      "user": {
+        "id": 3951144,
+        "avatar": {
+          "original": "None",
+          "webp": "None"
+        },
+        "username": "user-f43jbfon",
+        "full_name": "نفس"
+      },
+      "text": "وای فسیل عالی بود عالی حتما تو سینما ببینید",
+      "created_at": "2023-09-20T13:28:54.586356Z",
+      "likes_count": 6,
+      "dislikes_count": 0,
+      "replies_count": 0,
+      "state": "approved",
+      "thread": 17746,
+      "replies": [],
+      "like": null
+    },
+    {
+      "id": 317050,
+      "user": {
+        "id": 3862052,
+        "avatar": {
+          "original": "None",
+          "webp": "None"
+        },
+        "username": "user-q6h5fs51",
+        "full_name": "اهورا محمدی"
+      },
+      "text": "سلام خواهش میکنم فیلم آهنگ دو نفره رو هم اکران کنید",
+      "created_at": "2023-09-19T21:30:14.494866Z",
+      "likes_count": 2,
+      "dislikes_count": 1,
+      "replies_count": 2,
+      "state": "approved",
+      "thread": 17746,
+      "replies": [
+        {
+          "id": 317552,
+          "user": {
+            "id": 3395116,
+            "avatar": {
+              "original": "None",
+              "webp": "None"
+            },
+            "username": "user-lnyrnq6q",
+            "full_name": "Amirali farahani"
+          },
+          "text": "الان درحال اکران،روی بخش نمایش همه کلیک کنید و میتونید آنجا ببینید فیلم رو و رزرو کنید",
+          "created_at": "2023-09-23T11:03:40.938992Z",
+          "likes_count": 1,
+          "dislikes_count": 0,
+          "replies_count": 0,
+          "state": "approved",
+          "thread": 17746,
+          "replies": [],
+          "like": null
+        },
+        {
+          "id": 317083,
+          "user": {
+            "id": 3321237,
+            "avatar": {
+              "original": "None",
+              "webp": "None"
+            },
+            "username": "user-5af6v3oc",
+            "full_name": "محمد"
+          },
+          "text": "الان اکران نمیشه احتمالا بزودی اکران آنلاین می کننن",
+          "created_at": "2023-09-20T07:35:35.723235Z",
+          "likes_count": 4,
+          "dislikes_count": 1,
+          "replies_count": 0,
+          "state": "approved",
+          "thread": 17746,
+          "replies": [],
+          "like": null
+        }
+      ],
+      "like": null
+    },
+    {
+      "id": 317024,
+      "user": {
+        "id": 1553940,
+        "avatar": {
+          "original": "None",
+          "webp": "None"
+        },
+        "username": "user-aq288rri",
+        "full_name": "محمد جواد"
+      },
+      "text": "انقدر ما با این فیلم بلند بلند خندیدیم که فقط صدای خودمون رو میشنیدیم.فیلم با اینکه داستان خیلی خاصی نداشت اما ما انقدر باهاش حال کردیم و لذت بردیم که الان با اینکه کرایه برگشت نداریم و برای رسیدن به خونه باید 24 کیلومتر پیاده بریم اما بازم شادیم و شبمون تکمیل شده.ممنون از همه سازندگان",
+      "created_at": "2023-09-19T18:32:59.311223Z",
+      "likes_count": 24,
+      "dislikes_count": 1,
+      "replies_count": 2,
+      "state": "approved",
+      "thread": 17746,
+      "replies": [
+        {
+          "id": 317312,
+          "user": {
+            "id": 3556743,
+            "avatar": {
+              "original": "None",
+              "webp": "None"
+            },
+            "username": "user-0e62w6yo",
+            "full_name": "محمد رضا نیکدان"
+          },
+          "text": "راست میگی واقعا😐",
+          "created_at": "2023-09-21T19:21:51.443863Z",
+          "likes_count": 0,
+          "dislikes_count": 0,
+          "replies_count": 0,
+          "state": "approved",
+          "thread": 17746,
+          "replies": [],
+          "like": null
+        },
+        {
+          "id": 317257,
+          "user": {
+            "id": 3964549,
+            "avatar": {
+              "original": "None",
+              "webp": "None"
+            },
+            "username": "user-bv481xxx",
+            "full_name": "ش ش"
+          },
+          "text": "شما ها پول داده بودین تمام استفاده رو از پولتون بردید دیگه .",
+          "created_at": "2023-09-21T12:34:11.123575Z",
+          "likes_count": 0,
+          "dislikes_count": 0,
+          "replies_count": 0,
+          "state": "approved",
+          "thread": 17746,
+          "replies": [],
+          "like": null
+        }
+      ],
+      "like": null
+    },
+    {
+      "id": 316981,
+      "user": {
+        "id": 3580125,
+        "avatar": {
+          "original": "None",
+          "webp": "None"
+        },
+        "username": "user-4mn5adr5",
+        "full_name": "سارا زارعی"
+      },
+      "text": "خیلی قشنگ بود حتما  برید ببینید",
+      "created_at": "2023-09-19T13:37:47.280474Z",
+      "likes_count": 17,
+      "dislikes_count": 0,
+      "replies_count": 0,
+      "state": "approved",
+      "thread": 17746,
+      "replies": [],
+      "like": null
+    },
+    {
+      "id": 316978,
+      "user": {
+        "id": 3946884,
+        "avatar": {
+          "original": "None",
+          "webp": "None"
+        },
+        "username": "user-3qboizbn",
+        "full_name": "علیرضا صفری"
+      },
+      "text": "فیلم قشنگی بود",
+      "created_at": "2023-09-19T13:00:18.332304Z",
+      "likes_count": 11,
+      "dislikes_count": 0,
+      "replies_count": 0,
+      "state": "approved",
+      "thread": 17746,
+      "replies": [],
+      "like": null
+    }
+  ]
+}
+{
+    "count":2993,
+    "next":"https://cinematicket.org/api/v1/comment/comments/?page=3&thread=17746",
+    "previous":"https://cinematicket.org/api/v1/comment/comments/?thread=17746",
+    "results":[
+        {"id":316950,"user":{"id":2869580,"avatar":{"original":"None","webp":"None"},"username":"user-w8lszigt","full_name":"فاطمه"},"text":"فوق العادهههه","created_at":"2023-09-19T11:28:21.232098Z","likes_count":10,"dislikes_count":0,"replies_count":0,"state":"approved","thread":17746,"replies":[],"like":null},{"id":316898,"user":{"id":1844229,"avatar":{"original":"None","webp":"None"},"username":"user-86k71zys","full_name":"کاملیا حدادی"},"text":"عالی عالی❤❤","created_at":"2023-09-18T22:05:27.803269Z","likes_count":10,"dislikes_count":0,"replies_count":0,"state":"approved","thread":17746,"replies":[],"like":null},{"id":316860,"user":{"id":2669342,"avatar":{"original":"None","webp":"None"},"username":"user-49q28jdf","full_name":"لیلا جمالی"},"text":"بعد از 6ماه قرار نیست این فیلم برداشته بشه درسته قشنگ بود استقبال هم شد ولی بسه دیگه چه خبره 6مااااه .واقعا خودمون میسوزه که هیچ تفریحی نداریم بعد یه تفریح سینما هست که ماشالا یه فیلم 6ماه میمونه رو پرده","created_at":"2023-09-18T18:15:22.781709Z","likes_count":20,"dislikes_count":11,"replies_count":3,"state":"approved","thread":17746,"replies":[{"id":316985,"user":{"id":3204903,"avatar":{"original":"https://static.cdn.asset.cinematicket.org/media/image/avatars/Picsart_23-09-24_10-41-47-099.jpeg","webp":"https://static.cdn.asset.cinematicket.org/media/cache/3d/40/3d408c814aef48d851a3f59a0db12c40.webp"},"username":"user-290o6079","full_name":"امیر"},"text":"واقعا راست میگی بسه دیگه","created_at":"2023-09-19T13:49:36.103214Z","likes_count":7,"dislikes_count":9,"replies_count":0,"state":"approved","thread":17746,"replies":[],"like":null},{"id":317337,"user":{"id":1439087,"avatar":{"original":"None","webp":"None"},"username":"user-3t4frjne","full_name":"Ra"},"text":"دقیقا","created_at":"2023-09-21T21:50:31.735476Z","likes_count":0,"dislikes_count":1,"replies_count":0,"state":"approved","thread":17746,"replies":[],"like":null},{"id":317258,"user":{"id":3964549,"avatar":{"original":"None","webp":"None"},"username":"user-bv481xxx","full_name":"ش ش"},"text":"شما فیلم های دیگه که اومده رو ببین . استقبال و فروش همچنان داره که رو پرده مونده دیگه","created_at":"2023-09-21T12:35:03.442448Z","likes_count":1,"dislikes_count":0,"replies_count":0,"state":"approved","thread":17746,"replies":[],"like":null}],"like":null},{"id":316845,"user":{"id":2270297,"avatar":{"original":"None","webp":"None"},"username":"user-2btxf5b9","full_name":"حمید"},"text":"داستان فیلم سلیقه ای بود ولی من خوشم اومد","created_at":"2023-09-18T16:36:21.069284Z","likes_count":12,"dislikes_count":0,"replies_count":0,"state":"approved","thread":17746,"replies":[],"like":null},{"id":316824,"user":{"id":3852957,"avatar":{"original":"None","webp":"None"},"username":"user-rh2g3r16","full_name":"SPSH7222"},"text":"به نظر من ارزش دیدن داشت","created_at":"2023-09-18T13:41:46.980450Z","likes_count":12,"dislikes_count":0,"replies_count":0,"state":"approved","thread":17746,"replies":[],"like":null},{"id":316821,"user":{"id":2787862,"avatar":{"original":"None","webp":"None"},"username":"user-2xx66e5b","full_name":"امیر محمد فرهادی"},"text":"کی میگن فسیل قشنگ","created_at":"2023-09-18T13:40:18.651677Z","likes_count":14,"dislikes_count":6,"replies_count":0,"state":"approved","thread":17746,"replies":[],"like":null},{"id":316748,"user":{"id":1487094,"avatar":{"original":"None","webp":"None"},"username":"user-w6vxkkdx","full_name":"مهناز گلریز"},"text":"نظرات مثبت رو فقط نگه می دارئد؟؟؟","created_at":"2023-09-17T20:10:29.980355Z","likes_count":8,"dislikes_count":6,"replies_count":0,"state":"approved","thread":17746,"replies":[],"like":null},{"id":316747,"user":{"id":1487094,"avatar":{"original":"None","webp":"None"},"username":"user-w6vxkkdx","full_name":"مهناز گلریز"},"text":"آشغالترین فیلمی که اصلا کمدی نبود حالم بد شد حیف وقتی که گذاشتیم","created_at":"2023-09-17T20:09:08.107467Z","likes_count":10,"dislikes_count":44,"replies_count":2,"state":"approved","thread":17746,"replies":[{"id":316807,"user":{"id":3647191,"avatar":{"original":"None","webp":"None"},"username":"user-bcvm05ve","full_name":"سامی"},"text":"اتفاقا بهترین فیلم کمدی ای بود که تا حالا دیدم","created_at":"2023-09-18T11:43:03.145441Z","likes_count":23,"dislikes_count":6,"replies_count":1,"state":"approved","thread":17746,"replies":[],"like":null},{"id":317264,"user":{"id":3957048,"avatar":{"original":"None","webp":"None"},"username":"user-xqr34jgo","full_name":"اوینا اقبالی"},"text":"معلومه که شما روحیه ی داغون وافسرده ای دارید که با وجود اونهمه طنزی که در فیلم هست لذت نبردید","created_at":"2023-09-21T13:17:13.494880Z","likes_count":1,"dislikes_count":0,"replies_count":0,"state":"approved","thread":17746,"replies":[],"like":null}],"like":null},{"id":316744,"user":{"id":3721738,"avatar":{"original":"None","webp":"None"},"username":"user-4xqj6kru","full_name":"ساره جلالی"},"text":"میخوام برم فیلم ببینم کدوم فیلم به جز فسیل وبی مادر رو برم چون این دو تارو رفتم","created_at":"2023-09-17T19:46:20.255695Z","likes_count":6,"dislikes_count":0,"replies_count":2,"state":"approved","thread":17746,"replies":[{"id":317082,"user":{"id":2787862,"avatar":{"original":"None","webp":"None"},"username":"user-2xx66e5b","full_name":"امیر محمد فرهادی"},"text":"شهر هرت برو خیلی خنده دار بود","created_at":"2023-09-20T07:26:29.007332Z","likes_count":0,"dislikes_count":0,"replies_count":0,"state":"approved","thread":17746,"replies":[],"like":null},{"id":316998,"user":{"id":3297932,"avatar":{"original":"None","webp":"None"},"username":"user-4i2ocduk","full_name":"امیرحسین میناپور"},"text":"شهر هرت و ستاره بازی","created_at":"2023-09-19T14:47:23.430927Z","likes_count":1,"dislikes_count":5,"replies_count":0,"state":"approved","thread":17746,"replies":[],"like":null}],"like":null},{"id":316743,"user":{"id":3721738,"avatar":{"original":"None","webp":"None"},"username":"user-4xqj6kru","full_name":"ساره جلالی"},"text":"میخوام برم فیلم ببینم کدوم فیلم به جز فسیل وبی مادر رو برم چون این دو تارو رفتم","created_at":"2023-09-17T19:45:42.394003Z","likes_count":1,"dislikes_count":1,"replies_count":3,"state":"approved","thread":17746,"replies":[{"id":316816,"user":{"id":2674703,"avatar":{"original":"None","webp":"None"},"username":"user-f8oen8xe","full_name":"کسری شایسته"},"text":"نگهبان شب ، آخرین تولد \nبعد از این دو تا کت چرمی","created_at":"2023-09-18T13:12:15.384096Z","likes_count":2,"dislikes_count":0,"replies_count":0,"state":"approved","thread":17746,"replies":[],"like":null},{"id":316855,"user":{"id":1366197,"avatar":{"original":"None","webp":"None"},"username":"user-y4qe6ar0","full_name":"علی فهامی"},"text":"شهر هرت یا مصلحت","created_at":"2023-09-18T17:59:57.903277Z","likes_count":1,"dislikes_count":2,"replies_count":0,"state":"approved","thread":17746,"replies":[],"like":null},{"id":316786,"user":{"id":3544716,"avatar":{"original":"None","webp":"None"},"username":"user-51ailzbi","full_name":"کیمیا"},"text":"فیلم مصلحت خیلی خوب بود","created_at":"2023-09-18T07:43:15.915216Z","likes_count":4,"dislikes_count":1,"replies_count":0,"state":"approved","thread":17746,"replies":[],"like":null}],"like":null},{"id":316733,"user":{"id":3570978,"avatar":{"original":"None","webp":"None"},"username":"user-hkcd7vve","full_name":"مریم احمدی"},"text":"فیلم خیلی خوبی بود من با رفیقم رفتم و خیلی بهمون خوش گذشت پیشنهاد میکنم حتما نگاه کنین❤️","created_at":"2023-09-17T18:11:36.980292Z","likes_count":15,"dislikes_count":0,"replies_count":1,"state":"approved","thread":17746,"replies":[{"id":316856,"user":{"id":1366197,"avatar":{"original":"None","webp":"None"},"username":"user-y4qe6ar0","full_name":"علی فهامی"},"text":"رفیقت دوست داشت؟!","created_at":"2023-09-18T18:00:44.337269Z","likes_count":2,"dislikes_count":0,"replies_count":0,"state":"approved","thread":17746,"replies":[],"like":null}],"like":null},{"id":316725,"user":{"id":3648268,"avatar":{"original":"None","webp":"None"},"username":"user-motz3dua","full_name":"لانا"},"text":"یه شاهکار به تمام معنا نبود ولی جالب و سرگرم کننده بود بیشتر از یک بارم ارزش دیدن نداره","created_at":"2023-09-17T16:58:28.817497Z","likes_count":2,"dislikes_count":14,"replies_count":0,"state":"approved","thread":17746,"replies":[],"like":null},{"id":316724,"user":{"id":3846249,"avatar":{"original":"None","webp":"None"},"username":"user-7es6lvmw","full_name":"رضا مظاهری"},"text":"عالی بود ممنون شما هم برید ببینید","created_at":"2023-09-17T16:51:53.548428Z","likes_count":9,"dislikes_count":3,"replies_count":0,"state":"approved","thread":17746,"replies":[],"like":null},{"id":316720,"user":{"id":3544083,"avatar":{"original":"None","webp":"None"},"username":"user-hx7dw5x9","full_name":"‌"},"text":"بسیار عالی","created_at":"2023-09-17T16:11:48.718070Z","likes_count":9,"dislikes_count":2,"replies_count":0,"state":"approved","thread":17746,"replies":[],"like":null},{"id":316692,"user":{"id":2949369,"avatar":{"original":"None","webp":"None"},"username":"user-u7eork8f","full_name":"❤🧡💛💚💙💜"},"text":"اصلا بامزه نبود😒🙄 خوشمون نیومد 😑😑","created_at":"2023-09-17T11:28:38.056395Z","likes_count":2,"dislikes_count":30,"replies_count":1,"state":"approved","thread":17746,"replies":[{"id":317502,"user":{"id":3951572,"avatar":{"original":"None","webp":"None"},"username":"user-bgz3imf1","full_name":"م.پ.ف"},"text":"الان خرف شما رو باور کنم یا فروش ۲۵۸ میلیاردی رو؟","created_at":"2023-09-22T20:24:36.294215Z","likes_count":1,"dislikes_count":0,"replies_count":0,"state":"approved","thread":17746,"replies":[],"like":null}],"like":null},{"id":316684,"user":{"id":1241788,"avatar":{"original":"None","webp":"None"},"username":"user-ivheh2xr","full_name":"رضا فلاح سیاوشی مفرد"},"text":"خیلی بد ولی شهرهرت عالی بود","created_at":"2023-09-17T09:48:49.475054Z","likes_count":2,"dislikes_count":22,"replies_count":0,"state":"approved","thread":17746,"replies":[],"like":null},{"id":316681,"user":{"id":3941057,"avatar":{"original":"None","webp":"None"},"username":"user-x4636cib","full_name":"هادی ابراهیمی"},"text":"ب کادر فنی و تولید فیلم خسته نباشید میگم ❤️","created_at":"2023-09-17T09:04:59.336080Z","likes_count":13,"dislikes_count":3,"replies_count":0,"state":"approved","thread":17746,"replies":[],"like":null},{"id":316637,"user":{"id":3849123,"avatar":{"original":"None","webp":"None"},"username":"user-b321p4jb","full_name":"یکتا پرویزی"},"text":"من عاشقشم تا حالا۷ بار رفتم و دیدم","created_at":"2023-09-16T12:08:19.756527Z","likes_count":14,"dislikes_count":4,"replies_count":1,"state":"approved","thread":17746,"replies":[{"id":317923,"user":{"id":3974727,"avatar":{"original":"None","webp":"None"},"username":"user-5jdtwprc","full_name":"حسین گلستان"},"text":"خیلی خوب رفتی","created_at":"2023-09-26T05:24:47.881442Z","likes_count":0,"dislikes_count":0,"replies_count":0,"state":"approved","thread":17746,"replies":[],"like":null}],"like":null},{"id":316630,"user":{"id":1234228,"avatar":{"original":"None","webp":"None"},"username":"user-c7hur9ey","full_name":"شبنم پولادی"},"text":"خیلی مسخره بود فقط منتظر بودیم زودتر تموم بشه","created_at":"2023-09-16T08:13:47.870633Z","likes_count":1,"dislikes_count":29,"replies_count":1,"state":"approved","thread":17746,"replies":[{"id":316699,"user":{"id":1754717,"avatar":{"original":"None","webp":"None"},"username":"user-uvpf3nnt","full_name":"کاوه غلامی"},"text":"دقیقا","created_at":"2023-09-17T12:56:27.767349Z","likes_count":1,"dislikes_count":15,"replies_count":0,"state":"approved","thread":17746,"replies":[],"like":null}],"like":null},{"id":316623,"user":{"id":3935615,"avatar":{"original":"None","webp":"None"},"username":"user-g0uv15pz","full_name":"رضا"},"text":"خیلی خوب بود خیلی خندیدم اما دخترم دوست نداشت مناسب کودکان نبود،  خیلی باحال بود نبینی از دستت رفته است","created_at":"2023-09-15T19:03:31.899998Z","likes_count":10,"dislikes_count":5,"replies_count":0,"state":"approved","thread":17746,"replies":[],"like":null}
+    ]
+}
