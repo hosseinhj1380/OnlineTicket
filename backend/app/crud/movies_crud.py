@@ -58,5 +58,12 @@ class CRUDmovies:
             return "successfully deleted"
         else:
             return "movie id doesnt exist "
+
+
+def check_thread(thread):
+    if movie_collection_info.find_one({"thread":thread}):
+        return True
+    else:
+        return False
         
         
