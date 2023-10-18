@@ -54,9 +54,15 @@ class CRUDcommnet:
             return(None)
 
 
-    def update_comment(text,thread,commentID):
+    def update_comment(self,text,commentID):
         comment=movies_comment_collection.find_one({"commentID":commentID}, {'_id': False})
         if comment:
-            return comment
+            comment["text"]=text
+            comment["state"]="pending"
+            comment["created_at"]=str(datetime.now())
+            movies_comment_collection.update_one(
+            {"commentID":commentID},
+            {"$set":comment})
+            return {"text":text,"status":"pending"}
         else:
             return None
