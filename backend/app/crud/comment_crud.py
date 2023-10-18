@@ -1,6 +1,8 @@
 
 from databases import movies_comment_collection
-
+from datetime import datetime
+from crud import movies_crud
+import json
 
 class CRUDcommnet:
 
@@ -26,32 +28,41 @@ class CRUDcommnet:
 
     def create_comment(self,text,thread):
 
-        collection=movies_comment_collection.find_one({"thread": thread}, {'_id': False})
-        if collection:
-            comment_results=collection["result"]
-            new_comment={
-                    "id":0,
+        if movies_crud.check_thread(thread=thread):
+            try:
+                
+                movies_comment_collection.insert_one({
+                    "commentID":1,
                     "user":{},
                     "text":text,
-                    "created_at":0,
+                    "created_at":str(datetime.now()),
                     "state":"pending",
                     "likes_count":0,
                     "dislike_count":0,
                     "replies_count":0,
                     "replies":[],
                     "thread":thread
-            }
-            comment_results.append(new_comment)
-
-            try:
-                movies_comment_collection.update_one(
-                    {"thread": thread},
-                    {"$set": {"thread": thread,
-                              "result":comment_results}})
-                return (new_comment)
-            except :
-                return("create_comment failed while save ")
+                })
                 
+                return ({"text":text,"status":"pending"})
 
+            except  :
+            
+                return("create_comment failed while save ")
+                    
         else:
             return(None)
+
+
+    def update_comment(self,text,commentID):
+        comment=movies_comment_collection.find_one({"commentID":commentID}, {'_id': False})
+        if comment:
+            comment["text"]=text
+            comment["state"]="pending"
+            comment["created_at"]=str(datetime.now())
+            movies_comment_collection.update_one(
+            {"commentID":commentID},
+            {"$set":comment})
+            return {"text":text,"status":"pending"}
+        else:
+            return None
