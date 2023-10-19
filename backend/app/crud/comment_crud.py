@@ -66,3 +66,24 @@ class CRUDcommnet:
             return {"text":text,"status":"pending"}
         else:
             return None
+
+class CommentCheck:
+
+    def __init__(self):
+        pass
+
+    def get_all_pending_comment(self):
+
+        comments=movies_comment_collection.find({"state":"pending"},{'_id': False})
+        
+        result=[]
+        if comments:
+            for comment in comments:
+                result.append(comment)
+            return result
+            
+        else:
+            return None
+
+
+    

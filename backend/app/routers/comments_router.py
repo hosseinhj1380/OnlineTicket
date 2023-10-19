@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from schemes.comment_schemas import CreateComment,UpdateComment
-from crud.comment_crud import CRUDcommnet
+from crud.comment_crud import CRUDcommnet,CommentCheck
 
 
 router = APIRouter()
@@ -25,3 +25,13 @@ def update_comment(commentID:int,comment:UpdateComment):
             return JSONResponse(status_code=200,content= result)
         else:
             return JSONResponse(status_code=404,content="thread not found")
+
+@router.get("/api/comment/pending/")
+def unchecked_comment():
+    checkcomment=CommentCheck()
+    pending_comment=checkcomment.get_all_pending_comment()
+    
+    if pending_comment :
+        return JSONResponse(status_code=200,content=pending_comment)
+    else:
+        return JSONResponse(status_code=400,content="no pending comment available")

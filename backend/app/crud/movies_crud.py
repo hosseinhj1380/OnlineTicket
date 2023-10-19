@@ -1,6 +1,7 @@
 
 from databases import movie_collection_info
 from .comment_crud import CRUDcommnet
+from datetime import datetime
 
 class CRUDmovies:
 
@@ -25,6 +26,7 @@ class CRUDmovies:
 
         movie_collection_info.insert_one({"movie_id": movie_id,
                                           "movie_info": movie_info,
+                                          "created_at":str(datetime.now()),
                                           "movie_rate": movie_rate,
                                           "thread":thread,
                                           "has_been_sold": 0})
