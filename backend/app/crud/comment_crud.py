@@ -91,16 +91,19 @@ class CommentCheck:
         else:
             return None
 
-    def approve_comment(self,commentID):
+    def change_state_comment(self,commentID,state):
         comment=movies_comment_collection.find_one({"commentID":commentID}, {'_id': False})
 
         if comment:
+            if state =="approved" or "notapproved":
             
-            comment["state"]="approved"
-            movies_comment_collection.update_one(
-            {"commentID":commentID},
-            {"$set":comment})
-            return {"message":"comment approved successfully"}
+                comment["state"]=state
+                movies_comment_collection.update_one(
+                {"commentID":commentID},
+                {"$set":comment})
+                return {"message":"comment state changed  successfully"}
+            else:
+                return ({"message":"state is wrong "})
         else:
             return None
 
