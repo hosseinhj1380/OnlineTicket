@@ -12,12 +12,14 @@ class Movies(BaseModel):
     producer_name:str
     director_name:str
     actors_name:List[str]
-    movie_description:str
-    movie_review:str
+    description:str
+    review:str
     production_year:int
-    movie_images:List[str]
-    movie_poster:str
+    images:List[str]
+    poster:str
     movie_type:str
+    genres:List[dict]
+    categories:List[dict]
 
 
 

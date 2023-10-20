@@ -65,3 +65,9 @@ class CRUDgenres:
             return "successfully deleted"
         else:
             return "genres doesnt exist "
+
+def check_genres(genres):
+    if movies_genres_collection.find_one(genres):
+        return True
+    else:
+        return False  

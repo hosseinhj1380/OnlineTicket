@@ -65,3 +65,8 @@ class CRUDCategory:
         else:
             return "category doesnt exist "
     
+def check_category(category):
+    if movie_category_collection.find_one(category):
+        return True
+    else:
+        return False  

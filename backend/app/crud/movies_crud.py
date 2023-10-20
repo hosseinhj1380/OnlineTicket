@@ -1,6 +1,8 @@
 
 from databases import movie_collection_info
 from .comment_crud import CRUDcommnet
+from .genres_crud import check_genres
+from .category_crud import check_category
 from datetime import datetime
 
 class CRUDmovies:
@@ -14,22 +16,36 @@ class CRUDmovies:
             movie_id = 1
 
         obj=CRUDcommnet()
-        thread=obj.create()
-        
-
-         
-        
-
+        thread=obj.create_thread()
+    
         movie_rate = {"movie_rate": 0,
                       "rates_count": 0
                       }
 
+        for genre in movie_info["genres"]:
+            if check_genres(genres=genre):
+                pass 
+            else:
+                return {"status":"Error",
+                "message":f"genres{genre} are not available "}
+
+        for category in movie_info["categories"]:
+            if check_category(category):
+                pass
+            else:
+                return {"status":"Error",
+                        "message":f"category{category} are not available "}
+                
+
+        
         movie_collection_info.insert_one({"movie_id": movie_id,
                                           "movie_info": movie_info,
                                           "created_at":str(datetime.now()),
                                           "movie_rate": movie_rate,
                                           "thread":thread,
                                           "has_been_sold": 0})
+        return {"status":"Success",
+                        "message":"movie created successfully "}
 
     def movie_details(movie_id):
 

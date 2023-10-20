@@ -30,10 +30,12 @@ def create_movie_info(movie: Movies):
 
         movie_dict = movie.dict()
         obj = CRUDmovies
-        obj.create_movie(movie_dict)
+        result=obj.create_movie(movie_dict)
+        if result["status"]=="Success":
 
-        return JSONResponse(status_code=201, content="created successfully ")
-
+            return JSONResponse(status_code=201, content=result)
+        else:
+            return JSONResponse(status_code=400,content=result)
     else:
 
         return JSONResponse(status_code=400, content="bad request (value is null )")
