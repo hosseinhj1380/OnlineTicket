@@ -73,6 +73,22 @@ class CRUDcommnet:
         else:
             return None
 
+
+
+    def movie_comments(self,thread,skip,page_size):
+        count=movies_comment_collection.count_documents({"thread":thread,
+                                                        "state":"approved"})
+        comments=movies_comment_collection.find({"thread":thread,
+                                                 "state":"approved"},
+                                                {'_id': False}).skip(skip).limit(page_size)
+        
+        comments=list(comments)
+        
+        return({"count":count,
+                "comments":comments})
+        
+
+
 class CommentCheck:
 
     def __init__(self):
