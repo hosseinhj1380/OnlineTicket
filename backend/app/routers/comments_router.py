@@ -2,6 +2,7 @@ from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from schemes.comment_schemas import CreateComment,UpdateComment
 from crud.comment_crud import CRUDcommnet,CommentCheck
+from fastapi import Query
 
 
 router = APIRouter()
@@ -35,3 +36,48 @@ def unchecked_comment():
         return JSONResponse(status_code=200,content=pending_comment)
     else:
         return JSONResponse(status_code=400,content="no pending comment available")
+
+
+@router.patch("/api/comment/state/{commentID}")
+def approve_comment(commentID:int,state:str):
+    edit_comment=CommentCheck()
+    result=edit_comment.change_state_comment(commentID=commentID,state=state)
+    if result:
+        return JSONResponse(status_code=200,content=result)
+    else:
+        return JSONResponse(status_code=404,content="commentID not found ")
+
+
+@router.get("/api/comment/comments/")
+def movie_comments(thread:int,page: int = Query(default=1, description="Page number", ge=1)):
+
+    page_size=2
+    skip = (page - 1) * page_size
+
+    comments=CRUDcommnet()
+    result=comments.movie_comments(thread=thread,page_size=page_size,skip=skip)
+
+    if result["comments"] == []:
+        return JSONResponse (status_code=404 , content="invalid page")
+
+    else:
+        if  page == 1:
+            previous = None
+        else:
+            previous = f"127.0.0.1:8000/api/comment/comments/?thread={thread}&page={page - 1}" 
+        
+        if page_size * page < result["count"]:
+            next = f"127.0.0.1:8000/api/comment/comments/?thread={thread}&page={page + 1}" 
+
+        else:
+            next=None
+
+        return JSONResponse(status_code=200,content={
+                                                    "count":result["count"],
+                                                    "previous":previous,
+                                                    "next":next,
+                                                    "comments":result["comments"]
+                                                    })
+
+
+
