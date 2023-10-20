@@ -35,3 +35,13 @@ def unchecked_comment():
         return JSONResponse(status_code=200,content=pending_comment)
     else:
         return JSONResponse(status_code=400,content="no pending comment available")
+
+
+@router.patch("/api/comment/approve/{commentID}")
+def approve_comment(commentID:int):
+    edit_comment=CommentCheck()
+    result=edit_comment.approve_comment(commentID=commentID)
+    if result:
+        return JSONResponse(status_code=200,content=result)
+    else:
+        return JSONResponse(status_code=404,content="commentID not found ")

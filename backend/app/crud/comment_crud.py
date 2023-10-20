@@ -28,11 +28,17 @@ class CRUDcommnet:
 
     def create_comment(self,text,thread):
 
+        last_comment = movies_comment_collection.find_one(sort=[('_id', -1)])
+        if last_comment:
+            commentID = last_comment["commentID"]+1
+        else:
+            commentID = 1
+
         if movies_crud.check_thread(thread=thread):
             try:
                 
                 movies_comment_collection.insert_one({
-                    "commentID":1,
+                    "commentID":commentID,
                     "user":{},
                     "text":text,
                     "created_at":str(datetime.now()),
@@ -84,6 +90,20 @@ class CommentCheck:
             
         else:
             return None
+
+    def approve_comment(self,commentID):
+        comment=movies_comment_collection.find_one({"commentID":commentID}, {'_id': False})
+
+        if comment:
+            
+            comment["state"]="approved"
+            movies_comment_collection.update_one(
+            {"commentID":commentID},
+            {"$set":comment})
+            return {"message":"comment approved successfully"}
+        else:
+            return None
+
 
 
     
