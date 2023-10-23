@@ -17,3 +17,12 @@ def create_person(person:Person):
             return JSONResponse(status_code=200,content=result)
         else:
             return JSONResponse(status_code=500,content=result)
+        
+@router.get("/api/person/{PersonID}")
+def get_person(PersonID:int):
+    if PersonID:
+        person_info=PersonsCRUD()
+        result=person_info.get(PersonID)
+        if result:
+            return JSONResponse (status_code=200,content=result)
+        else:return JSONResponse(status_code=400,content="person is not defined ")
