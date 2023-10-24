@@ -40,3 +40,28 @@ class PersonsCRUD:
         else:
             return None 
         
+    def update(self,PersonID,PersonInfo):
+        
+        if persons_collection.find_one({"PersonID":PersonID}, {'_id': False}):
+            try:
+                
+                persons_collection.update_one({"PersonID": PersonID},
+                                              {"$set": PersonInfo})
+                return {"message":"success",
+                        "PersonInfo":PersonInfo}
+            except Exception as e :
+                return( e)
+        else:
+            return None
+        
+    def delete(self,PersonID):
+        filter={"PersonID":PersonID}
+        if persons_collection.find_one(filter, {'_id': False}):
+            try:
+                persons_collection.delete_one(filter)
+                return "deleted successfully "
+            except Exception as e:
+                return e
+        else:
+            return None
+            
