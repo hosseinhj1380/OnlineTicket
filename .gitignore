@@ -1,3 +1,8 @@
+<<<<<<< HEAD
 *__pycache__
 *.env
 *.json
+=======
+__pycache__
+.env
+>>>>>>> 75f4cffbd51c62cd62937b1dcd094e41478fca8c
