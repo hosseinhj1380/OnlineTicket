@@ -20,11 +20,9 @@ class CRUDcommnet:
             })
         else:
             thread = 1
-            movies_comment_collection.insert_one({
-                "thread":thread,
-                "result":[]
-            })
+        
         return thread
+    
 
     def create_comment(self,text,thread):
 
