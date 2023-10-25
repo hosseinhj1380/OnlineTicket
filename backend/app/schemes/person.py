@@ -11,6 +11,9 @@ class Person(BaseModel):
     biography:str
     birthplace:dict={"name_fa": "",
                      "name_en": ""}
-    roles:List[dict]=[{"name":""}]
+    roles:List[dict]=[{"id":0,
+                       "name":"string"}]
     
+class PersonRole(BaseModel):
     
+    name:str

@@ -1,4 +1,4 @@
-from databases import persons_collection
+from databases import persons_collection,person_role_collection
 
 
 class PersonsCRUD:
@@ -8,21 +8,27 @@ class PersonsCRUD:
     def personID_generator(self):
         
         last_document = persons_collection.find_one(sort=[('_id', -1)])
-        print(last_document)
+        
         if last_document:
             personID = last_document["PersonID"]+1
         else:
             personID = 1
             
-        print(personID)
+        
         return {"PersonID":personID}
     
     def create(self,PersonInfo):
         
         try:
             personID=self.personID_generator()
-            print(personID)
+            
             PersonInfo.update(personID)
+            for role in PersonInfo.get("roles"):
+                if check_role(role=role.get("name"),id=role.get("id")):
+                    pass
+                else:
+                    return {"status":"success",
+                    "message":"valueerror"}
             persons_collection.insert_one(PersonInfo)
             
             return {"status":"success",
@@ -65,3 +71,33 @@ class PersonsCRUD:
         else:
             return None
             
+            
+class PersonRoleCRUD:
+    
+    def __init__(self):
+        pass
+    
+    def id_generator(self):
+        last_document = person_role_collection.find_one(sort=[('_id', -1)])
+        
+        if last_document:
+            id = last_document["id"]+1
+        else:
+            id = 1
+        return id     
+            
+    def create(self,role):
+        id=self.id_generator()
+        person_role_collection.insert_one({"id":id,"role":role})
+        
+        return "success "
+    def get (self):
+        
+        return list(person_role_collection.find({},{'_id': False}))
+    
+def check_role(id,role):
+    if person_role_collection.find_one({"id":id,"role":role}, {'_id': False}): 
+        return True
+    else: return False
+        
+        
