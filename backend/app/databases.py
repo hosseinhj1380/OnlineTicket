@@ -27,6 +27,8 @@ movie_category_collection=db[os.environ.get("MOVIE_CATEGORY_COLLECTION")]
 
 persons_collection=db[os.environ.get("PERSON_COLLECTIONS")]
 
+person_role_collection=db[os.environ.get("PERSON_ROLE_COLLECTIONS")]
+
 
 
 
