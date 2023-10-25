@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from schemes.person import Person
-from crud.persons_crud import PersonsCRUD
+from schemes.person import Person,PersonRole
+from crud.persons_crud import PersonsCRUD,PersonRoleCRUD
 
 
 router = APIRouter()
@@ -25,7 +25,7 @@ def create_person(person:Person):
      #        return JSONResponse(status_code=400, content="person_image  format is not in base64 format ")
         new_person=PersonsCRUD()
         result=new_person.create(person.dict())
-        
+        # return result 
         if result["status"]=="success":
             return JSONResponse(status_code=200,content=result)
         else:
@@ -59,3 +59,16 @@ def delete_person(PersonId:int):
             return JSONResponse(status_code=200,content=result)
         else:
             return JSONResponse(status_code=400,content="person is not found ")
+        
+
+@router.post("/api/person/role/")
+def create_person_role(role:PersonRole):
+    new_role=PersonRoleCRUD()
+    
+    return JSONResponse(status_code=200,content=new_role.create(role.name))
+
+
+@router.get("/api/person/role/")
+def get_person_role():
+    roles=PersonRoleCRUD()
+    return JSONResponse(status_code=200,content=roles.get())
