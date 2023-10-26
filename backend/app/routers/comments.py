@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from schemes.comment_schemas import CreateComment,UpdateComment
+from schemes.comment import CreateComment,UpdateComment
 from crud.comment_crud import CRUDcommnet,CommentCheck
 from fastapi import Query
 
