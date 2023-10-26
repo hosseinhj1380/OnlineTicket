@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from schemes.movies_schemas import Movies, MovieUpdate
+from schemes.movies import Movies, MovieUpdate
 from crud.movies_crud import CRUDmovies
 
 import base64
