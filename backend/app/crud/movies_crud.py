@@ -10,8 +10,20 @@ class CRUDmovies:
     def __init__(self):
         pass
 
+
     def return_error(self, title, name):
         return {"status": "Error", "message": f"{title}: {name} are not available "}
+
+    def create_thread(self):
+        last_thread = movie_collection_info.find_one(sort=[("_id", -1)])
+
+        if last_thread:
+            thread = last_thread["thread"] + 1
+        else:
+            thread = 1
+
+        return thread
+    
 
     def create_movie(self, movie_info):
         last_document = movie_collection_info.find_one(sort=[("_id", -1)])
@@ -20,8 +32,10 @@ class CRUDmovies:
         else:
             movie_id = 1
 
-        obj = CRUDcommnet()
-        thread = obj.create_thread()
+
+        thread=self.create_thread()
+        
+
 
         movie_rate = {"movie_rate": 0, "rates_count": 0}
 
@@ -43,6 +57,7 @@ class CRUDmovies:
             return self.return_error(title="producer", name=producers)
         else:
             movie_info["producers"] = producers
+
 
         directors = self.check_person_ID(movie_info.get("directors"))
         if isinstance(directors, int):
