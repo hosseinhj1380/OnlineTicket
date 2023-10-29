@@ -9,9 +9,9 @@ class Movies(BaseModel):
     title:str
     # movie_pictures:List[UploadFile]
     # movie_poster:UploadFile
-    producer_name:str
-    director_name:str
-    actors_name:List[str]
+    producers:List[int]
+    directors:List[int]
+    actors:List[int]
     description:str
     review:str
     production_year:int
