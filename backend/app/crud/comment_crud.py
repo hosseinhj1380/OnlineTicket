@@ -8,20 +8,11 @@ class CRUDcommnet:
     def __init__(self) -> None:
         pass
 
-    def create_thread(self):
-        last_thread = movies_comment_collection.find_one(sort=[("_id", -1)])
-
-        if last_thread:
-            thread = last_thread["thread"] + 1
-            movies_comment_collection.insert_one({"thread": thread, "result": []})
-        else:
-            thread = 1
-
-        return thread
+    
 
     def create_comment(self, text, thread):
         last_comment = movies_comment_collection.find_one(sort=[("_id", -1)])
-        if last_comment["result"]:
+        if last_comment:
             commentID = last_comment["commentID"] + 1
         else:
             commentID = 1
