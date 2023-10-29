@@ -101,3 +101,12 @@ def check_role(id,role):
     else: return False
         
         
+def check_user_ID(id):
+    person=persons_collection.find_one({"PersonID":id}, {"full_name":True,
+                                                         "profile_photo":True,
+                                                         "PersonID":True,
+                                                         '_id': False})
+    if person:
+        
+        return person
+    else: return None
