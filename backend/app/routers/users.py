@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from schemes.users import UserBase,UserDisplay
-from app.crud.users_crud import UserCRUD , check_username
+from crud.users_crud import UserCRUD , check_username
 from fastapi.responses import JSONResponse
 
 # router = APIRouter(prefix='/user', tags=['user'])

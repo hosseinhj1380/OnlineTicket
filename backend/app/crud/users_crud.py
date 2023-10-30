@@ -1,5 +1,5 @@
 from databases import users_collection
-from hash import Hash
+from crud.hash import Hash
 
 class UserCRUD:
     def __init__(self) :
@@ -13,7 +13,8 @@ class UserCRUD:
             "password":Hash.bcrypt(password)
              })
             return "user created successfully "
-        except:
+        except Exception as e :
+            print(e)
             
             return  {"status": "Error",
                      "message": "there is a problem while saving data " } 
