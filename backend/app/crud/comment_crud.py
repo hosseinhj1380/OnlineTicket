@@ -5,20 +5,13 @@ import json
 
 
 class CRUDcommnet:
-    def __init__(self) -> None:
+    def __init__(self) :
         pass
 
-
-    
 
     def create_comment(self, text, thread):
         last_comment = movies_comment_collection.find_one(sort=[("_id", -1)])
         if last_comment:
-
-
-    def create_comment(self, text, thread):
-        last_comment = movies_comment_collection.find_one(sort=[("_id", -1)])
-        if last_comment["result"]:
 
             commentID = last_comment["commentID"] + 1
         else:
