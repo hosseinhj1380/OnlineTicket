@@ -1,5 +1,5 @@
 from databases import users_collection
-from crud.hash import Hash
+from core.hash import Hash
 
 class UserCRUD:
     def __init__(self) :
@@ -14,10 +14,14 @@ class UserCRUD:
              })
             return "user created successfully "
         except Exception as e :
-            print(e)
+       
             
             return  {"status": "Error",
                      "message": "there is a problem while saving data " } 
+            
+    # def update(self,user):
+        
+            
         
 def check_username(username):
     if users_collection.find_one({"username":username},{'_id': False}):
