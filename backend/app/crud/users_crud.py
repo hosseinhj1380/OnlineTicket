@@ -1,5 +1,5 @@
 from databases import users_collection
-from core.hash import Hash
+from OnlineTicket.backend.app.core.security.hash import Hash
 
 class UserCRUD:
     def __init__(self) :
@@ -27,3 +27,7 @@ def check_username(username):
     if users_collection.find_one({"username":username},{'_id': False}):
         return True
     else:return False
+    
+def find_user(username):
+    return users_collection.find_one({"username":username},{'_id': False})
+    

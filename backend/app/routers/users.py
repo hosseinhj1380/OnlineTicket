@@ -1,7 +1,8 @@
-from fastapi import APIRouter
+from fastapi import APIRouter , Depends
 from schemes.users import UserBase,UserDisplay
 from crud.users_crud import UserCRUD , check_username
 from fastapi.responses import JSONResponse
+from core.auth.oauth2 import oauth2_scheme
 
 # router = APIRouter(prefix='/user', tags=['user'])
 router= APIRouter()
