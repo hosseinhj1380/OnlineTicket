@@ -29,6 +29,8 @@ persons_collection=db[os.environ.get("PERSON_COLLECTIONS")]
 
 person_role_collection=db[os.environ.get("PERSON_ROLE_COLLECTIONS")]
 
+users_collection=db[os.environ.get("USERS_COLLECTION")]
+
 
 
 
