@@ -1,8 +1,8 @@
-from fastapi import APIRouter
+from fastapi import APIRouter , Depends
 from fastapi.responses import JSONResponse
 from schemes.movies import Movies, MovieUpdate
 from crud.movies_crud import CRUDmovies
-
+from core.auth.oauth2 import oauth2_scheme
 import base64
 
 
@@ -10,7 +10,7 @@ router = APIRouter()
 
 
 @router.post("/api/movie/create/")
-def create_movie_info(movie: Movies):
+def create_movie_info(movie: Movies,token:str=Depends(oauth2_scheme)):
     if movie:
         #    for movie_picture in movie.movie_images:
         #        try:
