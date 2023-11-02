@@ -1,17 +1,18 @@
 from fastapi import APIRouter, Depends, status
-from fastapi.exceptions import HTTPException
+from fastapi.exceptions import HTTPException 
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
-from crud.users_crud import find_user
-from security.hash import Hash
+from crud.users_crud import authenticate_user
+from core.hash import Hash
 from . import oauth2
 
 
 router = APIRouter()
 
 
-@router.post("/oauth2")
+@router.post("api/oauth2/login")
 def get_token(request: OAuth2PasswordRequestForm = Depends()):
-    user = find_user(request.username)
+    user = authenticate_user(request.username )
+    
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="invalid credential"

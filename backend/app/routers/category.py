@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from schemes.category import Category,CategoryUpdate
+from schemas.category import Category,CategoryUpdate
 from crud.category_crud import CRUDCategory
 
 
