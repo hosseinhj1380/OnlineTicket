@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from schemes.genres import Genres,GenresUpdate
+from schemas.genres import Genres,GenresUpdate
 from crud.genres_crud import CRUDgenres
 from typing import List
 

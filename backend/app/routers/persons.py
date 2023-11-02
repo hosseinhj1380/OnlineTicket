@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from schemes.person import Person,PersonRole
+from schemas.person import Person,PersonRole
 from crud.persons_crud import PersonsCRUD,PersonRoleCRUD
 
 
