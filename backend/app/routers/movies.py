@@ -10,7 +10,7 @@ router = APIRouter()
 
 
 @router.post("/api/movie/create/")
-def create_movie_info(movie: Movies):
+def create_movie_info(movie: Movies,token:str=Depends(oauth2_scheme)):
     if movie:
         #    for movie_picture in movie.movie_images:
         #        try:

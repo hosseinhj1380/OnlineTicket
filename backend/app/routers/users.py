@@ -1,10 +1,13 @@
+
 from fastapi import APIRouter, Depends
 from schemas.users import UserBase, UserDisplay
 from crud.users_crud import UserCRUD, check_username
+
 from fastapi.responses import JSONResponse
 from core.auth.oauth2 import oauth2_scheme
 
 # router = APIRouter(prefix='/user', tags=['user'])
+
 router = APIRouter(prefix="/api")
 
 
@@ -32,3 +35,4 @@ def create_user(user: UserBase,):
 # update user
 
 # delete user
+

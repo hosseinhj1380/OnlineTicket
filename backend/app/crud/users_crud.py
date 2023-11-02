@@ -51,3 +51,4 @@ def authenticate_user(username):
         {"username": username},
         {"_id": False}
     )
+
