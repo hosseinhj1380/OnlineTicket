@@ -6,10 +6,10 @@ from core.auth.oauth2 import oauth2_scheme
 import base64
 
 
-router = APIRouter()
+router = APIRouter(prefix="/api/movie")
 
 
-@router.post("/api/movie/create/")
+@router.post("/create/")
 def create_movie_info(movie: Movies,token:str=Depends(oauth2_scheme)):
     if movie:
         #    for movie_picture in movie.movie_images:
@@ -37,7 +37,7 @@ def create_movie_info(movie: Movies,token:str=Depends(oauth2_scheme)):
         return JSONResponse(status_code=400, content="bad request (value is null )")
 
 
-@router.get("/api/movie/movie_datails/{movie_id}")
+@router.get("/movie_datails/{movie_id}")
 def get_movie_details(movie_id: int):
     obj = CRUDmovies()
     result = obj.movie_details(movie_id=movie_id)
@@ -48,7 +48,7 @@ def get_movie_details(movie_id: int):
         return JSONResponse(status_code=404, content="movie not found ")
 
 
-@router.put("/api/movie/movie_update/")
+@router.put("/movie_update/")
 def movies_update(movie: MovieUpdate):
     if movie:
         # for movie_picture in  movie.movie_images:
@@ -80,7 +80,7 @@ def movies_update(movie: MovieUpdate):
         return JSONResponse(status_code=404, content="movie_id doesnt exist")
 
 
-@router.delete("/api/movie/movie_delete/{movie_id}")
+@router.delete("/movie_delete/{movie_id}")
 def movies_delete(movie_id: int):
     obj = CRUDmovies()
     result = obj.delete_movie(movie_id=movie_id)

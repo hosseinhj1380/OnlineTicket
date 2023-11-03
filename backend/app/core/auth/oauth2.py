@@ -10,7 +10,7 @@ from crud.users_crud import find_user
 
 
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="oauth2")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/oauth2/login")
 
 SECRET_KEY = "6c7d438d2ea66cc11ee315566bda6f45336930dc2a40eaa96ec009524c20aa69"
 ALGORITHM = "HS256"

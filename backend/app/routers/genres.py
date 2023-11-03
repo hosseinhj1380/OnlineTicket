@@ -6,10 +6,10 @@ from typing import List
 
 
 
-router = APIRouter()
+router = APIRouter(prefix="/api/generes")
 
 
-@router.post("/api/generes/create/")
+@router.post("/create/")
 def create_movies_genres(generes:Genres):
     if generes:
 
@@ -24,7 +24,7 @@ def create_movies_genres(generes:Genres):
 
         return JSONResponse(status_code=400,content="bad request")
     
-@router.get("/api/generes/details/")
+@router.get("/details/")
 def get_movies_genres():
 
     obj=CRUDgenres()
@@ -34,7 +34,7 @@ def get_movies_genres():
     
     return JSONResponse(status_code=200,content=list(documents)) 
 
-@router.put("/api/generes/update/")
+@router.put("/update/")
 def update_movie_genres(new_genre:GenresUpdate):
 
     if new_genre:
@@ -47,7 +47,7 @@ def update_movie_genres(new_genre:GenresUpdate):
         else:
             return JSONResponse(status_code=404,content=result)
         
-@router.delete("/api/generes/delete/{genres_name}")
+@router.delete("/delete/{genres_name}")
 def delete_movies_genres(genres_name:str):
     obj=CRUDgenres()
     result=obj.delete_genres(genres_name=genres_name)
