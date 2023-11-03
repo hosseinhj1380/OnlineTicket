@@ -1,13 +1,13 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from schemes.category import Category,CategoryUpdate
+from schemas.category import Category,CategoryUpdate
 from crud.category_crud import CRUDCategory
 
 
-router = APIRouter()
+router = APIRouter(prefix="/api/category")
 
 
-@router.post("/api/category/create/")
+@router.post("/create/")
 def create_movies_genres(category:Category):
     if category:
 
@@ -22,7 +22,7 @@ def create_movies_genres(category:Category):
 
         return JSONResponse(status_code=400,content="bad request")
     
-@router.get("/api/category/details/")
+@router.get("/details/")
 def get_movies_genres():
 
     obj=CRUDCategory()
@@ -32,7 +32,7 @@ def get_movies_genres():
     
     return JSONResponse(status_code=200,content=list(documents)) 
 
-@router.put("/api/category/update/")
+@router.put("/update/")
 def update_movie_genres(new_category:CategoryUpdate):
 
     if new_category:
@@ -45,7 +45,7 @@ def update_movie_genres(new_category:CategoryUpdate):
         else:
             return JSONResponse(status_code=404,content=result)
         
-@router.delete("/api/category/delete/{cateory_name}")
+@router.delete("/delete/{cateory_name}")
 def delete_movies_genres(cateory_name:str):
     obj=CRUDCategory()
     result=obj.delete_category(category_name=cateory_name)

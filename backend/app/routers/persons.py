@@ -1,13 +1,13 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from schemes.person import Person,PersonRole
+from schemas.person import Person,PersonRole
 from crud.persons_crud import PersonsCRUD,PersonRoleCRUD
 
 
-router = APIRouter()
+router = APIRouter(prefix="/api/person")
 
 
-@router.post("/api/person/")
+@router.post("/")
 def create_person(person:Person):
     if person:
     #    for person_image in person.images:
@@ -31,7 +31,7 @@ def create_person(person:Person):
         else:
             return JSONResponse(status_code=500,content=result)
         
-@router.get("/api/person/{PersonID}")
+@router.get("/{PersonID}")
 def get_person(PersonID:int):
     if PersonID:
         person_info=PersonsCRUD()
@@ -40,7 +40,7 @@ def get_person(PersonID:int):
             return JSONResponse (status_code=200,content=result)
         else:return JSONResponse(status_code=400,content="person is not defined ")
         
-@router.patch("/api/person/")
+@router.patch("/")
 def update_person(PersonId:int,person:Person):
     if person:
         person_update=PersonsCRUD()
@@ -50,7 +50,7 @@ def update_person(PersonId:int,person:Person):
         else:
             return JSONResponse(status_code=400,content="person is not found ")
         
-@router.delete("/api/person/{PersonID}")
+@router.delete("/{PersonID}")
 def delete_person(PersonId:int):
     if PersonId:
         person_update=PersonsCRUD()
@@ -61,14 +61,14 @@ def delete_person(PersonId:int):
             return JSONResponse(status_code=400,content="person is not found ")
         
 
-@router.post("/api/person/role/")
+@router.post("/role")
 def create_person_role(role:PersonRole):
     new_role=PersonRoleCRUD()
     
     return JSONResponse(status_code=200,content=new_role.create(role.name))
 
 
-@router.get("/api/person/role/")
+@router.get("/role/")
 def get_person_role():
     roles=PersonRoleCRUD()
     return JSONResponse(status_code=200,content=roles.get())

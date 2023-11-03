@@ -9,7 +9,7 @@ class CRUDcommnet:
         pass
 
 
-    def create_comment(self, text, thread):
+    def create_comment(self, text, thread , user):
         last_comment = movies_comment_collection.find_one(sort=[("_id", -1)])
         if last_comment:
 
@@ -22,7 +22,7 @@ class CRUDcommnet:
                 movies_comment_collection.insert_one(
                     {
                         "commentID": commentID,
-                        "user": {},
+                        "user": user,
                         "text": text,
                         "created_at": str(datetime.now()),
                         "state": "pending",
