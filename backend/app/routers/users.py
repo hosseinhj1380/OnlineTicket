@@ -3,9 +3,11 @@ from schemas.users import UserBase, UserDisplay
 from crud.users_crud import UserCRUD, check_username
 from fastapi.responses import JSONResponse
 from core.auth.oauth2 import oauth2_scheme
+from core.parameters_check import is_strong_password , is_valid_email
 
 # router = APIRouter(prefix='/user', tags=['user'])
 router = APIRouter(prefix="/api/user")
+
 
 
 # create user
@@ -13,7 +15,15 @@ router = APIRouter(prefix="/api/user")
 def create_user(user: UserBase):
     if check_username(user.username):
         return JSONResponse(status_code=406, content="username already exist ")
+    
+    elif not  is_valid_email(user.email):
+        return JSONResponse(status_code=406 , content="email is not valid ")
+    elif user.password is None or user.password in user.username :
+        return JSONResponse(status_code=406 , content="password must not be none or same as username ")
+    elif not  is_strong_password(user.password):
+        return JSONResponse(status_code=406 , content="password is weak ")
     else:
+        
         new_user = UserCRUD()
         result = new_user.create(
             username=user.username,
