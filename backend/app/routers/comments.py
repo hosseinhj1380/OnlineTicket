@@ -7,10 +7,10 @@ from fastapi import Query
 from core.auth.oauth2 import get_current_user
 
 
-router = APIRouter()
+router = APIRouter(prefix="/api/comment")
 
 
-@router.post("/api/comment/comments/")
+@router.post("/comments/")
 def create_new_commnet(
     comment: CreateComment, 
     current_user: UserBase = Depends(get_current_user)
@@ -28,7 +28,7 @@ def create_new_commnet(
             return JSONResponse(status_code=404, content="thread not found")
 
 
-@router.patch("/api/comment/comments/{commentID}")
+@router.patch("/comments/{commentID}")
 def update_comment(commentID: int, comment: UpdateComment):
     if comment:
         obj = CRUDcommnet()
@@ -39,7 +39,7 @@ def update_comment(commentID: int, comment: UpdateComment):
             return JSONResponse(status_code=404, content="thread not found")
 
 
-@router.get("/api/comment/pending/")
+@router.get("/pending/")
 def unchecked_comment():
     checkcomment = CommentCheck()
     pending_comment = checkcomment.get_all_pending_comment()
@@ -50,7 +50,7 @@ def unchecked_comment():
         return JSONResponse(status_code=400, content="no pending comment available")
 
 
-@router.patch("/api/comment/state/{commentID}")
+@router.patch("/state/{commentID}")
 def approve_comment(commentID: int, state: str):
     edit_comment = CommentCheck()
     result = edit_comment.change_state_comment(commentID=commentID, state=state)
@@ -60,7 +60,7 @@ def approve_comment(commentID: int, state: str):
         return JSONResponse(status_code=404, content="commentID not found ")
 
 
-@router.get("/api/comment/comments/")
+@router.get("/comments/")
 def movie_comments(
     thread: int, page: int = Query(default=1, description="Page number", ge=1)
 ):
