@@ -1,15 +1,15 @@
-from fastapi import APIRouter
+from fastapi import APIRouter , Depends
 from fastapi.responses import JSONResponse
 from schemas.genres import Genres,GenresUpdate
 from crud.genres_crud import CRUDgenres
 from typing import List
-
+from core.auth.oauth2 import is_admin
 
 
 router = APIRouter(prefix="/api/generes")
 
 
-@router.post("/create/")
+@router.post("/create/" , dependencies=[Depends(is_admin)])
 def create_movies_genres(generes:Genres):
     if generes:
 
@@ -34,7 +34,7 @@ def get_movies_genres():
     
     return JSONResponse(status_code=200,content=list(documents)) 
 
-@router.put("/update/")
+@router.put("/update/" , dependencies=[Depends(is_admin)])
 def update_movie_genres(new_genre:GenresUpdate):
 
     if new_genre:
@@ -47,7 +47,7 @@ def update_movie_genres(new_genre:GenresUpdate):
         else:
             return JSONResponse(status_code=404,content=result)
         
-@router.delete("/delete/{genres_name}")
+@router.delete("/delete/{genres_name}" , dependencies=[Depends(is_admin)])
 def delete_movies_genres(genres_name:str):
     obj=CRUDgenres()
     result=obj.delete_genres(genres_name=genres_name)
