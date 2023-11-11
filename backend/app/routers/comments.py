@@ -4,7 +4,7 @@ from schemas.comment import CreateComment, UpdateComment
 from schemas.users import UserBase
 from crud.comment_crud import CRUDcommnet, CommentCheck
 from fastapi import Query
-from core.auth.oauth2 import get_current_user
+from core.auth.oauth2 import get_current_user, is_admin
 
 
 router = APIRouter(prefix="/api/comment")
@@ -12,15 +12,12 @@ router = APIRouter(prefix="/api/comment")
 
 @router.post("/comments/")
 def create_new_commnet(
-    comment: CreateComment, 
-    current_user: UserBase = Depends(get_current_user)
+    comment: CreateComment, current_user: UserBase = Depends(get_current_user)
 ):
     if comment:
         obj = CRUDcommnet()
         result = obj.create_comment(
-            text=comment.text, 
-            thread=comment.thread, 
-            user=current_user
+            text=comment.text, thread=comment.thread, user=current_user
         )
         if result is not None:
             return JSONResponse(status_code=200, content=result)
@@ -29,7 +26,11 @@ def create_new_commnet(
 
 
 @router.patch("/comments/{commentID}")
-def update_comment(commentID: int, comment: UpdateComment):
+def update_comment(
+    commentID: int,
+    comment: UpdateComment,
+    current_user: UserBase = Depends(get_current_user),
+):
     if comment:
         obj = CRUDcommnet()
         result = obj.update_comment(text=comment.text, commentID=commentID)
@@ -39,7 +40,7 @@ def update_comment(commentID: int, comment: UpdateComment):
             return JSONResponse(status_code=404, content="thread not found")
 
 
-@router.get("/pending/")
+@router.get("/pending/", dependencies=[Depends(is_admin)])
 def unchecked_comment():
     checkcomment = CommentCheck()
     pending_comment = checkcomment.get_all_pending_comment()
@@ -50,7 +51,7 @@ def unchecked_comment():
         return JSONResponse(status_code=400, content="no pending comment available")
 
 
-@router.patch("/state/{commentID}")
+@router.patch("/state/{commentID}", dependencies=[Depends(is_admin)])
 def approve_comment(commentID: int, state: str):
     edit_comment = CommentCheck()
     result = edit_comment.change_state_comment(commentID=commentID, state=state)

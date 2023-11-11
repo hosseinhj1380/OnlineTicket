@@ -47,3 +47,14 @@ def get_current_user(token: str=Depends(oauth2_scheme)):
     user = find_user(username )
 
     return user
+
+
+def is_admin(current_user: dict = Depends(get_current_user)):
+    if "admin" in current_user.get("roles", []):
+        return True
+    raise HTTPException(status_code=403, detail="You do not have access to this resource")
+
+def is_superuser(current_user: dict = Depends(get_current_user)):
+    if "superuser" in current_user.get("roles", []):
+        return True
+    raise HTTPException(status_code=403, detail="You do not have access to this resource")

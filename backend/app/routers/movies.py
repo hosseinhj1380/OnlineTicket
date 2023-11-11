@@ -2,14 +2,14 @@ from fastapi import APIRouter , Depends
 from fastapi.responses import JSONResponse
 from schemas.movies import Movies, MovieUpdate
 from crud.movies_crud import CRUDmovies
-from core.auth.oauth2 import oauth2_scheme
+from core.auth.oauth2 import oauth2_scheme , is_admin
 import base64
 
 
 router = APIRouter(prefix="/api/movie")
 
 
-@router.post("/create/")
+@router.post("/create/" , dependencies=[Depends(is_admin)])
 def create_movie_info(movie: Movies,token:str=Depends(oauth2_scheme)):
     if movie:
         #    for movie_picture in movie.movie_images:
@@ -48,7 +48,7 @@ def get_movie_details(movie_id: int):
         return JSONResponse(status_code=404, content="movie not found ")
 
 
-@router.put("/movie_update/")
+@router.put("/movie_update/" , dependencies=[Depends(is_admin)])
 def movies_update(movie: MovieUpdate):
     if movie:
         # for movie_picture in  movie.movie_images:
@@ -80,7 +80,7 @@ def movies_update(movie: MovieUpdate):
         return JSONResponse(status_code=404, content="movie_id doesnt exist")
 
 
-@router.delete("/movie_delete/{movie_id}")
+@router.delete("/movie_delete/{movie_id}" , dependencies=[Depends(is_admin)])
 def movies_delete(movie_id: int):
     obj = CRUDmovies()
     result = obj.delete_movie(movie_id=movie_id)

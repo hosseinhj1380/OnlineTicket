@@ -1,13 +1,13 @@
-from fastapi import APIRouter
+from fastapi import APIRouter , Depends
 from fastapi.responses import JSONResponse
 from schemas.person import Person,PersonRole
 from crud.persons_crud import PersonsCRUD,PersonRoleCRUD
-
+from core.auth.oauth2 import is_admin
 
 router = APIRouter(prefix="/api/person")
 
 
-@router.post("/")
+@router.post("/" , dependencies=[Depends(is_admin)])
 def create_person(person:Person):
     if person:
     #    for person_image in person.images:
@@ -40,7 +40,7 @@ def get_person(PersonID:int):
             return JSONResponse (status_code=200,content=result)
         else:return JSONResponse(status_code=400,content="person is not defined ")
         
-@router.patch("/")
+@router.patch("/" , dependencies=[Depends(is_admin)])
 def update_person(PersonId:int,person:Person):
     if person:
         person_update=PersonsCRUD()
@@ -50,7 +50,7 @@ def update_person(PersonId:int,person:Person):
         else:
             return JSONResponse(status_code=400,content="person is not found ")
         
-@router.delete("/{PersonID}")
+@router.delete("/{PersonID}" , dependencies=[Depends(is_admin)])
 def delete_person(PersonId:int):
     if PersonId:
         person_update=PersonsCRUD()
@@ -61,14 +61,14 @@ def delete_person(PersonId:int):
             return JSONResponse(status_code=400,content="person is not found ")
         
 
-@router.post("/role")
+@router.post("/role" , dependencies=[Depends(is_admin)])
 def create_person_role(role:PersonRole):
     new_role=PersonRoleCRUD()
     
     return JSONResponse(status_code=200,content=new_role.create(role.name))
 
 
-@router.get("/role/")
+@router.get("/role/" , dependencies=[Depends(is_admin)])
 def get_person_role():
     roles=PersonRoleCRUD()
     return JSONResponse(status_code=200,content=roles.get())
