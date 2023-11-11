@@ -20,6 +20,8 @@ class UserCRUD:
                     "email": email,
                     "password": Hash.bcrypt(password),
                     "userID": userID,
+                    "roles":["client"],
+                    "state":"active"
                 }
             )
             return "user created successfully "
@@ -36,14 +38,43 @@ class UserCRUD:
             user_info["email"]=user["email"]    
             try:
                 users_collection.update_one({"userID": userID},
-                                        {"$set": user_info})
+                                            {"$set": user_info})
                 return "success"
             except Exception as e :
                 print(e )
                 return None
         else:
             return None
-                
+        
+    def block_user(self , username):
+        if check_username(username) :
+            user = find_user(username=username)
+        
+            user_info=users_collection.find_one({"userID":user["userID"]}, {'_id': False})
+        
+        
+            user_info["state"]="block"
+            users_collection.update_one({"userID": user["userID"]},
+                                        {"$set": user_info})
+            
+            return "user blocked successfully "
+        
+        else: return None     
+    
+    def admin_access(self , username):
+        if check_username(username) :
+            user = find_user(username=username)
+        
+            user_info=users_collection.find_one({"userID":user["userID"]}, {'_id': False})
+        
+        
+            user_info["roles"].append("admin")
+            users_collection.update_one({"userID": user["userID"]},
+                                        {"$set": user_info})
+            
+            return "user added to admins  successfully "
+        
+        else: return None             
 
 
 def check_username(username):

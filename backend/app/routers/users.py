@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from schemas.users import UserBase, UserDisplay, UserUpdate
 from crud.users_crud import UserCRUD, check_username
 from fastapi.responses import JSONResponse
-from core.auth.oauth2 import get_current_user
+from core.auth.oauth2 import get_current_user , is_admin , is_superuser
 from core.parameters_check import is_strong_password, is_valid_email
 
 # router = APIRouter(prefix='/user', tags=['user'])
@@ -10,7 +10,7 @@ router = APIRouter(prefix="/api/user")
 
 
 # create user
-@router.post("/create", response_model=UserDisplay)
+@router.post("/signup", response_model=UserDisplay)
 def create_user(user: UserBase):
     if check_username(user.username):
         return JSONResponse(status_code=406, content="username already exist ")
@@ -38,7 +38,7 @@ def create_user(user: UserBase):
 
 
 # update user
-@router.put("/update")
+@router.put("/edit-profile")
 def update_user(user: UserUpdate, current_user: UserBase = Depends(get_current_user)):
     if user:
         if not is_valid_email(user.email):
@@ -51,3 +51,24 @@ def update_user(user: UserUpdate, current_user: UserBase = Depends(get_current_u
         else:
             return JSONResponse(status_code=400, content=" user not found ")
 
+@router.patch("/block-user/{username}" , dependencies=[Depends(is_admin)])
+def block_user(username : str):
+    
+    user = UserCRUD()
+    result=user.block_user(username)
+    if result:
+        return JSONResponse(status_code=200 , content= result)
+        
+    else:
+        return JSONResponse(status_code=400 , content= "username not found ")
+    
+
+@router.patch("/admin-access" , dependencies=[Depends(is_superuser)])
+def admin_access(username : str):
+    user = UserCRUD()
+    result=user.admin_access(username)
+    if result:
+        return JSONResponse(status_code=200 , content= result)
+        
+    else:
+        return JSONResponse(status_code=400 , content= "username not found ")
