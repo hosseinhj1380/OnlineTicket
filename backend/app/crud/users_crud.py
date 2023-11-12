@@ -97,3 +97,5 @@ def authenticate_user(username):
         {"_id": False}
     )
 
+def check_email_not_available(email):
+    return users_collection.find_one({"email":email} , {"_id": False})
