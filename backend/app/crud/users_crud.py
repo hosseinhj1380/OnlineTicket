@@ -6,7 +6,7 @@ class UserCRUD:
     def __init__(self):
         pass
 
-    def create(self, username, email, password , full_name):
+    def create(self, username, email, password, full_name):
         last_user = users_collection.find_one(sort=[("_id", -1)])
         if last_user:
             userID = last_user["userID"] + 1
@@ -14,8 +14,8 @@ class UserCRUD:
             userID = 1
         try:
             users_collection.insert_one(
-                {   
-                    "full_name":full_name,
+                {
+                    "full_name": full_name,
                     "username": username,
                     "email": email,
                     "password": Hash.bcrypt(password),
@@ -39,16 +39,11 @@ def check_username(username):
         return False
 
 
-def find_user(username  ):
-    
+def find_user(username):
     return users_collection.find_one(
-        {"username": username},
-        {"_id": False, "password": False, "email": False}
+        {"username": username}, {"_id": False, "password": False, "email": False}
     )
+
 
 def authenticate_user(username):
-    return users_collection.find_one(
-        {"username": username},
-        {"_id": False}
-    )
-
+    return users_collection.find_one({"username": username}, {"_id": False})
