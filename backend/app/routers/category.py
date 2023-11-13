@@ -1,13 +1,13 @@
-from fastapi import APIRouter
+from fastapi import APIRouter , Depends
 from fastapi.responses import JSONResponse
 from schemas.category import Category,CategoryUpdate
 from crud.category_crud import CRUDCategory
-
+from core.auth.oauth2 import is_admin
 
 router = APIRouter(prefix="/api/category")
 
 
-@router.post("/create/")
+@router.post("/create/" , dependencies=[Depends(is_admin)])
 def create_movies_genres(category:Category):
     if category:
 
@@ -32,7 +32,7 @@ def get_movies_genres():
     
     return JSONResponse(status_code=200,content=list(documents)) 
 
-@router.put("/update/")
+@router.put("/update/" , dependencies=[Depends(is_admin)])
 def update_movie_genres(new_category:CategoryUpdate):
 
     if new_category:
@@ -45,7 +45,7 @@ def update_movie_genres(new_category:CategoryUpdate):
         else:
             return JSONResponse(status_code=404,content=result)
         
-@router.delete("/delete/{cateory_name}")
+@router.delete("/delete/{cateory_name}" , dependencies=[Depends(is_admin)])
 def delete_movies_genres(cateory_name:str):
     obj=CRUDCategory()
     result=obj.delete_category(category_name=cateory_name)

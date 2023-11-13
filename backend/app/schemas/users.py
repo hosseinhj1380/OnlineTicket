@@ -12,4 +12,9 @@ class UserDisplay(BaseModel):
     email:str
     full_name : str
     
+class UserUpdate(BaseModel):
+    email : str
+    full_name : str
+    
+    
 

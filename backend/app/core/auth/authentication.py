@@ -24,6 +24,11 @@ def get_token(request: OAuth2PasswordRequestForm = Depends()):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="invalid password"
         )
+    if user["state"] == "block":
+        
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=" your user has been blocked "
+        )
 
     access_token = oauth2.create_access_token(data={"sub": request.username})
 
