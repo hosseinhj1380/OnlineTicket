@@ -1,9 +1,9 @@
 from pydantic import BaseModel
 
+
 class Genres(BaseModel):
-    name:str
-    
+    name: str
+
 
 class GenresUpdate(Genres):
-    new_name :str
-    
+    new_name: str

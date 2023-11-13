@@ -20,8 +20,8 @@ class UserCRUD:
                     "email": email,
                     "password": Hash.bcrypt(password),
                     "userID": userID,
-                    "roles":["client"],
-                    "state":"active"
+                    "roles": ["client"],
+                    "state": "active",
                 }
             )
             return "user created successfully "
@@ -31,50 +31,51 @@ class UserCRUD:
                 "message": "there is a problem while saving data ",
             }
 
-    def update(self,user,userID):
-        user_info=users_collection.find_one({"userID":userID}, {'_id': False})
+    def update(self, user, userID):
+        user_info = users_collection.find_one({"userID": userID}, {"_id": False})
         if user_info:
-            user_info["full_name"]=user["full_name"]
-            user_info["email"]=user["email"]    
+            user_info["full_name"] = user["full_name"]
+            user_info["email"] = user["email"]
             try:
-                users_collection.update_one({"userID": userID},
-                                            {"$set": user_info})
+                users_collection.update_one({"userID": userID}, {"$set": user_info})
                 return "success"
-            except Exception as e :
-                print(e )
+            except Exception as e:
+                print(e)
                 return None
         else:
             return None
-        
-    def block_user(self , username):
-        if check_username(username) :
+
+    def block_user(self, username):
+        if check_username(username):
             user = find_user(username=username)
-        
-            user_info=users_collection.find_one({"userID":user["userID"]}, {'_id': False})
-        
-        
-            user_info["state"]="block"
-            users_collection.update_one({"userID": user["userID"]},
-                                        {"$set": user_info})
-            
+
+            user_info = users_collection.find_one(
+                {"userID": user["userID"]}, {"_id": False}
+            )
+
+            user_info["state"] = "block"
+            users_collection.update_one({"userID": user["userID"]}, {"$set": user_info})
+
             return "user blocked successfully "
-        
-        else: return None     
-    
-    def admin_access(self , username):
-        if check_username(username) :
+
+        else:
+            return None
+
+    def admin_access(self, username):
+        if check_username(username):
             user = find_user(username=username)
-        
-            user_info=users_collection.find_one({"userID":user["userID"]}, {'_id': False})
-        
-        
+
+            user_info = users_collection.find_one(
+                {"userID": user["userID"]}, {"_id": False}
+            )
+
             user_info["roles"].append("admin")
-            users_collection.update_one({"userID": user["userID"]},
-                                        {"$set": user_info})
-            
+            users_collection.update_one({"userID": user["userID"]}, {"$set": user_info})
+
             return "user added to admins  successfully "
-        
-        else: return None             
+
+        else:
+            return None
 
 
 def check_username(username):
@@ -85,17 +86,14 @@ def check_username(username):
 
 
 def find_user(username):
-    
     return users_collection.find_one(
         {"username": username}, {"_id": False, "password": False, "email": False}
     )
 
 
 def authenticate_user(username):
-    return users_collection.find_one(
-        {"username": username},
-        {"_id": False}
-    )
+    return users_collection.find_one({"username": username}, {"_id": False})
+
 
 def check_email_not_available(email):
-    return users_collection.find_one({"email":email} , {"_id": False})
+    return users_collection.find_one({"email": email}, {"_id": False})
