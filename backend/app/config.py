@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routers import movies,category,comments,genres,persons,users
+from routers import movies,category,comments,genres,persons,users , cinemas
 
 from core.auth import authentication 
 
@@ -11,5 +11,6 @@ app.include_router(comments.router,tags=["comment"])
 app.include_router(persons.router,tags=["persons"])
 app.include_router(users.router,tags=["user"])
 app.include_router(authentication.router,tags=["authentications"])
+app.include_router(cinemas.router , tags=["cinemas"])
 
 
