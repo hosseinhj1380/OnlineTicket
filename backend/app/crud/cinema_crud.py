@@ -25,6 +25,18 @@ class CRUDcinema:
             except Exception as e :
                 return e 
             
+    def update(self , cinemaID , cinema):
+        cinema_info= cinema_collection.find_one({"cinemaID":cinemaID} , {"_id": False})
+        if cinema_info :
+            try:
+                cinema_collection.update_one({"cinemaID":cinemaID} , {"$set":cinema})
+                return "informations successfully updated "
+            except Exception as  e :
+                return e 
+        else:
+            return None
+        
+    
             
             
 

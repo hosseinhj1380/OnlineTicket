@@ -32,4 +32,14 @@ def create_new_cinemas(cinema : Cinema , token: str = Depends(oauth2_scheme) ):
         else:
             
             return JSONResponse (status_code= 406 , content=" cinema with this name already exist ")
+        
+@router.patch("/edit/{cinemaID}" , dependencies=[Depends(is_admin)])
+def edit_cinema( cinemaID :int , cinema : Cinema ,token: str = Depends(oauth2_scheme)):
+    if cinema:
+        update_cinema=CRUDcinema()
+        result=update_cinema.update(cinemaID=cinemaID , cinema= cinema.dict())
+        if update_cinema is not None :
+            return JSONResponse(status_code=202 , content= result )
+        else :
+            return " cinema with this ID is not available "
             
