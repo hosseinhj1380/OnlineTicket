@@ -31,3 +31,16 @@ def is_valid_email(email):
         return True
     else:
         return False
+    
+def is_valid_number_cinema(numbers):
+    pattern = re.compile(r'\d{3}-\d{8}')
+
+    
+
+    for number in numbers:
+        if pattern.match(number):
+            pass
+        else:
+            return False
+        return True
+

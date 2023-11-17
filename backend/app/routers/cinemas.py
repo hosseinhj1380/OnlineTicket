@@ -1,10 +1,11 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends , status
 from schemas.cinemas import Cinema
 from fastapi.responses import JSONResponse
 from core.auth.oauth2 import oauth2_scheme, is_admin
 from crud.cinema_crud import CRUDcinema 
 import base64
-
+from core.parameters_check import is_valid_number_cinema
+from fastapi.exceptions import  ValidationException , HTTPException , RequestValidationError
 
 router = APIRouter(prefix="/api/cinemas")
 
@@ -25,13 +26,18 @@ def create_new_cinemas(cinema : Cinema , token: str = Depends(oauth2_scheme) ):
 
         #    except:
         #        return JSONResponse(status_code=400, content="movie_poster  format is not in base64 format ")
-        obj = CRUDcinema()
-        result = obj.create(cinema.dict())
-        if result is not None:
-            return JSONResponse(status_code= 200  , content= result)
-        else:
+        
+        if is_valid_number_cinema(cinema.telephones):
             
-            return JSONResponse (status_code= 406 , content=" cinema with this name already exist ")
+            obj = CRUDcinema()
+            result = obj.create(cinema.dict())
+            if result is not None:
+                return JSONResponse(status_code= 200  , content= result)
+            else:
+                
+                return JSONResponse (status_code= 406 , content=" cinema with this name already exist ")
+        else: return ValidationException( errors="telephones with this format is incorect")
+        
         
 @router.patch("/edit/{cinemaID}" , dependencies=[Depends(is_admin)])
 def edit_cinema( cinemaID :int , cinema : Cinema ,token: str = Depends(oauth2_scheme)):
@@ -43,3 +49,10 @@ def edit_cinema( cinemaID :int , cinema : Cinema ,token: str = Depends(oauth2_sc
         else :
             return " cinema with this ID is not available "
             
+@router.get("/{cinemaID}", dependencies=[Depends(is_admin)])
+def show_cinema_info(cinemaID : int ,token: str = Depends(oauth2_scheme)):
+    i=CRUDcinema()
+    info=i.get(cinemaID)
+    if info  is not None :
+        return JSONResponse(status_code=200 , content=info)
+    else : return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="invalid cinemaID")
