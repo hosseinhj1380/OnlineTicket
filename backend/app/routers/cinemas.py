@@ -1,3 +1,4 @@
+
 from fastapi import APIRouter, Depends, status, Query
 from schemas.cinemas import Cinema
 from fastapi.responses import JSONResponse
@@ -20,6 +21,22 @@ GOOGLE_MAPS_API_KEY = "YOUR_GOOGLE_MAPS_API_KEY"  # Replace with your actual API
 @router.post("/create", dependencies=[Depends(is_admin)])
 def create_new_cinemas(cinema: Cinema, token: str = Depends(oauth2_scheme)):
     if cinema:
+=======
+from fastapi import APIRouter, Depends
+from schemas.cinemas import Cinema
+from fastapi.responses import JSONResponse
+from core.auth.oauth2 import oauth2_scheme, is_admin
+from crud.cinema_crud import CRUDcinema 
+import base64
+
+
+router = APIRouter(prefix="/api/cinemas")
+
+
+@router.post("/create" , dependencies=[Depends(is_admin)])
+def create_new_cinemas(cinema : Cinema , token: str = Depends(oauth2_scheme) ):
+    if cinema :
+
         #    for movie_picture in movie.movie_images:
         #        try:
         #            decode_image = base64.b64decode(movie_picture)
@@ -33,6 +50,7 @@ def create_new_cinemas(cinema: Cinema, token: str = Depends(oauth2_scheme)):
 
         #    except:
         #        return JSONResponse(status_code=400, content="movie_poster  format is not in base64 format ")
+
 
         if is_valid_number_cinema(cinema.telephones):
             obj = CRUDcinema()
@@ -88,3 +106,13 @@ def get_lat_long(location: str) -> dict:
 async def get_coordinates(location: str = Query(..., title="Location to geocode")):
     coordinates = get_lat_long(location)
     return {"location": location, "coordinates": coordinates}
+
+        obj = CRUDcinema()
+        result = obj.create(cinema.dict())
+        if result is not None:
+            return JSONResponse(status_code= 200  , content= result)
+        else:
+            
+            return JSONResponse (status_code= 406 , content=" cinema with this name already exist ")
+        
+

@@ -15,5 +15,3 @@ class Cinema(BaseModel):
     rules : List[str]
     city : int
     
-    
-    
