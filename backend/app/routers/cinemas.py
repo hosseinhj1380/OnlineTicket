@@ -18,20 +18,6 @@ router = APIRouter(prefix="/api/cinemas")
 GOOGLE_MAPS_API_KEY = "YOUR_GOOGLE_MAPS_API_KEY"  # Replace with your actual API key
 
 
-@router.post("/create", dependencies=[Depends(is_admin)])
-def create_new_cinemas(cinema: Cinema, token: str = Depends(oauth2_scheme)):
-    if cinema:
-=======
-from fastapi import APIRouter, Depends
-from schemas.cinemas import Cinema
-from fastapi.responses import JSONResponse
-from core.auth.oauth2 import oauth2_scheme, is_admin
-from crud.cinema_crud import CRUDcinema 
-import base64
-
-
-router = APIRouter(prefix="/api/cinemas")
-
 
 @router.post("/create" , dependencies=[Depends(is_admin)])
 def create_new_cinemas(cinema : Cinema , token: str = Depends(oauth2_scheme) ):
@@ -107,12 +93,5 @@ async def get_coordinates(location: str = Query(..., title="Location to geocode"
     coordinates = get_lat_long(location)
     return {"location": location, "coordinates": coordinates}
 
-        obj = CRUDcinema()
-        result = obj.create(cinema.dict())
-        if result is not None:
-            return JSONResponse(status_code= 200  , content= result)
-        else:
-            
-            return JSONResponse (status_code= 406 , content=" cinema with this name already exist ")
-        
+
 
