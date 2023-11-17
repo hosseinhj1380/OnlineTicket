@@ -10,6 +10,7 @@ class CRUDcinema:
         if cinema_collection.find_one({"name":cinema["name"]} , {"_id": False}): 
             return None
         else : 
+
             try :
                 
                 last_id = cinema_collection.find_one(sort=[("_id", -1)])
@@ -18,6 +19,12 @@ class CRUDcinema:
                 else:
                     cinemaID = 1
                 cinema["rate"] = 0 
+
+                cinema["rate_count"] = 0
+                cinema["halls_count"] = 0
+                cinema["verified"] = False
+                cinema["halls"] = []
+
                 cinema["cinemaID"] = cinemaID
                 
                 cinema_collection.insert_one(cinema)
@@ -36,6 +43,12 @@ class CRUDcinema:
         else:
             return None
         
+
+    def get(self , cinemaID):
+         return cinema_collection.find_one({"cinemaID":cinemaID } , {"_id": False})
+        
+        
+
     
             
             
