@@ -19,7 +19,7 @@ db = client[os.environ.get("DATABASE_NAME")]
 
 movie_collection_info=db[os.environ.get("MOVIES_COLLECTION_INFO")]
 
-movies_comment_collection=db[os.environ.get("MOVIES_COMMENT_COLLECTION")]
+comment_collection=db[os.environ.get("COMMENT_COLLECTION")]
 
 movies_genres_collection=db[os.environ.get("MOVIES_GENRES_COLLECTION")]
 
@@ -33,7 +33,7 @@ users_collection=db[os.environ.get("USERS_COLLECTION")]
 
 cinema_collection = db[os.environ.get("CINEMA_COLLECTION")]
 
-
+thread_collection = db[os.environ.get("THREAD_COLLECTION")]
 
 
 

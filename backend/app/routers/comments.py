@@ -14,10 +14,15 @@ router = APIRouter(prefix="/api/comment")
 def create_new_commnet(
     comment: CreateComment, current_user: UserBase = Depends(get_current_user)
 ):
+    
     if comment:
+        
+        user={"full_name":current_user["full_name"] , 
+              "username":current_user["username"]}
+        
         obj = CRUDcommnet()
         result = obj.create_comment(
-            text=comment.text, thread=comment.thread, user=current_user
+            text=comment.text, thread=comment.thread, user=user
         )
         if result is not None:
             return JSONResponse(status_code=200, content=result)
