@@ -19,7 +19,7 @@ GOOGLE_MAPS_API_KEY = "YOUR_GOOGLE_MAPS_API_KEY"  # Replace with your actual API
 
 
 
-@router.post("/create" , dependencies=[Depends(is_admin)])
+@router.post("/create/" , dependencies=[Depends(is_admin)])
 def create_new_cinemas(cinema : Cinema , token: str = Depends(oauth2_scheme) ):
     if cinema :
 
