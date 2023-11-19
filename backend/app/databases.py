@@ -35,7 +35,7 @@ cinema_collection = db[os.environ.get("CINEMA_COLLECTION")]
 
 thread_collection = db[os.environ.get("THREAD_COLLECTION")]
 
-
+halls_collection =db[os.environ.get("CINEMA_HALLS")]
 
 
 # db=client["online_ticket"]

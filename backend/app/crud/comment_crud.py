@@ -74,16 +74,7 @@ class CommentCheck:
         pass
 
     def get_all_pending_comment(self):
-        comments = comment_collection.find({"state": "pending"}, {"_id": False})
-
-        result = []
-        if comments:
-            for comment in comments:
-                result.append(comment)
-            return result
-
-        else:
-            return None
+        return comment_collection.find({"state": "pending"}, {"_id": False})
 
     def change_state_comment(self, commentID, state):
         comment = comment_collection.find_one({"commentID": commentID}, {"_id": False})

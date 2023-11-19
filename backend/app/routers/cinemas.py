@@ -1,9 +1,8 @@
-
 from fastapi import APIRouter, Depends, status, Query
-from schemas.cinemas import Cinema
+from schemas.cinemas import Cinema, Halls
 from fastapi.responses import JSONResponse
 from core.auth.oauth2 import oauth2_scheme, is_admin
-from crud.cinema_crud import CRUDcinema
+from crud.cinema_crud import CRUDcinema, CRUDhalls
 import base64
 from core.parameters_check import is_valid_number_cinema
 from fastapi.exceptions import (
@@ -18,11 +17,9 @@ router = APIRouter(prefix="/api/cinemas")
 GOOGLE_MAPS_API_KEY = "YOUR_GOOGLE_MAPS_API_KEY"  # Replace with your actual API key
 
 
-
-@router.post("/create/" , dependencies=[Depends(is_admin)])
-def create_new_cinemas(cinema : Cinema , token: str = Depends(oauth2_scheme) ):
-    if cinema :
-
+@router.post("/create/", dependencies=[Depends(is_admin)])
+def create_new_cinemas(cinema: Cinema, token: str = Depends(oauth2_scheme)):
+    if cinema:
         #    for movie_picture in movie.movie_images:
         #        try:
         #            decode_image = base64.b64decode(movie_picture)
@@ -36,7 +33,6 @@ def create_new_cinemas(cinema : Cinema , token: str = Depends(oauth2_scheme) ):
 
         #    except:
         #        return JSONResponse(status_code=400, content="movie_poster  format is not in base64 format ")
-
 
         if is_valid_number_cinema(cinema.telephones):
             obj = CRUDcinema()
@@ -74,6 +70,60 @@ def show_cinema_info(cinemaID: int, token: str = Depends(oauth2_scheme)):
         )
 
 
+@router.post("/halls/{cinemaID}", dependencies=[Depends(is_admin)])
+def create_new_hall(cinemaID: int, hall: Halls, token: str = Depends(oauth2_scheme)):
+    if hall:
+        c = CRUDhalls()
+        result = c.create(cinemaID=cinemaID, hall=hall.dict())
+        if result is not None:
+            return JSONResponse(status_code=200, content=result)
+        else:
+            return HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="invalid cinemaID"
+            )
+
+
+@router.patch("/hall/{cinemaID}/{hallID}", dependencies=[Depends(is_admin)])
+def update_hall(
+    cinemaID: int, hallID: int, hall: Halls, token: str = Depends(oauth2_scheme)
+):
+    if hall:
+        u = CRUDhalls()
+        result = u.update(hall=hall.dict(), hallID=hallID, cinemaID=cinemaID)
+
+        if result is not None:
+            return JSONResponse(status_code=202, content=result)
+        else:
+            return HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="invalid cinemaID or hallid ",
+            )
+
+
+@router.get("/hall/{cinemaID}", dependencies=[Depends(is_admin)])
+def get_halls_info(cinemaID: int, token: str = Depends(oauth2_scheme)):
+    g = CRUDhalls()
+    result = g.get(cinemaID=cinemaID)
+    if result:
+        return JSONResponse(status_code=200, content=list(result))
+    else:
+        return HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="invalid cinemaID  "
+        )
+
+
+@router.get("/hall/{cinemaID}/{hallID}", dependencies=[Depends(is_admin)])
+def get_a_hall_info(cinemaID: int, hallID: int, token: str = Depends(oauth2_scheme)):
+    g = CRUDhalls()
+    result = g.get(cinemaID=cinemaID, hallID=hallID)
+    if result:
+        return JSONResponse(status_code=200, content=result)
+    else:
+        return HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="invalid cinemaID or hallID "
+        )
+
+
 def get_lat_long(location: str) -> dict:
     base_url = "https://maps.googleapis.com/maps/api/geocode/json"
     params = {"address": location, "key": GOOGLE_MAPS_API_KEY}
@@ -92,6 +142,3 @@ def get_lat_long(location: str) -> dict:
 async def get_coordinates(location: str = Query(..., title="Location to geocode")):
     coordinates = get_lat_long(location)
     return {"location": location, "coordinates": coordinates}
-
-
-
