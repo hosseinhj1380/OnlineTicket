@@ -15,3 +15,10 @@ class Cinema(BaseModel):
     rules : List[str]
     city : int
     
+class Halls(BaseModel):
+    name : str
+    capacity : int 
+    min_price : int
+    max_price : int
+    
+    

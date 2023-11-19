@@ -51,7 +51,7 @@ def unchecked_comment():
     pending_comment = checkcomment.get_all_pending_comment()
 
     if pending_comment:
-        return JSONResponse(status_code=200, content=pending_comment)
+        return JSONResponse(status_code=200, content=list(pending_comment))
     else:
         return JSONResponse(status_code=400, content="no pending comment available")
 

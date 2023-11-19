@@ -1,4 +1,4 @@
-from databases import cinema_collection
+from databases import cinema_collection, halls_collection
 from .thread import create_thread
 
 
@@ -45,3 +45,53 @@ class CRUDcinema:
 
     def get(self, cinemaID):
         return cinema_collection.find_one({"cinemaID": cinemaID}, {"_id": False})
+
+
+class CRUDhalls:
+    def __init__(self):
+        pass
+
+    def create(self, cinemaID, hall):
+        cinema = cinema_collection.find_one({"cinemaID": cinemaID}, {"_id": False})
+        if cinema:
+            last = halls_collection.find_one(sort=[("_id", -1)])
+            if last:
+                hallid = last["hallID"] + 1
+            else:
+                hallid = 1
+            try:
+                available_halls = cinema["halls"]
+                available_halls.append(hallid)
+                cinema["halls"] = available_halls
+                cinema_collection.update_one({"cinemaID": cinemaID}, {"$set": cinema})
+                hall["hallID"] = hallid
+                hall["cinemaID"] = cinemaID
+                halls_collection.insert_one(hall)
+
+                return " successfully added "
+            except Exception as e:
+                return e
+
+        else:
+            return None
+
+    def update(self, cinemaID, hallID, hall):
+        h = halls_collection.find_one({"hallID": hallID}, {"_id": False})
+        c = cinema_collection.find_one({"cinemaID": cinemaID}, {"_id": False})
+        if h and c:
+            if hallID in c["halls"]:
+                halls_collection.update_one({"hallID": hallID}, {"$set": hall})
+                return " successfully updated "
+            else:
+                return " this hall doesnt assign to this cinema "
+        else:
+            return None
+
+    def get(self, cinemaID, hallID=None):
+        if hallID is None:
+            return halls_collection.find({"cinemaID": cinemaID}, {"_id": False})
+
+        else:
+            return halls_collection.find_one(
+                {"cinemaID": cinemaID, "hallID": hallID}, {"_id": False}
+            )
