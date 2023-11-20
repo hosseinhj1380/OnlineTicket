@@ -5,16 +5,15 @@ class UserBase(BaseModel):
     email: str
     username: str
     password: str
-    full_name : str
+    full_name: str
+
 
 class UserDisplay(BaseModel):
-    username:str
-    email:str
-    full_name : str
-    
-class UserUpdate(BaseModel):
-    email : str
-    full_name : str
-    
-    
+    username: str
+    email: str
+    full_name: str
 
+
+class UserUpdate(BaseModel):
+    email: str
+    full_name: str

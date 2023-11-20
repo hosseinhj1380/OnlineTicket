@@ -1,25 +1,24 @@
-from databases import movies_comment_collection
+from databases import comment_collection
 from datetime import datetime
 from crud import movies_crud
 import json
+from .thread import check_thread
 
 
 class CRUDcommnet:
-    def __init__(self) :
+    def __init__(self):
         pass
 
-
-    def create_comment(self, text, thread , user):
-        last_comment = movies_comment_collection.find_one(sort=[("_id", -1)])
+    def create_comment(self, text, thread, user):
+        last_comment = comment_collection.find_one(sort=[("_id", -1)])
         if last_comment:
-
             commentID = last_comment["commentID"] + 1
         else:
             commentID = 1
 
-        if movies_crud.check_thread(thread=thread):
+        if check_thread(thread=thread):
             try:
-                movies_comment_collection.insert_one(
+                comment_collection.insert_one(
                     {
                         "commentID": commentID,
                         "user": user,
@@ -43,26 +42,22 @@ class CRUDcommnet:
             return None
 
     def update_comment(self, text, commentID):
-        comment = movies_comment_collection.find_one(
-            {"commentID": commentID}, {"_id": False}
-        )
+        comment = comment_collection.find_one({"commentID": commentID}, {"_id": False})
         if comment:
             comment["text"] = text
             comment["state"] = "pending"
             comment["created_at"] = str(datetime.now())
-            movies_comment_collection.update_one(
-                {"commentID": commentID}, {"$set": comment}
-            )
+            comment_collection.update_one({"commentID": commentID}, {"$set": comment})
             return {"text": text, "status": "pending"}
         else:
             return None
 
     def movie_comments(self, thread, skip, page_size):
-        count = movies_comment_collection.count_documents(
+        count = comment_collection.count_documents(
             {"thread": thread, "state": "approved"}
         )
         comments = (
-            movies_comment_collection.find(
+            comment_collection.find(
                 {"thread": thread, "state": "approved"}, {"_id": False}
             )
             .skip(skip)
@@ -79,26 +74,15 @@ class CommentCheck:
         pass
 
     def get_all_pending_comment(self):
-        comments = movies_comment_collection.find({"state": "pending"}, {"_id": False})
-
-        result = []
-        if comments:
-            for comment in comments:
-                result.append(comment)
-            return result
-
-        else:
-            return None
+        return comment_collection.find({"state": "pending"}, {"_id": False})
 
     def change_state_comment(self, commentID, state):
-        comment = movies_comment_collection.find_one(
-            {"commentID": commentID}, {"_id": False}
-        )
+        comment = comment_collection.find_one({"commentID": commentID}, {"_id": False})
 
         if comment:
             if state == "approved" or "notapproved":
                 comment["state"] = state
-                movies_comment_collection.update_one(
+                comment_collection.update_one(
                     {"commentID": commentID}, {"$set": comment}
                 )
                 return {"message": "comment state changed  successfully"}
