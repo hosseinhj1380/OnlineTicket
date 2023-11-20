@@ -124,6 +124,7 @@ class CRUDhalls:
                             "movie": {"movie": movie},
                             "start_at": session["start_at"],
                             "can_order": True,
+                            "is_active":True
                         }
                     )
                     info["sessions"] = hall_session
@@ -155,6 +156,7 @@ class CRUDhalls:
                                 "movie": {"movie": movie},
                                 "start_at": session["start_at"],
                                 "can_order": True,
+                                "is_active":True
                             }
 
                             info["sessions"] = sessions
@@ -172,3 +174,6 @@ class CRUDhalls:
             return "invalid sessionId"
         else:
             return None
+    
+    def delete_session(self , sessionID):
+        pass

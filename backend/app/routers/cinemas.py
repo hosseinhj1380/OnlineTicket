@@ -160,6 +160,22 @@ def update_sessions( cinemaID: int, hallID: int, session: UpdateSession, token: 
                 )
         else:
             return JSONResponse(status_code=406, content="wrong format datetime ")
+        
+        
+# @router.delete("/session/{sessionID}", dependencies=[Depends(is_admin)])
+# def update_sessions( sessionID : int , token: str = Depends(oauth2_scheme)
+# ):  
+#     d = CRUDhalls()
+#     result=d.delete_session(sessionID)
+#     if result is not None:
+#                 return JSONResponse(status_code=200, content=result)
+
+#     else:
+#         return HTTPException(
+#             status_code=status.HTTP_404_NOT_FOUND,
+#             detail="invalid cinemaID or hallID ",
+#         )
+        
     
 
 
