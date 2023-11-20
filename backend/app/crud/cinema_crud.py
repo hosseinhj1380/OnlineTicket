@@ -1,5 +1,7 @@
 from databases import cinema_collection, halls_collection
 from .thread import create_thread
+from .movies_crud import CRUDmovies
+from core.parameters_check import is_valid_format
 
 
 class CRUDcinema:
@@ -66,6 +68,7 @@ class CRUDhalls:
                 cinema_collection.update_one({"cinemaID": cinemaID}, {"$set": cinema})
                 hall["hallID"] = hallid
                 hall["cinemaID"] = cinemaID
+                hall["sessions"] = []
                 halls_collection.insert_one(hall)
 
                 return " successfully added "
@@ -95,3 +98,84 @@ class CRUDhalls:
             return halls_collection.find_one(
                 {"cinemaID": cinemaID, "hallID": hallID}, {"_id": False}
             )
+
+
+    def new_session(self, cinemaID, hallID, session):
+        info = halls_collection.find_one(
+            {"hallID": hallID, "cinemaID": cinemaID}, {"_id": False}
+        )
+
+        if info:
+            c = CRUDmovies()
+            movie = c.movie_details(movie_id=session["movieID"])
+            if movie:
+                try:
+                    last = halls_collection.find_one(
+                        {"sessions": True}, sort=[("_id", -1)]
+                    )
+                    if last:
+                        sessionID = last[-1]["sessionID"] + 1
+                    else:
+                        sessionID = 1
+                    hall_session = info["sessions"]
+
+                    hall_session.append(
+                        {
+                            "sessionID": sessionID,
+                            "movie": {"movie": movie},
+                            "start_at": session["start_at"],
+                            "can_order": True,
+                            "is_active":True
+                        }
+                    )
+                    info["sessions"] = hall_session
+
+                    halls_collection.update_one({"hallID": hallID}, {"$set": info})
+                    return " successfully added "
+                except Exception as e:
+                    return e
+            else:
+                return "no availabale movie with this id "
+
+        else:
+            return None
+
+    def update_session(self, cinemaID, hallID, session):
+        info = halls_collection.find_one(
+            {"hallID": hallID, "cinemaID": cinemaID}, {"_id": False}
+        )
+        if info:
+            sessions = info["sessions"]
+            for i in range(len(sessions)):
+                if session["sessionID"] == sessions[i]["sessionID"]:
+                    c = CRUDmovies()
+                    movie = c.movie_details(movie_id=session["movieID"])
+                    if movie:
+                        try:
+                            sessions[i] = {
+                                "sessionID": session["sessionID"],
+                                "movie": {"movie": movie},
+                                "start_at": session["start_at"],
+                                "can_order": True,
+                                "is_active":True
+                            }
+
+                            info["sessions"] = sessions
+
+                            halls_collection.update_one(
+                                {"hallID": hallID}, {"$set": info}
+                            )
+                            return " successfully added "
+                        except Exception as e:
+                            return e
+
+                    else:
+                        return "no availabale movie with this id "
+
+            return "invalid sessionId"
+        else:
+            return None
+    
+    def delete_session(self , sessionID):
+        pass
+

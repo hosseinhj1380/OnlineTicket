@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, status, Query
-from schemas.cinemas import Cinema, Halls
+from schemas.cinemas import Cinema, Halls, Session , UpdateSession
 from fastapi.responses import JSONResponse
 from core.auth.oauth2 import oauth2_scheme, is_admin
 from crud.cinema_crud import CRUDcinema, CRUDhalls
 import base64
-from core.parameters_check import is_valid_number_cinema
+from core.parameters_check import is_valid_number_cinema, is_valid_format
 from fastapi.exceptions import (
     ValidationException,
     HTTPException,
@@ -122,6 +122,63 @@ def get_a_hall_info(cinemaID: int, hallID: int, token: str = Depends(oauth2_sche
         return HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="invalid cinemaID or hallID "
         )
+
+
+
+@router.post("/session/{cinemaID}/{hallID}", dependencies=[Depends(is_admin)])
+def new_session(
+    cinemaID: int, hallID: int, session: Session, token: str = Depends(oauth2_scheme)
+):
+    if session:
+        if is_valid_format(session.start_at):
+            s = CRUDhalls()
+            result = s.new_session(cinemaID, hallID, session.dict())
+            if result is not None:
+                return JSONResponse(status_code=200, content=result)
+
+            else:
+                return HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail="invalid cinemaID or hallID ",
+                )
+        else:
+            return JSONResponse(status_code=406, content="wrong format datetime ")
+        
+@router.patch("/session/{cinemaID}/{hallID}", dependencies=[Depends(is_admin)])
+def update_sessions( cinemaID: int, hallID: int, session: UpdateSession, token: str = Depends(oauth2_scheme)
+):
+    if session:
+        if is_valid_format(session.start_at):
+            u = CRUDhalls()
+            result = u.update_session(cinemaID, hallID, session.dict())
+            if result is not None:
+                return JSONResponse(status_code=200, content=result)
+
+            else:
+                return HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail="invalid cinemaID or hallID ",
+                )
+        else:
+            return JSONResponse(status_code=406, content="wrong format datetime ")
+        
+        
+# @router.delete("/session/{sessionID}", dependencies=[Depends(is_admin)])
+# def update_sessions( sessionID : int , token: str = Depends(oauth2_scheme)
+# ):  
+#     d = CRUDhalls()
+#     result=d.delete_session(sessionID)
+#     if result is not None:
+#                 return JSONResponse(status_code=200, content=result)
+
+#     else:
+#         return HTTPException(
+#             status_code=status.HTTP_404_NOT_FOUND,
+#             detail="invalid cinemaID or hallID ",
+#         )
+        
+    
+
 
 
 def get_lat_long(location: str) -> dict:

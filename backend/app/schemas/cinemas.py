@@ -21,4 +21,10 @@ class Halls(BaseModel):
     min_price : int
     max_price : int
     
+
+class Session(BaseModel):
+    movieID :int
+    start_at : str ="2023-11-16T21:55:00+03:30"
     
+class UpdateSession(Session):
+    sessionID :int
