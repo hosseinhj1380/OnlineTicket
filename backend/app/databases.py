@@ -37,6 +37,9 @@ thread_collection = db[os.environ.get("THREAD_COLLECTION")]
 
 halls_collection =db[os.environ.get("CINEMA_HALLS")]
 
+sales_chart_collection =db[os.environ.get("SALES_CHART")]
+
+
 
 # db=client["online_ticket"]
 

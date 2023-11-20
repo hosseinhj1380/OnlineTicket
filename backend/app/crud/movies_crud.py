@@ -1,4 +1,4 @@
-from databases import movie_collection_info
+from databases import movie_collection_info, sales_chart_collection
 from .genres_crud import check_genres
 from .category_crud import check_category
 from .persons_crud import check_user_ID
@@ -105,5 +105,29 @@ class CRUDmovies:
             else:
                 return int(infoID)
         return result
+
+
+def process_sales_chart():
+    pipeline = [
+        {"$sort": {"has_been_sold": -1}},
+        {
+            "$project": {
+                "_id": 0,
+                "movie_id": 1,
+                "has_been_sold": True,
+                "title": "$movie_info.title",
+                "producers": "$movie_info.producers",
+            }
+        },
+    ]
+
+    result = list(movie_collection_info.aggregate(pipeline))
     
+    sales_chart_collection.insert_one({"sales_chart": result,
+                                       "process_date":str(datetime.now())})
     
+def sales_chart():
+    
+    ch =sales_chart_collection.find_one( sort=[("_id", -1)])
+    del ch["_id"] 
+    return(ch)
