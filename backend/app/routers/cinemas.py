@@ -12,6 +12,8 @@ from fastapi.exceptions import (
 )
 import requests
 
+
+
 router = APIRouter(prefix="/api/cinemas")
 
 GOOGLE_MAPS_API_KEY = "YOUR_GOOGLE_MAPS_API_KEY"  # Replace with your actual API key
