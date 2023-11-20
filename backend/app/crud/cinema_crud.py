@@ -99,6 +99,7 @@ class CRUDhalls:
                 {"cinemaID": cinemaID, "hallID": hallID}, {"_id": False}
             )
 
+
     def new_session(self, cinemaID, hallID, session):
         info = halls_collection.find_one(
             {"hallID": hallID, "cinemaID": cinemaID}, {"_id": False}
@@ -177,3 +178,4 @@ class CRUDhalls:
     
     def delete_session(self , sessionID):
         pass
+

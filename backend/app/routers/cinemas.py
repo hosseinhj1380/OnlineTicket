@@ -124,6 +124,7 @@ def get_a_hall_info(cinemaID: int, hallID: int, token: str = Depends(oauth2_sche
         )
 
 
+
 @router.post("/session/{cinemaID}/{hallID}", dependencies=[Depends(is_admin)])
 def new_session(
     cinemaID: int, hallID: int, session: Session, token: str = Depends(oauth2_scheme)
@@ -177,6 +178,7 @@ def update_sessions( cinemaID: int, hallID: int, session: UpdateSession, token: 
 #         )
         
     
+
 
 
 def get_lat_long(location: str) -> dict:
