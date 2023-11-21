@@ -1,9 +1,9 @@
-from databases import movie_collection_info
-from .comment_crud import CRUDcommnet
+from databases import movie_collection_info, sales_chart_collection
 from .genres_crud import check_genres
 from .category_crud import check_category
 from .persons_crud import check_user_ID
 from datetime import datetime
+from .thread import create_thread
 
 
 class CRUDmovies:
@@ -13,16 +13,6 @@ class CRUDmovies:
     def return_error(self, title, name):
         return {"status": "Error", "message": f"{title}: {name} are not available "}
 
-    def create_thread(self):
-        last_thread = movie_collection_info.find_one(sort=[("_id", -1)])
-
-        if last_thread:
-            thread = last_thread["thread"] + 1
-        else:
-            thread = 1
-
-        return thread
-
     def create_movie(self, movie_info):
         last_document = movie_collection_info.find_one(sort=[("_id", -1)])
         if last_document:
@@ -30,7 +20,7 @@ class CRUDmovies:
         else:
             movie_id = 1
 
-        thread = self.create_thread()
+        thread = create_thread(type="movie")
 
         movie_rate = {"movie_rate": 0, "rates_count": 0}
 
@@ -117,8 +107,27 @@ class CRUDmovies:
         return result
 
 
-def check_thread(thread):
-    if movie_collection_info.find_one({"thread": thread}):
-        return True
-    else:
-        return False
+def process_sales_chart():
+    pipeline = [
+        {"$sort": {"has_been_sold": -1}},
+        {
+            "$project": {
+                "_id": 0,
+                "movie_id": 1,
+                "has_been_sold": True,
+                "title": "$movie_info.title",
+                "producers": "$movie_info.producers",
+            }
+        },
+    ]
+
+    result = list(movie_collection_info.aggregate(pipeline))
+    
+    sales_chart_collection.insert_one({"sales_chart": result,
+                                       "process_date":str(datetime.now())})
+    
+def sales_chart():
+    
+    ch =sales_chart_collection.find_one( sort=[("_id", -1)])
+    del ch["_id"] 
+    return(ch)
