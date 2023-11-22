@@ -80,6 +80,8 @@ class CommentCheck:
         )
         
         return {"count": count, "comments": list(comments)}
+
+
     def change_state_comment(self, commentID, state):
         comment = comment_collection.find_one({"commentID": commentID}, {"_id": False})
 
