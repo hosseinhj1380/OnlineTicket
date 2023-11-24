@@ -2,6 +2,7 @@ from databases import cinema_collection, halls_collection
 from .thread import create_thread
 from .movies_crud import CRUDmovies
 from core.parameters_check import is_valid_format
+from datetime import date
 
 
 class CRUDcinema:
@@ -47,6 +48,57 @@ class CRUDcinema:
 
     def get(self, cinemaID):
         return cinema_collection.find_one({"cinemaID": cinemaID}, {"_id": False})
+
+    def get_a_cinema_details(self, cinemaID):
+        cinema = cinema_collection.find_one(
+            {"cinemaID": cinemaID, "verified": True}, {"_id": False}
+        )
+        if cinema:
+            sort_by_halls = []
+            sort_by_session =[]
+            
+            for hallID in cinema["halls"]:
+                hall_info = halls_collection.find_one(
+                    {
+                        "hallID": hallID,
+                        "sessions": {"$elemMatch": {"can_order": True}},
+                    },
+                    {"_id": False, "capacity": False, "sessions.is_active": False},
+                )
+                temp = []
+                for session in hall_info["sessions"]:
+                    new_Session = {session["sessionID"]: session}
+                    temp.append(new_Session)
+                    if str(date.today()) in session["start_at"]:
+                        
+                        
+                        sort_by_session.append({
+                            session["sessionID"]:
+                                {
+                                
+                                "halls":{"min_price":hall_info["min_price"],
+                                         "max_price":hall_info["max_price"],
+                                         "hallID":hall_info["hallID"],
+                                         "cinemaID":hall_info["cinemaID"],
+                                         },
+                                "session":new_Session
+                            }
+                        })
+                        
+                        
+                        
+                hall_info["sessions"] = temp
+                sort_by_halls.append({hallID: hall_info})
+                
+
+                
+            
+
+            return {"cinema": cinema, "halls": sort_by_halls,
+                    "sessions":sort_by_session}
+
+        else:
+            return None
 
 
 class CRUDhalls:
@@ -99,7 +151,6 @@ class CRUDhalls:
                 {"cinemaID": cinemaID, "hallID": hallID}, {"_id": False}
             )
 
-
     def new_session(self, cinemaID, hallID, session):
         info = halls_collection.find_one(
             {"hallID": hallID, "cinemaID": cinemaID}, {"_id": False}
@@ -110,25 +161,24 @@ class CRUDhalls:
             movie = c.movie_details(movie_id=session["movieID"])
             if movie:
                 try:
-                    last = halls_collection.find_one(
-                        {"sessions": True}, sort=[("_id", -1)]
-                    )
-                    if last:
-                        sessionID = last[-1]["sessionID"] + 1
+                    sessions = info["sessions"]
+
+                    if sessions:
+                        sessionID = sessions[-1]["sessionID"] + 1
                     else:
                         sessionID = 1
-                    hall_session = info["sessions"]
+                    temp = info["sessions"]
 
-                    hall_session.append(
+                    temp.append(
                         {
                             "sessionID": sessionID,
                             "movie": {"movie": movie},
                             "start_at": session["start_at"],
                             "can_order": True,
-                            "is_active":True
+                            "is_active": True,
                         }
                     )
-                    info["sessions"] = hall_session
+                    info["sessions"] = temp
 
                     halls_collection.update_one({"hallID": hallID}, {"$set": info})
                     return " successfully added "
@@ -157,7 +207,7 @@ class CRUDhalls:
                                 "movie": {"movie": movie},
                                 "start_at": session["start_at"],
                                 "can_order": True,
-                                "is_active":True
+                                "is_active": True,
                             }
 
                             info["sessions"] = sessions
@@ -175,7 +225,6 @@ class CRUDhalls:
             return "invalid sessionId"
         else:
             return None
-    
-    def delete_session(self , sessionID):
-        pass
 
+    def delete_session(self, sessionID):
+        pass

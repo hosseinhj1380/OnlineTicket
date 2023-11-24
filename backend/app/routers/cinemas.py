@@ -178,6 +178,17 @@ def update_sessions( cinemaID: int, hallID: int, session: UpdateSession, token: 
 #             status_code=status.HTTP_404_NOT_FOUND,
 #             detail="invalid cinemaID or hallID ",
 #         )
+
+
+@router.get("/detail/{cinemaID}")
+def get_cinema_info(cinemaID : int):
+    g = CRUDcinema()
+    result = g.get_a_cinema_details(cinemaID=cinemaID)
+    if result is not None:
+        return JSONResponse(status_code=200 , content=result)
+    else:
+        return JSONResponse(status_code=404 , content="cinemaID is not valid ")
+
         
     
 
