@@ -9,8 +9,10 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 
 
+
 scheduler = BackgroundScheduler()
 scheduler.add_job(process_sales_chart, "cron", hour=00, minute=22)
+
 scheduler.start()
 
 router = APIRouter(prefix="/api/movie")
