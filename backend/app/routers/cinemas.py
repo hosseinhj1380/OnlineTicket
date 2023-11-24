@@ -8,7 +8,7 @@ from core.parameters_check import is_valid_number_cinema, is_valid_format
 from fastapi.exceptions import (
     ValidationException,
     HTTPException,
-    RequestValidationError,
+    
 )
 import requests
 

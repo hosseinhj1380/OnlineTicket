@@ -8,15 +8,9 @@ import base64
 from apscheduler.schedulers.background import BackgroundScheduler
 
 
-# Function to be scheduled
 
-# Create a scheduler
 scheduler = BackgroundScheduler()
-
-# Add the job to run every day at 10:00 PM
 scheduler.add_job(process_sales_chart, "cron", hour=00, minute=22)
-
-# Start the scheduler
 scheduler.start()
 
 router = APIRouter(prefix="/api/movie")
