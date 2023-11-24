@@ -67,13 +67,14 @@ class CRUDcinema:
                 )
                 temp = []
                 for session in hall_info["sessions"]:
-                    new_Session = {session["sessionID"]: session}
-                    temp.append(new_Session)
-                    if str(date.today()) in session["start_at"]:
-                        
+                    d = str(date.today()) 
+                    if d in session["start_at"]:
+                        new_Session = {session["sessionID"]: session}
+                        temp.append(new_Session)
                         
                         sort_by_session.append({
-                            session["sessionID"]:
+                            d:{
+                                session["sessionID"]:
                                 {
                                 
                                 "halls":{"min_price":hall_info["min_price"],
@@ -82,7 +83,7 @@ class CRUDcinema:
                                          "cinemaID":hall_info["cinemaID"],
                                          },
                                 "session":new_Session
-                            }
+                            }}
                         })
                         
                         
@@ -94,7 +95,8 @@ class CRUDcinema:
                 
             
 
-            return {"cinema": cinema, "halls": sort_by_halls,
+            return {"cinema": cinema,
+                    "halls": sort_by_halls,
                     "sessions":sort_by_session}
 
         else:
