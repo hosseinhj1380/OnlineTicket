@@ -153,12 +153,14 @@ class CRUDhalls:
                 {"cinemaID": cinemaID, "hallID": hallID}, {"_id": False}
             )
 
+
     
 class CRUDsession:
     def __init__(self) :
         pass
     
     def create(self, cinemaID, hallID, session):
+      
         info = halls_collection.find_one(
             {"hallID": hallID, "cinemaID": cinemaID}, {"_id": False}
         )
@@ -168,10 +170,12 @@ class CRUDsession:
             movie = c.movie_details(movie_id=session["movieID"])
             if movie:
                 try:
+
                     last_session = session_collection.find_one(sort=[("_id", -1)])
 
                     if last_session:
                         sessionID = last_session["sessionID"]+ 1
+
                     else:
                         sessionID = 1
                     temp = info["sessions"]
@@ -208,6 +212,7 @@ class CRUDsession:
             {"sessionID":session["sessionID"]}, {"_id": False}
         )
         if info:
+
             
             c = CRUDmovies()
             movie = c.movie_details(movie_id=session["movieID"])
@@ -228,6 +233,7 @@ class CRUDsession:
                     return " successfully added "
                 except Exception as e:
                     return e
+
 
             else:
                 return "no availabale movie with this id "
