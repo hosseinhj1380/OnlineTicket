@@ -73,8 +73,14 @@ class CommentCheck:
     def __init__(self):
         pass
 
-    def get_all_pending_comment(self):
-        return comment_collection.find({"state": "pending"}, {"_id": False})
+    def get_all_pending_comment(self,skip, page_size):
+        comments= comment_collection.find({"state": "pending"}, {"_id": False}).skip(skip).limit(page_size)
+        count = count = comment_collection.count_documents(
+            {"state": "pending"}
+        )
+        
+        return {"count": count, "comments": list(comments)}
+
 
     def change_state_comment(self, commentID, state):
         comment = comment_collection.find_one({"commentID": commentID}, {"_id": False})
