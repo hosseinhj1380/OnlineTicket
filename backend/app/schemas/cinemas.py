@@ -24,7 +24,9 @@ class Halls(BaseModel):
 
 class Session(BaseModel):
     movieID :int
-    start_at : str ="2023-11-16T21:55:00+03:30"
+    start_at : str ="21:55:00+03:30"
+    start_release_date : str =  "2023-11-16T21:55:00+03:30"
+    end_release_date : str = "2023-11-16T21:55:00+03:30"
     
 class UpdateSession(Session):
     sessionID :int
