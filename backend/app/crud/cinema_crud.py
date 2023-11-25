@@ -193,6 +193,8 @@ class CRUDsession:
                             "sessionID": sessionID,
                             "movie":  movie,
                             "start_at": session["start_at"],
+                            "start_release_date":session["start_release_date"],
+                            "end_release_date":session["end_release_date"],
                             "can_order": True,
                             "cinemaID":info["cinemaID"],
                             "hallID":info["hallID"]
@@ -222,6 +224,8 @@ class CRUDsession:
                         "sessionID": info["sessionID"],
                         "movie": movie,
                         "start_at": session["start_at"],
+                        "start_release_date":session["start_release_date"],
+                        "end_release_date":session["end_release_date"],
                         "can_order": True,
                         "cinemaID":info["cinemaID"],
                         "hallID":info["hallID"]
