@@ -39,6 +39,8 @@ halls_collection =db[os.environ.get("CINEMA_HALLS")]
 
 sales_chart_collection =db[os.environ.get("SALES_CHART")]
 
+session_collection = db[os.environ.get("SESSIONS_COLLECTION")]
+
 
 
 # db=client["online_ticket"]
