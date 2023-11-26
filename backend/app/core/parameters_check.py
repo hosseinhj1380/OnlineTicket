@@ -48,3 +48,8 @@ def is_valid_number_cinema(numbers):
 def is_valid_format(input_text):
     pattern = re.compile(r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+03:30$')
     return bool(pattern.match(input_text))
+
+def is_valid_time_format(input_text):
+    pattern = re.compile(r'^(0[7-9]|1\d|2[0-4]):([0-5]\d):00\+03:30$')
+
+    return(bool(pattern.match(input_text)))
