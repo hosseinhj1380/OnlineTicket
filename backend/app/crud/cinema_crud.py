@@ -49,58 +49,58 @@ class CRUDcinema:
     def get(self, cinemaID):
         return cinema_collection.find_one({"cinemaID": cinemaID}, {"_id": False})
 
-    def get_a_cinema_details(self, cinemaID):
-        cinema = cinema_collection.find_one(
-            {"cinemaID": cinemaID, "verified": True}, {"_id": False}
-        )
-        if cinema:
-            sort_by_halls = []
-            sort_by_session =[]
+    # def get_a_cinema_details(self, cinemaID):
+    #     cinema = cinema_collection.find_one(
+    #         {"cinemaID": cinemaID, "verified": True}, {"_id": False}
+    #     )
+    #     if cinema:
+    #         sort_by_halls = []
+    #         sort_by_session =[]
             
-            for hallID in cinema["halls"]:
-                hall_info = halls_collection.find_one(
-                    {
-                        "hallID": hallID,
-                        "sessions": {"$elemMatch": {"can_order": True}},
-                    },
-                    {"_id": False, "capacity": False, "sessions.is_active": False},
-                )
-                temp = []
-                for session in hall_info["sessions"]:
-                    d = str(date.today()) 
-                    if d in session["start_at"]:
-                        new_Session = {session["sessionID"]: session}
-                        temp.append(new_Session)
+    #         for hallID in cinema["halls"]:
+    #             hall_info = halls_collection.find_one(
+    #                 {
+    #                     "hallID": hallID,
+    #                     "sessions": {"$elemMatch": {"can_order": True}},
+    #                 },
+    #                 {"_id": False, "capacity": False, "sessions.is_active": False},
+    #             )
+    #             temp = []
+                
+    #             today = str(date.today()) 
+    #             if today in session["start_at"]:
+    #                     new_Session = {session["sessionID"]: session}
+    #                     temp.append(new_Session)
                         
-                        sort_by_session.append({
-                            d:{
-                                session["sessionID"]:
-                                {
+    #                     sort_by_session.append({
+    #                         d:{
+    #                             session["sessionID"]:
+    #                             {
                                 
-                                "halls":{"min_price":hall_info["min_price"],
-                                         "max_price":hall_info["max_price"],
-                                         "hallID":hall_info["hallID"],
-                                         "cinemaID":hall_info["cinemaID"],
-                                         },
-                                "session":new_Session
-                            }}
-                        })
+    #                             "halls":{"min_price":hall_info["min_price"],
+    #                                      "max_price":hall_info["max_price"],
+    #                                      "hallID":hall_info["hallID"],
+    #                                      "cinemaID":hall_info["cinemaID"],
+    #                                      },
+    #                             "session":new_Session
+    #                         }}
+    #                     })
                         
                         
                         
-                hall_info["sessions"] = temp
-                sort_by_halls.append({hallID: hall_info})
+    #             hall_info["sessions"] = temp
+    #             sort_by_halls.append({hallID: hall_info})
                 
 
                 
             
 
-            return {"cinema": cinema,
-                    "halls": sort_by_halls,
-                    "sessions":sort_by_session}
+    #         return {"cinema": cinema,
+    #                 "halls": sort_by_halls,
+    #                 "sessions":sort_by_session}
 
-        else:
-            return None
+    #     else:
+    #         return None
 
 
 class CRUDhalls:

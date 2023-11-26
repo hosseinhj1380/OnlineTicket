@@ -1,17 +1,19 @@
 from fastapi import APIRouter, Depends, status, Query
-from schemas.cinemas import Cinema, Halls, Session , UpdateSession
+from schemas.cinemas import Cinema, Halls, Session, UpdateSession
 from fastapi.responses import JSONResponse
 from core.auth.oauth2 import oauth2_scheme, is_admin
-from crud.cinema_crud import CRUDcinema, CRUDhalls , CRUDsession
+from crud.cinema_crud import CRUDcinema, CRUDhalls, CRUDsession
 import base64
-from core.parameters_check import is_valid_number_cinema, is_valid_format
+from core.parameters_check import (
+    is_valid_number_cinema,
+    is_valid_format,
+    is_valid_time_format,
+)
 from fastapi.exceptions import (
     ValidationException,
     HTTPException,
-    
 )
 import requests
-
 
 
 router = APIRouter(prefix="/api/cinemas")
@@ -126,13 +128,16 @@ def get_a_hall_info(cinemaID: int, hallID: int, token: str = Depends(oauth2_sche
         )
 
 
-
 @router.post("/session/{cinemaID}/{hallID}", dependencies=[Depends(is_admin)])
 def new_session(
     cinemaID: int, hallID: int, session: Session, token: str = Depends(oauth2_scheme)
 ):
     if session:
-        if is_valid_format(session.start_at):
+        if (
+            is_valid_format(session.start_release_date)
+            and is_valid_format(session.end_release_date)
+            and is_valid_time_format(session.start_at)
+        ):
             s = CRUDsession()
             result = s.create(cinemaID, hallID, session.dict())
             if result is not None:
@@ -145,14 +150,18 @@ def new_session(
                 )
         else:
             return JSONResponse(status_code=406, content="wrong format datetime ")
-        
+
+
 @router.patch("/session", dependencies=[Depends(is_admin)])
-def update_sessions(  session: UpdateSession, token: str = Depends(oauth2_scheme)
-):
+def update_sessions(session: UpdateSession, token: str = Depends(oauth2_scheme)):
     if session:
-        if is_valid_format(session.start_at):
+        if (
+            is_valid_format(session.start_release_date)
+            and is_valid_format(session.end_release_date)
+            and is_valid_time_format(session.start_at)
+        ):
             u = CRUDsession()
-            result = u.update( session.dict())
+            result = u.update(session.dict())
             if result is not None:
                 return JSONResponse(status_code=200, content=result)
 
@@ -163,11 +172,11 @@ def update_sessions(  session: UpdateSession, token: str = Depends(oauth2_scheme
                 )
         else:
             return JSONResponse(status_code=406, content="wrong format datetime ")
-        
-        
+
+
 # @router.delete("/session/{sessionID}", dependencies=[Depends(is_admin)])
 # def update_sessions( sessionID : int , token: str = Depends(oauth2_scheme)
-# ):  
+# ):
 #     d = CRUDhalls()
 #     result=d.delete_session(sessionID)
 #     if result is not None:
@@ -180,18 +189,14 @@ def update_sessions(  session: UpdateSession, token: str = Depends(oauth2_scheme
 #         )
 
 
-@router.get("/detail/{cinemaID}")
-def get_cinema_info(cinemaID : int):
-    g = CRUDcinema()
-    result = g.get_a_cinema_details(cinemaID=cinemaID)
-    if result is not None:
-        return JSONResponse(status_code=200 , content=result)
-    else:
-        return JSONResponse(status_code=404 , content="cinemaID is not valid ")
-
-        
-    
-
+# @router.get("/detail/{cinemaID}")
+# def get_cinema_info(cinemaID: int):
+#     g = CRUDcinema()
+#     result = g.get_a_cinema_details(cinemaID=cinemaID)
+#     if result is not None:
+#         return JSONResponse(status_code=200, content=result)
+#     else:
+#         return JSONResponse(status_code=404, content="cinemaID is not valid ")
 
 
 def get_lat_long(location: str) -> dict:
