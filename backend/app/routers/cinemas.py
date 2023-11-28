@@ -189,14 +189,18 @@ def update_sessions(session: UpdateSession, token: str = Depends(oauth2_scheme))
 #         )
 
 
-# @router.get("/detail/{cinemaID}")
-# def get_cinema_info(cinemaID: int):
-#     g = CRUDcinema()
-#     result = g.get_a_cinema_details(cinemaID=cinemaID)
-#     if result is not None:
-#         return JSONResponse(status_code=200, content=result)
-#     else:
-#         return JSONResponse(status_code=404, content="cinemaID is not valid ")
+
+@router.get("/detail/{cinemaID}")
+def get_cinema_info(cinemaID: int):
+    g = CRUDcinema()
+    result = g.get_a_cinema_details(cinemaID=cinemaID)
+    if result is not None:
+        return JSONResponse(status_code=200, content=result)
+    else:
+        return JSONResponse(status_code=404, content="cinemaID is not valid ")
+
+
+
 
 
 def get_lat_long(location: str) -> dict:

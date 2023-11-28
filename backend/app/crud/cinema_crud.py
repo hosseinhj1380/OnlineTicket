@@ -1,4 +1,4 @@
-from databases import cinema_collection, halls_collection , session_collection
+from databases import cinema_collection, halls_collection, session_collection
 from .thread import create_thread
 from .movies_crud import CRUDmovies
 from core.parameters_check import is_valid_format
@@ -49,55 +49,68 @@ class CRUDcinema:
     def get(self, cinemaID):
         return cinema_collection.find_one({"cinemaID": cinemaID}, {"_id": False})
 
-    # def get_a_cinema_details(self, cinemaID):
-    #     cinema = cinema_collection.find_one(
-    #         {"cinemaID": cinemaID, "verified": True}, {"_id": False}
-    #     )
-    #     if cinema:
-    #         sort_by_halls = []
-    #         sort_by_session =[]
+    def get_a_cinema_details(self, cinemaID):
+        cinema = cinema_collection.find_one(
+            {"cinemaID": cinemaID, "verified": True}, {"_id": False}
+        )
+        if cinema:
+            sort_by_halls = []
+            sort_by_session = {}
             
-    #         for hallID in cinema["halls"]:
-    #             hall_info = halls_collection.find_one(
-    #                 {
-    #                     "hallID": hallID,
-    #                     "sessions": {"$elemMatch": {"can_order": True}},
-    #                 },
-    #                 {"_id": False, "capacity": False, "sessions.is_active": False},
-    #             )
-    #             temp = []
-                
-    #             today = str(date.today()) 
-    #             if today in session["start_at"]:
-    #                     new_Session = {session["sessionID"]: session}
-    #                     temp.append(new_Session)
-                        
-    #                     sort_by_session.append({
-    #                         d:{
-    #                             session["sessionID"]:
-    #                             {
+
+            for hallID in cinema["halls"]:
+                hall_info = halls_collection.find_one(
+                    {
+                        "hallID": hallID,
+                        "sessions": {"$elemMatch": {"is_active": True}},
+                    },
+                    {"_id": False, "capacity": False},
+                )
+                if hall_info is not None:
+                    for session in hall_info["sessions"]:
+                        temp = []
+
+                       
+
+                        s = session_collection.find_one(
+                            {"sessionID": session["sessionID"], "can_order": True},
+                            {"_id": False},
+                        )
+                        if s is not None:
+                            print("nothing  ")
+                            d = str(date.today())
+                            if d in s["start_release_date"]:
+                                new_Session = {s["sessionID"]: s}
+                                temp.append(new_Session)
                                 
-    #                             "halls":{"min_price":hall_info["min_price"],
-    #                                      "max_price":hall_info["max_price"],
-    #                                      "hallID":hall_info["hallID"],
-    #                                      "cinemaID":hall_info["cinemaID"],
-    #                                      },
-    #                             "session":new_Session
-    #                         }}
-    #                     })
-                        
-                        
-                        
-    #             hall_info["sessions"] = temp
-    #             sort_by_halls.append({hallID: hall_info})
-                
+                                
+                                
+                                if d not in sort_by_session:
+                                    sort_by_session[d]={}
+                                
+                                sort_by_session[d][s["sessionID"]]={
+                                                "halls": {
+                                                    "min_price": hall_info["min_price"],
+                                                    "max_price": hall_info["max_price"],
+                                                    "hallID": hall_info["hallID"],
+                                                    "cinemaID": hall_info["cinemaID"],
+                                                },
+                                                "session": new_Session,
+                                            }
+                                
+                                
+                                
+                                del hall_info["cinemaID"]
 
-                
-            
+                                hall_info["sessions"] = temp
+                                sort_by_halls.append({hallID: s})
 
-    #         return {"cinema": cinema,
-    #                 "halls": sort_by_halls,
-    #                 "sessions":sort_by_session}
+            return {
+                "cinema": cinema,
+                "halls": sort_by_halls,
+                "sessions": sort_by_session,
+            }
+
 
     #     else:
     #         return None
@@ -154,13 +167,11 @@ class CRUDhalls:
             )
 
 
-    
 class CRUDsession:
-    def __init__(self) :
+    def __init__(self):
         pass
-    
+
     def create(self, cinemaID, hallID, session):
-      
         info = halls_collection.find_one(
             {"hallID": hallID, "cinemaID": cinemaID}, {"_id": False}
         )
@@ -170,11 +181,10 @@ class CRUDsession:
             movie = c.movie_details(movie_id=session["movieID"])
             if movie:
                 try:
-
                     last_session = session_collection.find_one(sort=[("_id", -1)])
 
                     if last_session:
-                        sessionID = last_session["sessionID"]+ 1
+                        sessionID = last_session["sessionID"] + 1
 
                     else:
                         sessionID = 1
@@ -189,17 +199,21 @@ class CRUDsession:
                     info["sessions"] = temp
 
                     halls_collection.update_one({"hallID": hallID}, {"$set": info})
-                    session_collection.insert_one({
+                    session_collection.insert_one(
+                        {
                             "sessionID": sessionID,
-                            "movie":  movie,
+                            "movie": movie,
                             "start_at": session["start_at"],
-                            "start_release_date":session["start_release_date"],
-                            "end_release_date":session["end_release_date"],
+
+                            "start_release_date": session["start_release_date"],
+                            "end_release_date": session["end_release_date"],
+
                             "can_order": True,
-                            "cinemaID":info["cinemaID"],
-                            "hallID":info["hallID"]
-                    })
-                    
+                            "cinemaID": info["cinemaID"],
+                            "hallID": info["hallID"],
+                        }
+                    )
+
                     return " successfully added "
                 except Exception as e:
                     return e
@@ -209,35 +223,34 @@ class CRUDsession:
         else:
             return None
 
-    def update(self,  session):
+    def update(self, session):
         info = session_collection.find_one(
-            {"sessionID":session["sessionID"]}, {"_id": False}
+            {"sessionID": session["sessionID"]}, {"_id": False}
         )
         if info:
-
-            
             c = CRUDmovies()
             movie = c.movie_details(movie_id=session["movieID"])
             if movie:
                 try:
-                    new_session= {
+                    new_session = {
                         "sessionID": info["sessionID"],
                         "movie": movie,
                         "start_at": session["start_at"],
-                        "start_release_date":session["start_release_date"],
-                        "end_release_date":session["end_release_date"],
+
+                        "start_release_date": session["start_release_date"],
+                        "end_release_date": session["end_release_date"],
+
                         "can_order": True,
-                        "cinemaID":info["cinemaID"],
-                        "hallID":info["hallID"]
+                        "cinemaID": info["cinemaID"],
+                        "hallID": info["hallID"],
                     }
 
                     session_collection.update_one(
                         {"sessionID": session["sessionID"]}, {"$set": new_session}
-                        )
+                    )
                     return " successfully added "
                 except Exception as e:
                     return e
-
 
             else:
                 return "no availabale movie with this id "
