@@ -54,6 +54,7 @@ class CRUDcinema:
             {"cinemaID": cinemaID, "verified": True}, {"_id": False}
         )
         if cinema:
+
             sort_by_halls = {}
             sort_by_session = {}
 
@@ -66,15 +67,17 @@ class CRUDcinema:
                     {"_id": False, "capacity": False},
                 )
                 if hall_info is not None:
-                    for session in hall_info["sessions"]:
+
                         
                         temp = []
+
 
                         s = session_collection.find_one(
                             {"sessionID": session["sessionID"], "can_order": True},
                             {"_id": False},
                         )
                         if s is not None:
+
                             
                             dates = process_start_end_date(
                                 start=str(date.today()),
@@ -108,6 +111,7 @@ class CRUDcinema:
                                     }
 
                                 sort_by_halls[hallID][s["sessionID"]] = s
+
 
             return {
                 "cinema": cinema,
