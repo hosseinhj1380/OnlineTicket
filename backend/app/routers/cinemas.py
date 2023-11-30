@@ -189,6 +189,7 @@ def update_sessions(session: UpdateSession, token: str = Depends(oauth2_scheme))
 #         )
 
 
+
 @router.get("/detail/{cinemaID}")
 def get_cinema_info(cinemaID: int):
     g = CRUDcinema()
@@ -197,6 +198,7 @@ def get_cinema_info(cinemaID: int):
         return JSONResponse(status_code=200, content=result)
     else:
         return JSONResponse(status_code=404, content="cinemaID is not valid ")
+
 
 
 
