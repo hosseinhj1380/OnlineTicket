@@ -1,10 +1,19 @@
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 from schemas.movies import Movies, MovieUpdate
-from crud.movies_crud import CRUDmovies
+from crud.movies_crud import CRUDmovies , sales_chart , process_sales_chart
 from core.auth.oauth2 import oauth2_scheme, is_admin
 import base64
 
+from apscheduler.schedulers.background import BackgroundScheduler
+
+
+
+
+scheduler = BackgroundScheduler()
+scheduler.add_job(process_sales_chart, "cron", hour=00, minute=22)
+
+scheduler.start()
 
 router = APIRouter(prefix="/api/movie")
 
@@ -88,3 +97,9 @@ def movies_delete(movie_id: int):
         return JSONResponse(status_code=202, content=result)
     elif result == "movie_id doesnt exist ":
         return JSONResponse(status_code=404, content=result)
+
+
+@router.get("/sales-chart")
+def sales_chart_box():
+    
+    return JSONResponse(status_code=200 , content=sales_chart() )

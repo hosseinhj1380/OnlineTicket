@@ -31,3 +31,25 @@ def is_valid_email(email):
         return True
     else:
         return False
+    
+def is_valid_number_cinema(numbers):
+    pattern = re.compile(r'\d{3}-\d{8}')
+
+    
+
+    for number in numbers:
+        if pattern.match(number):
+            pass
+        else:
+            return False
+        return True
+
+
+def is_valid_format(input_text):
+    pattern = re.compile(r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+03:30$')
+    return bool(pattern.match(input_text))
+
+def is_valid_time_format(input_text):
+    pattern = re.compile(r'^(0[7-9]|1\d|2[0-4]):([0-5]\d):00\+03:30$')
+
+    return(bool(pattern.match(input_text)))
