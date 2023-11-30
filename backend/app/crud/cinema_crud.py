@@ -2,7 +2,7 @@ from databases import cinema_collection, halls_collection, session_collection
 from .thread import create_thread
 from .movies_crud import CRUDmovies
 from core.parameters_check import is_valid_format
-from datetime import date
+from datetime import date, datetime, timedelta, timezone
 
 
 class CRUDcinema:
@@ -54,9 +54,8 @@ class CRUDcinema:
             {"cinemaID": cinemaID, "verified": True}, {"_id": False}
         )
         if cinema:
-            sort_by_halls = []
+            sort_by_halls = {}
             sort_by_session = {}
-            
 
             for hallID in cinema["halls"]:
                 hall_info = halls_collection.find_one(
@@ -68,42 +67,47 @@ class CRUDcinema:
                 )
                 if hall_info is not None:
                     for session in hall_info["sessions"]:
+                        
                         temp = []
-
-                       
 
                         s = session_collection.find_one(
                             {"sessionID": session["sessionID"], "can_order": True},
                             {"_id": False},
                         )
                         if s is not None:
-                            print("nothing  ")
-                            d = str(date.today())
-                            if d in s["start_release_date"]:
+                            
+                            dates = process_start_end_date(
+                                start=str(date.today()),
+                                end=s["end_release_date"],
+                                start_release=s["start_release_date"],
+                            )
+                            for d in dates:
                                 new_Session = {s["sessionID"]: s}
                                 temp.append(new_Session)
-                                
-                                
-                                
+
                                 if d not in sort_by_session:
-                                    sort_by_session[d]={}
-                                
-                                sort_by_session[d][s["sessionID"]]={
-                                                "halls": {
-                                                    "min_price": hall_info["min_price"],
-                                                    "max_price": hall_info["max_price"],
-                                                    "hallID": hall_info["hallID"],
-                                                    "cinemaID": hall_info["cinemaID"],
-                                                },
-                                                "session": new_Session,
-                                            }
-                                
-                                
-                                
-                                del hall_info["cinemaID"]
+                                    sort_by_session[d] = {}
+
+                                sort_by_session[d][s["sessionID"]] = {
+                                    "halls": {
+                                        "min_price": hall_info["min_price"],
+                                        "max_price": hall_info["max_price"],
+                                        "hallID": hall_info["hallID"],
+                                        # "cinemaID": hall_info["cinemaID"],
+                                    },
+                                    "session": s,
+                                }
+
+                                # del hall_info["cinemaID"]
 
                                 hall_info["sessions"] = temp
-                                sort_by_halls.append({hallID: s})
+                                if hallID not in sort_by_halls:
+                                    sort_by_halls[hallID] = {
+                                        "min_price": hall_info["min_price"],
+                                        "max_price": hall_info["max_price"],
+                                    }
+
+                                sort_by_halls[hallID][s["sessionID"]] = s
 
             return {
                 "cinema": cinema,
@@ -255,3 +259,30 @@ class CRUDsession:
 
     def delete_session(self, sessionID):
         pass
+
+
+def process_start_end_date(start, end, start_release):
+    start_release_date = datetime.fromisoformat(str(start_release)[:-6])
+    current_time = datetime.now(start_release_date.tzinfo)
+
+    if current_time < start_release_date:
+        start_date = start_release_date
+
+    else:
+        start_date = datetime.fromisoformat(start)
+
+    now_time = datetime.now(timezone(timedelta(hours=3, minutes=30)))
+    now_time_format = datetime.fromisoformat(str(now_time)[:-6])
+
+    end_date = datetime.fromisoformat(end[:-6])
+
+    date_list = []
+    for x in range((end_date - start_date).days + 1):
+        if x == 0:
+            if (start_date - now_time_format).seconds >= 3600:
+                date_list.append(start_date + timedelta(days=x))
+
+        else:
+            date_list.append(start_date + timedelta(days=x))
+
+    return [date.strftime("%Y-%m-%d") for date in date_list]
