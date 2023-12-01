@@ -54,7 +54,6 @@ class CRUDcinema:
             {"cinemaID": cinemaID, "verified": True}, {"_id": False}
         )
         if cinema:
-
             sort_by_halls = {}
             sort_by_session = {}
 
@@ -67,51 +66,45 @@ class CRUDcinema:
                     {"_id": False, "capacity": False},
                 )
                 if hall_info is not None:
+                    temp = []
 
-                        
-                        temp = []
-
-
-                        s = session_collection.find_one(
-                            {"sessionID": session["sessionID"], "can_order": True},
-                            {"_id": False},
+                    s = session_collection.find_one(
+                        {"sessionID": session["sessionID"], "can_order": True},
+                        {"_id": False},
+                    )
+                    if s is not None:
+                        dates = process_start_end_date(
+                            start=str(date.today()),
+                            end=s["end_release_date"],
+                            start_release=s["start_release_date"],
                         )
-                        if s is not None:
+                        for d in dates:
+                            new_Session = {s["sessionID"]: s}
+                            temp.append(new_Session)
 
-                            
-                            dates = process_start_end_date(
-                                start=str(date.today()),
-                                end=s["end_release_date"],
-                                start_release=s["start_release_date"],
-                            )
-                            for d in dates:
-                                new_Session = {s["sessionID"]: s}
-                                temp.append(new_Session)
+                            if d not in sort_by_session:
+                                sort_by_session[d] = {}
 
-                                if d not in sort_by_session:
-                                    sort_by_session[d] = {}
+                            sort_by_session[d][s["sessionID"]] = {
+                                "halls": {
+                                    "min_price": hall_info["min_price"],
+                                    "max_price": hall_info["max_price"],
+                                    "hallID": hall_info["hallID"],
+                                    # "cinemaID": hall_info["cinemaID"],
+                                },
+                                "session": s,
+                            }
 
-                                sort_by_session[d][s["sessionID"]] = {
-                                    "halls": {
-                                        "min_price": hall_info["min_price"],
-                                        "max_price": hall_info["max_price"],
-                                        "hallID": hall_info["hallID"],
-                                        # "cinemaID": hall_info["cinemaID"],
-                                    },
-                                    "session": s,
+                            # del hall_info["cinemaID"]
+
+                            hall_info["sessions"] = temp
+                            if hallID not in sort_by_halls:
+                                sort_by_halls[hallID] = {
+                                    "min_price": hall_info["min_price"],
+                                    "max_price": hall_info["max_price"],
                                 }
 
-                                # del hall_info["cinemaID"]
-
-                                hall_info["sessions"] = temp
-                                if hallID not in sort_by_halls:
-                                    sort_by_halls[hallID] = {
-                                        "min_price": hall_info["min_price"],
-                                        "max_price": hall_info["max_price"],
-                                    }
-
-                                sort_by_halls[hallID][s["sessionID"]] = s
-
+                            sort_by_halls[hallID][s["sessionID"]] = s
 
             return {
                 "cinema": cinema,
@@ -119,6 +112,28 @@ class CRUDcinema:
                 "sessions": sort_by_session,
             }
 
+    def home_cinemas(self, skip, page_size, city):
+        count = cinema_collection.count_documents({"city": city, "verified": True})
+        cinemas = (
+            cinema_collection.find(
+                {"city": city, "verified": True},
+                {
+                    "name": True,
+                    "images": True,
+                    "facility": True,
+                    "rate": True,
+                    "rate_count": True,
+                    "cinemaID": True,
+                    "address": True,
+                    "_id": False,
+                },
+                sort=[("cinemaID")],
+            )
+            .skip(skip)
+            .limit(page_size)
+        )
+
+        return {"count": count, "results": list(cinemas)}
 
     #     else:
     #         return None
@@ -212,10 +227,8 @@ class CRUDsession:
                             "sessionID": sessionID,
                             "movie": movie,
                             "start_at": session["start_at"],
-
                             "start_release_date": session["start_release_date"],
                             "end_release_date": session["end_release_date"],
-
                             "can_order": True,
                             "cinemaID": info["cinemaID"],
                             "hallID": info["hallID"],
@@ -244,10 +257,8 @@ class CRUDsession:
                         "sessionID": info["sessionID"],
                         "movie": movie,
                         "start_at": session["start_at"],
-
                         "start_release_date": session["start_release_date"],
                         "end_release_date": session["end_release_date"],
-
                         "can_order": True,
                         "cinemaID": info["cinemaID"],
                         "hallID": info["hallID"],

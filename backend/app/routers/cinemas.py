@@ -200,6 +200,44 @@ def get_cinema_info(cinemaID: int):
         return JSONResponse(status_code=404, content="cinemaID is not valid ")
 
 
+@router.get("/home/")
+def cinemas_home(city :int ,page: int = Query(default=1, description="Page number", ge=1)
+):
+    page_size = 20
+    skip = (page - 1) * page_size
+    
+    c = CRUDcinema()
+    result =c.home_cinemas(skip=skip , page_size=page_size  , city=city)
+    
+    if result["results"] == []:
+        return JSONResponse(status_code=404, content="invalid page")
+
+    else:
+        if page == 1:
+            previous = None
+        else:
+            previous = (
+                f"127.0.0.1:8000/api/cinema/home/?city={city}&page={page - 1}"
+            )
+
+        if page_size * page < result["count"]:
+            next = (
+                f"127.0.0.1:8000/api/comment/comments/?city={city}&page={page + 1}"
+            )
+
+        else:
+            next = None
+
+        return JSONResponse(
+            status_code=200,
+            content={
+                "count": result["count"],
+                "previous": previous,
+                "next": next,
+                "results": result["results"],
+            },
+        )
+    
 
 
 
@@ -215,6 +253,10 @@ def get_lat_long(location: str) -> dict:
         return result
     else:
         raise HTTPException(status_code=400, detail="Failed to geocode location")
+
+
+
+
 
 
 @router.get("/get_coordinates")
