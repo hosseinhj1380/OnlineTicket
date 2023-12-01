@@ -54,6 +54,7 @@ class CRUDcinema:
             {"cinemaID": cinemaID, "verified": True}, {"_id": False}
         )
         if cinema:
+
             sort_by_halls = {}
             sort_by_session = {}
 
@@ -66,6 +67,7 @@ class CRUDcinema:
                     {"_id": False, "capacity": False},
                 )
                 if hall_info is not None:
+
                     temp = []
 
                     s = session_collection.find_one(
@@ -105,6 +107,10 @@ class CRUDcinema:
                                 }
 
                             sort_by_halls[hallID][s["sessionID"]] = s
+
+
+                        
+                       
 
             return {
                 "cinema": cinema,
