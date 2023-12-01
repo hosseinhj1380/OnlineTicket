@@ -3,11 +3,15 @@ from .thread import create_thread
 from .movies_crud import CRUDmovies
 from core.parameters_check import is_valid_format
 from datetime import date, datetime, timedelta, timezone
+from .facilities_crud import check_facility
 
 
 class CRUDcinema:
     def __init__(self):
         pass
+
+    def return_error(self, title, name):
+        return {"status": "Error", "message": f"{title}: {name} are not available "}
 
     def create(self, cinema):
         if cinema_collection.find_one({"name": cinema["name"]}, {"_id": False}):
@@ -21,6 +25,12 @@ class CRUDcinema:
                     cinemaID = last_id["cinemaID"] + 1
                 else:
                     cinemaID = 1
+
+                for faci in cinema["facility"]:
+                    if check_facility(facility=faci):
+                        pass
+                    else:
+                        return self.return_error(title="facilities", name=faci)
                 cinema["rate"] = 0
                 cinema["thread"] = thread
                 cinema["rate_count"] = 0
@@ -38,6 +48,13 @@ class CRUDcinema:
     def update(self, cinemaID, cinema):
         cinema_info = cinema_collection.find_one({"cinemaID": cinemaID}, {"_id": False})
         if cinema_info:
+            if cinema["facility"]:
+                for faci in cinema["facility"]:
+                    if check_facility(facility=faci):
+                        pass
+                    else:
+                        return self.return_error(title="facilities", name=faci)
+
             try:
                 cinema_collection.update_one({"cinemaID": cinemaID}, {"$set": cinema})
                 return "informations successfully updated "
@@ -54,7 +71,6 @@ class CRUDcinema:
             {"cinemaID": cinemaID, "verified": True}, {"_id": False}
         )
         if cinema:
-
             sort_by_halls = {}
             sort_by_session = {}
 
@@ -67,58 +83,51 @@ class CRUDcinema:
                     {"_id": False, "capacity": False},
                 )
                 if hall_info is not None:
+                    temp = []
 
-                        
-                        temp = []
-
-
-                        s = session_collection.find_one(
-                            {"sessionID": session["sessionID"], "can_order": True},
-                            {"_id": False},
+                    s = session_collection.find_one(
+                        {"sessionID": session["sessionID"], "can_order": True},
+                        {"_id": False},
+                    )
+                    if s is not None:
+                        dates = process_start_end_date(
+                            start=str(date.today()),
+                            end=s["end_release_date"],
+                            start_release=s["start_release_date"],
                         )
-                        if s is not None:
+                        for d in dates:
+                            new_Session = {s["sessionID"]: s}
+                            temp.append(new_Session)
 
-                            
-                            dates = process_start_end_date(
-                                start=str(date.today()),
-                                end=s["end_release_date"],
-                                start_release=s["start_release_date"],
-                            )
-                            for d in dates:
-                                new_Session = {s["sessionID"]: s}
-                                temp.append(new_Session)
+                            if d not in sort_by_session:
+                                sort_by_session[d] = {}
 
-                                if d not in sort_by_session:
-                                    sort_by_session[d] = {}
+                            sort_by_session[d][s["sessionID"]] = {
+                                "halls": {
+                                    "min_price": hall_info["min_price"],
+                                    "max_price": hall_info["max_price"],
+                                    "hallID": hall_info["hallID"],
+                                    # "cinemaID": hall_info["cinemaID"],
+                                },
+                                "session": s,
+                            }
 
-                                sort_by_session[d][s["sessionID"]] = {
-                                    "halls": {
-                                        "min_price": hall_info["min_price"],
-                                        "max_price": hall_info["max_price"],
-                                        "hallID": hall_info["hallID"],
-                                        # "cinemaID": hall_info["cinemaID"],
-                                    },
-                                    "session": s,
+                            # del hall_info["cinemaID"]
+
+                            hall_info["sessions"] = temp
+                            if hallID not in sort_by_halls:
+                                sort_by_halls[hallID] = {
+                                    "min_price": hall_info["min_price"],
+                                    "max_price": hall_info["max_price"],
                                 }
 
-                                # del hall_info["cinemaID"]
-
-                                hall_info["sessions"] = temp
-                                if hallID not in sort_by_halls:
-                                    sort_by_halls[hallID] = {
-                                        "min_price": hall_info["min_price"],
-                                        "max_price": hall_info["max_price"],
-                                    }
-
-                                sort_by_halls[hallID][s["sessionID"]] = s
-
+                            sort_by_halls[hallID][s["sessionID"]] = s
 
             return {
                 "cinema": cinema,
                 "halls": sort_by_halls,
                 "sessions": sort_by_session,
             }
-
 
     #     else:
     #         return None
@@ -212,10 +221,8 @@ class CRUDsession:
                             "sessionID": sessionID,
                             "movie": movie,
                             "start_at": session["start_at"],
-
                             "start_release_date": session["start_release_date"],
                             "end_release_date": session["end_release_date"],
-
                             "can_order": True,
                             "cinemaID": info["cinemaID"],
                             "hallID": info["hallID"],
@@ -244,10 +251,8 @@ class CRUDsession:
                         "sessionID": info["sessionID"],
                         "movie": movie,
                         "start_at": session["start_at"],
-
                         "start_release_date": session["start_release_date"],
                         "end_release_date": session["end_release_date"],
-
                         "can_order": True,
                         "cinemaID": info["cinemaID"],
                         "hallID": info["hallID"],

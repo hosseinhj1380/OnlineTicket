@@ -1,17 +1,19 @@
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
-from schemas.category import Category, CategoryUpdate
-from crud.category_crud import CRUDCategory
+from schemas.facilities import Facilities, FacilitiesUpdate
+from crud.facilities_crud import FacilitiesCRUD
+from typing import List
 from core.auth.oauth2 import is_admin
 
-router = APIRouter(prefix="/api/category")
+
+router = APIRouter(prefix="/api/facilities")
 
 
 @router.post("/create/", dependencies=[Depends(is_admin)])
-def create_movies_category(category: Category):
-    if category:
-        obj = CRUDCategory()
-        result = obj.create_category(new_category_name=category.name)
+def create_movies_facility(facilities: Facilities):
+    if facilities:
+        obj = FacilitiesCRUD()
+        result = obj.create_facility(new_facility_name=facilities.name)
         if result:
             return JSONResponse(status_code=200, content=result)
         else:
@@ -24,33 +26,33 @@ def create_movies_category(category: Category):
 
 
 @router.get("/details/")
-def get_movies_category():
-    obj = CRUDCategory()
+def get_movies_facility():
+    obj = FacilitiesCRUD()
 
-    documents = obj.get_category_details()
+    documents = obj.get_facility_details()
 
     return JSONResponse(status_code=200, content=list(documents))
 
 
 @router.put("/update/", dependencies=[Depends(is_admin)])
-def update_movie_category(new_category: CategoryUpdate):
-    if new_category:
-        obj = CRUDCategory()
-        result = obj.update_category(
-            category_name=new_category.name, category_new_name=new_category.new_name
+def update_movie_facility(new_facilities: FacilitiesUpdate):
+    if new_facilities:
+        obj = FacilitiesCRUD()
+        result = obj.update_facility(
+            facility_name=new_facilities.name, facility_new_name=new_facilities.new_name
         )
         if result == "Successfully Updated ":
             return JSONResponse(status_code=200, content=result)
-        elif result == "Failed to update category":
+        elif result == "Failed to update facility":
             return JSONResponse(status_code=500, content=result)
         else:
             return JSONResponse(status_code=404, content=result)
 
 
-@router.delete("/delete/{cateory_name}", dependencies=[Depends(is_admin)])
-def delete_movies_category(cateory_name: str):
-    obj = CRUDCategory()
-    result = obj.delete_category(category_name=cateory_name)
+@router.delete("/delete/{facility_name}", dependencies=[Depends(is_admin)])
+def delete_movies_facility(facility_name: str):
+    obj = FacilitiesCRUD()
+    result = obj.delete_facility(facility_name=facility_name)
     if result == "successfully deleted":
         return JSONResponse(status_code=200, content=result)
     else:
