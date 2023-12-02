@@ -158,6 +158,7 @@ class CRUDcinema:
 
 
 
+
 class CRUDhalls:
     def __init__(self):
         pass
