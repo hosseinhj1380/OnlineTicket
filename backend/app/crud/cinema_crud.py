@@ -3,11 +3,15 @@ from .thread import create_thread
 from .movies_crud import CRUDmovies
 from core.parameters_check import is_valid_format
 from datetime import date, datetime, timedelta, timezone
+from .facilities_crud import check_facility
 
 
 class CRUDcinema:
     def __init__(self):
         pass
+
+    def return_error(self, title, name):
+        return {"status": "Error", "message": f"{title}: {name} are not available "}
 
     def create(self, cinema):
         if cinema_collection.find_one({"name": cinema["name"]}, {"_id": False}):
@@ -21,6 +25,12 @@ class CRUDcinema:
                     cinemaID = last_id["cinemaID"] + 1
                 else:
                     cinemaID = 1
+
+                for faci in cinema["facility"]:
+                    if check_facility(facility=faci):
+                        pass
+                    else:
+                        return self.return_error(title="facilities", name=faci)
                 cinema["rate"] = 0
                 cinema["thread"] = thread
                 cinema["rate_count"] = 0
@@ -38,6 +48,13 @@ class CRUDcinema:
     def update(self, cinemaID, cinema):
         cinema_info = cinema_collection.find_one({"cinemaID": cinemaID}, {"_id": False})
         if cinema_info:
+            if cinema["facility"]:
+                for faci in cinema["facility"]:
+                    if check_facility(facility=faci):
+                        pass
+                    else:
+                        return self.return_error(title="facilities", name=faci)
+
             try:
                 cinema_collection.update_one({"cinemaID": cinemaID}, {"$set": cinema})
                 return "informations successfully updated "
@@ -54,7 +71,6 @@ class CRUDcinema:
             {"cinemaID": cinemaID, "verified": True}, {"_id": False}
         )
         if cinema:
-
             sort_by_halls = {}
             sort_by_session = {}
 
@@ -67,8 +83,8 @@ class CRUDcinema:
                     {"_id": False, "capacity": False},
                 )
                 if hall_info is not None:
-
                     temp = []
+
 
                     s = session_collection.find_one(
                         {"sessionID": session["sessionID"], "can_order": True},
@@ -109,14 +125,12 @@ class CRUDcinema:
                             sort_by_halls[hallID][s["sessionID"]] = s
 
 
-                        
-                       
-
             return {
                 "cinema": cinema,
                 "halls": sort_by_halls,
                 "sessions": sort_by_session,
             }
+
 
     def home_cinemas(self, skip, page_size, city):
         count = cinema_collection.count_documents({"city": city, "verified": True})
@@ -140,6 +154,7 @@ class CRUDcinema:
         )
 
         return {"count": count, "results": list(cinemas)}
+
 
     #     else:
     #         return None
