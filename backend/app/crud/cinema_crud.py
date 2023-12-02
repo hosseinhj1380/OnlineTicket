@@ -85,6 +85,7 @@ class CRUDcinema:
                 if hall_info is not None:
                     temp = []
 
+
                     s = session_collection.find_one(
                         {"sessionID": session["sessionID"], "can_order": True},
                         {"_id": False},
@@ -123,11 +124,37 @@ class CRUDcinema:
 
                             sort_by_halls[hallID][s["sessionID"]] = s
 
+
             return {
                 "cinema": cinema,
                 "halls": sort_by_halls,
                 "sessions": sort_by_session,
             }
+
+
+    def home_cinemas(self, skip, page_size, city):
+        count = cinema_collection.count_documents({"city": city, "verified": True})
+        cinemas = (
+            cinema_collection.find(
+                {"city": city, "verified": True},
+                {
+                    "name": True,
+                    "images": True,
+                    "facility": True,
+                    "rate": True,
+                    "rate_count": True,
+                    "cinemaID": True,
+                    "address": True,
+                    "_id": False,
+                },
+                sort=[("cinemaID")],
+            )
+            .skip(skip)
+            .limit(page_size)
+        )
+
+        return {"count": count, "results": list(cinemas)}
+
 
     #     else:
     #         return None
