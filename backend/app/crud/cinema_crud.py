@@ -156,8 +156,7 @@ class CRUDcinema:
         return {"count": count, "results": list(cinemas)}
 
 
-    #     else:
-    #         return None
+
 
 
 class CRUDhalls:
