@@ -140,7 +140,12 @@ def process_sales_chart():
     )
 
 
-def sales_chart():
-    ch = sales_chart_collection.find_one(sort=[("_id", -1)])
-    del ch["_id"]
-    return ch
+def sales_chart(skip , page_size ):
+    chart = sales_chart_collection.find_one(sort=[("_id", -1)])
+    del chart["_id"]
+    
+    res = chart["sales_chart"][skip:skip+page_size]
+    
+    count = len(chart["sales_chart"])
+        
+    return {"count":count , "results":res}
