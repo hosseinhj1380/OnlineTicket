@@ -149,3 +149,4 @@ def sales_chart(skip , page_size ):
     count = len(chart["sales_chart"])
         
     return {"count":count , "results":res}
+
