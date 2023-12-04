@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends , Query
 from fastapi.responses import JSONResponse
 from schemas.movies import Movies, MovieUpdate
 from crud.movies_crud import CRUDmovies , sales_chart , process_sales_chart
@@ -79,14 +79,17 @@ def movies_update(movie: MovieUpdate):
 
     obj = CRUDmovies()
     result = obj.movie_update(movie_id=movie_id, movie_info=movie_dict)
+    
     if result == "success":
-        return JSONResponse(status_code=204, content="updated successfully")
+        return JSONResponse(status_code=202, content="updated successfully")
     elif result == "failed":
         return JSONResponse(
             status_code=500, content="internal server error please try later "
         )
     elif result == "movie_id doesnt exist ":
         return JSONResponse(status_code=404, content="movie_id doesnt exist")
+    else :
+        return JSONResponse(status_code= 406 , content= result)
 
 
 @router.delete("/movie_delete/{movie_id}", dependencies=[Depends(is_admin)])
@@ -100,6 +103,36 @@ def movies_delete(movie_id: int):
 
 
 @router.get("/sales-chart")
-def sales_chart_box():
+def sales_chart_box(page_size: int,page: int = Query(default=1, description="Page number", ge=1) ):
     
-    return JSONResponse(status_code=200 , content=sales_chart() )
+    skip = (page - 1) * page_size
+    
+    result =sales_chart(skip=skip , page_size=page_size)
+    if result["results"] == []:
+        return JSONResponse(status_code=404, content="invalid page")
+
+    else:
+        if page == 1:
+            previous = None
+        else:
+            previous = (
+                f"127.0.0.1:8000/api/cinema/home/?page={page - 1}&page_size={page_size}"
+            )
+
+        if page_size * page < result["count"]:
+            next = (
+                f"127.0.0.1:8000/api/comment/comments/?page={page + 1}&page_size={page_size}"
+            )
+
+        else:
+            next = None
+
+        return JSONResponse(
+            status_code=200,
+            content={
+                "count": result["count"],
+                "previous": previous,
+                "next": next,
+                "results": result["results"],
+            },
+        )

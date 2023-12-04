@@ -41,6 +41,8 @@ sales_chart_collection =db[os.environ.get("SALES_CHART")]
 
 session_collection = db[os.environ.get("SESSIONS_COLLECTION")]
 
+facilities_collection = db[os.environ.get("FACILITIES_COLLECTION")]
+
 
 
 # db=client["online_ticket"]
