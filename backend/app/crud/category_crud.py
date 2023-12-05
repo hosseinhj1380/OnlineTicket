@@ -33,7 +33,7 @@ class CRUDCategory:
                 return None
 
     def get_category_details(self):
-        return movie_category_collection.find({}, {"name": 1, "id": 1, "_id": 0})
+        return list (movie_category_collection.find({}, {"name": 1, "id": 1, "_id": 0}))
 
     def update_category(self, category_new_name, category_name):
         if self.check_category_availability(category_name=category_name):
