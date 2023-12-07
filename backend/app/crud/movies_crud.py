@@ -4,7 +4,8 @@ from .category_crud import check_category
 from .persons_crud import check_user_ID
 from datetime import datetime
 from .thread import create_thread
-
+import json
+from.category_crud import CRUDCategory
 
 class CRUDmovies:
     def __init__(self):
@@ -13,17 +14,7 @@ class CRUDmovies:
     def return_error(self, title, name):
         return {"status": "Error", "message": f"{title}: {name} are not available "}
 
-    def create_movie(self, movie_info):
-        last_document = movie_collection_info.find_one(sort=[("_id", -1)])
-        if last_document:
-            movie_id = last_document["movie_id"] + 1
-        else:
-            movie_id = 1
-
-        thread = create_thread(type="movie")
-
-        movie_rate = {"movie_rate": 0, "rates_count": 0}
-
+    def check_input_parameters(self, movie_info):
         for genre in movie_info["genres"]:
             if check_genres(genres=genre):
                 pass
@@ -56,17 +47,34 @@ class CRUDmovies:
         else:
             movie_info["actors"] = actors
 
-        movie_collection_info.insert_one(
-            {
-                "movie_id": movie_id,
-                "movie_info": movie_info,
-                "created_at": str(datetime.now()),
-                "movie_rate": movie_rate,
-                "thread": thread,
-                "has_been_sold": 0,
-            }
-        )
-        return {"status": "Success", "message": "movie created successfully "}
+        return {"status": "success"}
+
+    def create_movie(self, movie_info):
+        last_document = movie_collection_info.find_one(sort=[("_id", -1)])
+        if last_document:
+            movie_id = last_document["movie_id"] + 1
+        else:
+            movie_id = 1
+
+        thread = create_thread(type="movie")
+
+        movie_rate = {"movie_rate": 0, "rates_count": 0}
+
+        check_inputs = self.check_input_parameters(movie_info)
+        if check_inputs["status"] == "success":
+            movie_collection_info.insert_one(
+                {
+                    "movie_id": movie_id,
+                    "movie_info": movie_info,
+                    "created_at": str(datetime.now()),
+                    "movie_rate": movie_rate,
+                    "thread": thread,
+                    "has_been_sold": 0,
+                }
+            )
+            return {"status": "Success", "message": "movie created successfully "}
+        else:
+            return check_inputs
 
     def movie_details(self, movie_id):
         movie_detail = movie_collection_info.find_one(
@@ -77,14 +85,19 @@ class CRUDmovies:
 
     def movie_update(self, movie_id, movie_info):
         if movie_collection_info.find_one({"movie_id": movie_id}, {"_id": False}):
-            try:
-                movie_collection_info.update_one(
-                    {"movie_id": movie_id}, {"$set": {"movie_info": movie_info}}
-                )
+            check_inputs = self.check_input_parameters(movie_info)
 
-                return "success"
-            except:
-                return "failed"
+            if check_inputs["status"] == "success":
+                try:
+                    movie_collection_info.update_one(
+                        {"movie_id": movie_id}, {"$set": {"movie_info": movie_info}}
+                    )
+
+                    return "success"
+                except:
+                    return "failed"
+            else:
+                return check_inputs
         else:
             return "movie_id does not exist "
 
@@ -122,12 +135,53 @@ def process_sales_chart():
     ]
 
     result = list(movie_collection_info.aggregate(pipeline))
+
+    sales_chart_collection.insert_one(
+        {"sales_chart": result, "process_date": str(datetime.now())}
+    )
+
+
+def sales_chart(skip , page_size ):
+    chart = sales_chart_collection.find_one(sort=[("_id", -1)])
+    del chart["_id"]
     
-    sales_chart_collection.insert_one({"sales_chart": result,
-                                       "process_date":str(datetime.now())})
+    res = chart["sales_chart"][skip:skip+page_size]
     
-def sales_chart():
+    count = len(chart["sales_chart"])
+        
+    return {"count":count , "results":res}
+
+def home_page(page_size ):
+    c=CRUDCategory()
     
-    ch =sales_chart_collection.find_one( sort=[("_id", -1)])
-    del ch["_id"] 
-    return(ch)
+    res =[]
+    
+    
+    for cat in c.get_category_details():
+        
+        
+        pipeline = [
+        
+        {"$unwind": "$movie_info.categories"},
+        
+        
+        {"$sort": {"movie_info.categories.id": -1}},
+        {"$match": {"movie_info.categories.id": cat["id"]}},
+        {
+                "$project": {
+                    "_id": 0,
+                    "movie_id":1,
+                    "title": "$movie_info.title",
+                    "producers": "$movie_info.producers",
+                    "movie_rate":1,
+                    "has_been_sold":1,
+                    # "movie_category":"$movie_info.categories.id",
+                    }},
+        {"$limit": page_size}
+        
+        
+    ]
+        res.append({"category_id":cat["id"],
+                    "name":cat['name'],
+                    "movies":list(movie_collection_info.aggregate(pipeline))})
+    return res 
