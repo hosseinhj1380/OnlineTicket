@@ -135,6 +135,7 @@ def sales_chart_box(page_size: int,page: int = Query(default=1, description="Pag
                 "next": next,
                 "results": result["results"],
             },
+
         )
         
 @router.get("/home")
@@ -143,3 +144,4 @@ def movie_homepage(page_size : int):
     return JSONResponse(status_code=200 , content=home_page(page_size=page_size))
     
     
+
