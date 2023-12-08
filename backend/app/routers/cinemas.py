@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, status, Query
 from schemas.cinemas import Cinema, Halls, Session, UpdateSession , Rate
 from fastapi.responses import JSONResponse
 from core.auth.oauth2 import oauth2_scheme, is_admin
+from core.jobs.daily.rate import process_cinema_rate
 from crud.cinema_crud import CRUDcinema, CRUDhalls, CRUDsession
 import base64
 from core.parameters_check import (
@@ -14,7 +15,14 @@ from fastapi.exceptions import (
     HTTPException,
 )
 import requests
+from apscheduler.schedulers.background import BackgroundScheduler
 
+
+
+scheduler = BackgroundScheduler()
+scheduler.add_job(process_cinema_rate, "cron", hour=3, minute=30)
+
+scheduler.start()
 
 router = APIRouter(prefix="/api/cinemas")
 
