@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, status, Query
-from schemas.cinemas import Cinema, Halls, Session, UpdateSession
+from schemas.cinemas import Cinema, Halls, Session, UpdateSession , Rate
 from fastapi.responses import JSONResponse
 from core.auth.oauth2 import oauth2_scheme, is_admin
 from crud.cinema_crud import CRUDcinema, CRUDhalls, CRUDsession
@@ -239,6 +239,21 @@ def cinemas_home(city :int ,page: int = Query(default=1, description="Page numbe
         )
     
 
+@router.post("/rate" )
+def rate_cinema(cinemaID: int ,rate :Rate , token: str = Depends(oauth2_scheme)):
+    if rate:
+        r =CRUDcinema()
+        
+        result=r.new_rate(cinemaID=cinemaID , rate=rate.dict()) 
+        if result is not None:
+            return JSONResponse (status_code=200 , content=result)
+        else:
+            return JSONResponse(status_code=404 ,content="cinema not found ")
+        
+        
+        
+        
+
 
 
 def get_lat_long(location: str) -> dict:
@@ -253,7 +268,6 @@ def get_lat_long(location: str) -> dict:
         return result
     else:
         raise HTTPException(status_code=400, detail="Failed to geocode location")
-
 
 
 
