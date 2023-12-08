@@ -14,7 +14,7 @@ router = APIRouter(prefix="/api/user")
 def create_user(user: UserBase):
     if check_username(user.username):
         return JSONResponse(status_code=406, content="username already exist ")
-    elif check_email_not_available:
+    elif check_email_not_available(user.email):
         return JSONResponse(status_code=406, content=" email already is available ")
     elif not is_valid_email(user.email):
         return JSONResponse(status_code=406, content="email is not valid ")
