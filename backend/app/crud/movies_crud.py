@@ -4,7 +4,8 @@ from .category_crud import check_category
 from .persons_crud import check_user_ID
 from datetime import datetime
 from .thread import create_thread
-
+import json
+from.category_crud import CRUDCategory
 
 class CRUDmovies:
     def __init__(self):
@@ -150,3 +151,38 @@ def sales_chart(skip , page_size ):
         
     return {"count":count , "results":res}
 
+
+def home_page(page_size ):
+    c=CRUDCategory()
+    
+    res =[]
+    
+    
+    for cat in c.get_category_details():
+        
+        
+        pipeline = [
+        
+        {"$unwind": "$movie_info.categories"},
+        
+        
+        {"$sort": {"movie_info.categories.id": -1}},
+        {"$match": {"movie_info.categories.id": cat["id"]}},
+        {
+                "$project": {
+                    "_id": 0,
+                    "movie_id":1,
+                    "title": "$movie_info.title",
+                    "producers": "$movie_info.producers",
+                    "movie_rate":1,
+                    "has_been_sold":1,
+                    # "movie_category":"$movie_info.categories.id",
+                    }},
+        {"$limit": page_size}
+        
+        
+    ]
+        res.append({"category_id":cat["id"],
+                    "name":cat['name'],
+                    "movies":list(movie_collection_info.aggregate(pipeline))})
+    return res 
