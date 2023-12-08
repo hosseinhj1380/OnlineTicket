@@ -4,4 +4,6 @@
 # source /path/to/your/virtualenv/bin/activate
 
 # Run the FastAPI server using uvicorn
-uvicorn backend.app.config:app --host 127.0.0.1 --port 8000 --reload
+cd ./backend/app/
+
+uvicorn config:app --host 0.0.0.0 --port 8000 --reload
