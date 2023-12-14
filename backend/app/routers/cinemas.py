@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, status, Query
 from schemas.cinemas import Cinema, Halls, Session, UpdateSession
 from fastapi.responses import JSONResponse
-from core.auth.oauth2 import oauth2_scheme, is_admin
+from core.auth.oauth2 import oauth2_scheme, is_admin , is_cinemaagent_or_admin
 from crud.cinema_crud import CRUDcinema, CRUDhalls, CRUDsession
 import base64
 from core.parameters_check import (
@@ -21,7 +21,7 @@ router = APIRouter(prefix="/api/cinemas")
 GOOGLE_MAPS_API_KEY = "YOUR_GOOGLE_MAPS_API_KEY"  # Replace with your actual API key
 
 
-@router.post("/create/", dependencies=[Depends(is_admin)])
+@router.post("/create/", dependencies=[Depends(is_cinemaagent_or_admin )])
 def create_new_cinemas(cinema: Cinema, token: str = Depends(oauth2_scheme)):
     if cinema:
         #    for movie_picture in movie.movie_images:
@@ -51,7 +51,7 @@ def create_new_cinemas(cinema: Cinema, token: str = Depends(oauth2_scheme)):
             return ValidationException(errors="telephones with this format is incorect")
 
 
-@router.patch("/edit/{cinemaID}", dependencies=[Depends(is_admin)])
+@router.patch("/edit/{cinemaID}", dependencies=[Depends(is_cinemaagent_or_admin )])
 def edit_cinema(cinemaID: int, cinema: Cinema, token: str = Depends(oauth2_scheme)):
     if cinema:
         update_cinema = CRUDcinema()
@@ -62,7 +62,7 @@ def edit_cinema(cinemaID: int, cinema: Cinema, token: str = Depends(oauth2_schem
             return " cinema with this ID is not available "
 
 
-@router.get("/{cinemaID}", dependencies=[Depends(is_admin)])
+@router.get("/{cinemaID}", dependencies=[Depends(is_cinemaagent_or_admin)])
 def show_cinema_info(cinemaID: int, token: str = Depends(oauth2_scheme)):
     i = CRUDcinema()
     info = i.get(cinemaID)
@@ -74,7 +74,7 @@ def show_cinema_info(cinemaID: int, token: str = Depends(oauth2_scheme)):
         )
 
 
-@router.post("/halls/{cinemaID}", dependencies=[Depends(is_admin)])
+@router.post("/halls/{cinemaID}", dependencies=[Depends(is_cinemaagent_or_admin )])
 def create_new_hall(cinemaID: int, hall: Halls, token: str = Depends(oauth2_scheme)):
     if hall:
         c = CRUDhalls()
@@ -87,7 +87,7 @@ def create_new_hall(cinemaID: int, hall: Halls, token: str = Depends(oauth2_sche
             )
 
 
-@router.patch("/hall/{cinemaID}/{hallID}", dependencies=[Depends(is_admin)])
+@router.patch("/hall/{cinemaID}/{hallID}", dependencies=[Depends(is_cinemaagent_or_admin )])
 def update_hall(
     cinemaID: int, hallID: int, hall: Halls, token: str = Depends(oauth2_scheme)
 ):
@@ -104,7 +104,7 @@ def update_hall(
             )
 
 
-@router.get("/hall/{cinemaID}", dependencies=[Depends(is_admin)])
+@router.get("/hall/{cinemaID}", dependencies=[Depends(  is_cinemaagent_or_admin)])
 def get_halls_info(cinemaID: int, token: str = Depends(oauth2_scheme)):
     g = CRUDhalls()
     result = g.get(cinemaID=cinemaID)
@@ -116,7 +116,7 @@ def get_halls_info(cinemaID: int, token: str = Depends(oauth2_scheme)):
         )
 
 
-@router.get("/hall/{cinemaID}/{hallID}", dependencies=[Depends(is_admin)])
+@router.get("/hall/{cinemaID}/{hallID}", dependencies=[Depends(is_cinemaagent_or_admin )])
 def get_a_hall_info(cinemaID: int, hallID: int, token: str = Depends(oauth2_scheme)):
     g = CRUDhalls()
     result = g.get(cinemaID=cinemaID, hallID=hallID)
@@ -128,7 +128,7 @@ def get_a_hall_info(cinemaID: int, hallID: int, token: str = Depends(oauth2_sche
         )
 
 
-@router.post("/session/{cinemaID}/{hallID}", dependencies=[Depends(is_admin)])
+@router.post("/session/{cinemaID}/{hallID}", dependencies=[Depends(is_cinemaagent_or_admin )])
 def new_session(
     cinemaID: int, hallID: int, session: Session, token: str = Depends(oauth2_scheme)
 ):
@@ -152,7 +152,7 @@ def new_session(
             return JSONResponse(status_code=406, content="wrong format datetime ")
 
 
-@router.patch("/session", dependencies=[Depends(is_admin)])
+@router.patch("/session", dependencies=[Depends(is_cinemaagent_or_admin )])
 def update_sessions(session: UpdateSession, token: str = Depends(oauth2_scheme)):
     if session:
         if (
@@ -174,7 +174,7 @@ def update_sessions(session: UpdateSession, token: str = Depends(oauth2_scheme))
             return JSONResponse(status_code=406, content="wrong format datetime ")
 
 
-# @router.delete("/session/{sessionID}", dependencies=[Depends(is_admin)])
+# @router.delete("/session/{sessionID}", dependencies=[Depends(is_cinemaagent_or_admin)])
 # def update_sessions( sessionID : int , token: str = Depends(oauth2_scheme)
 # ):
 #     d = CRUDhalls()
