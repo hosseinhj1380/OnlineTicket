@@ -49,7 +49,9 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
 
 
 def is_admin(current_user: dict = Depends(get_current_user)):
-    if "admin" in current_user.get("roles", []):
+    if ("admin" in current_user.get("roles", []) 
+        or "superuser" in current_user.get("roles", [])
+    ):
         return True
     raise HTTPException(
         status_code=403, detail="You do not have access to this resource"
@@ -58,6 +60,18 @@ def is_admin(current_user: dict = Depends(get_current_user)):
 
 def is_superuser(current_user: dict = Depends(get_current_user)):
     if "superuser" in current_user.get("roles", []):
+        return True
+    raise HTTPException(
+        status_code=403, detail="You do not have access to this resource"
+    )
+
+
+def is_cinemaagent_or_admin(current_user: dict = Depends(get_current_user)):
+    if (
+        "cinema_agent" in current_user.get("roles", [])
+        or "superuser" in current_user.get("roles", [])
+        or "admin" in current_user.get("roles", [])
+    ):
         return True
     raise HTTPException(
         status_code=403, detail="You do not have access to this resource"
