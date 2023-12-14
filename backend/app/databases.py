@@ -43,7 +43,7 @@ session_collection = db[os.environ.get("SESSIONS_COLLECTION")]
 
 facilities_collection = db[os.environ.get("FACILITIES_COLLECTION")]
 
-
+rate_collection =db[os.environ.get("RATE_COLLECTION")]
 
 # db=client["online_ticket"]
 

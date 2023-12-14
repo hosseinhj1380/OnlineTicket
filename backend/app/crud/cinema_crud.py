@@ -1,4 +1,4 @@
-from databases import cinema_collection, halls_collection, session_collection
+from databases import cinema_collection, halls_collection, session_collection , rate_collection
 from .thread import create_thread
 from .movies_crud import CRUDmovies
 from core.parameters_check import is_valid_format
@@ -131,6 +131,11 @@ class CRUDcinema:
                 "sessions": sort_by_session,
             }
 
+    def new_rate(self , cinemaID , rate):
+        if cinema_collection.find_one({"cinemaID":cinemaID} , {"_id": False}):
+            rate_collection.insert_one({"cinemaID":cinemaID ,"rate":rate})
+            return "success" 
+        else: return None        
 
     def home_cinemas(self, skip, page_size, city):
         count = cinema_collection.count_documents({"city": city, "verified": True})
@@ -299,6 +304,9 @@ class CRUDsession:
 
     def delete_session(self, sessionID):
         pass
+    
+    
+        
 
 
 def process_start_end_date(start, end, start_release):
@@ -326,3 +334,5 @@ def process_start_end_date(start, end, start_release):
             date_list.append(start_date + timedelta(days=x))
 
     return [date.strftime("%Y-%m-%d") for date in date_list]
+
+
