@@ -120,25 +120,6 @@ class CRUDmovies:
         return result
 
 
-def process_sales_chart():
-    pipeline = [
-        {"$sort": {"has_been_sold": -1}},
-        {
-            "$project": {
-                "_id": 0,
-                "movie_id": 1,
-                "has_been_sold": True,
-                "title": "$movie_info.title",
-                "producers": "$movie_info.producers",
-            }
-        },
-    ]
-
-    result = list(movie_collection_info.aggregate(pipeline))
-
-    sales_chart_collection.insert_one(
-        {"sales_chart": result, "process_date": str(datetime.now())}
-    )
 
 
 def sales_chart(skip , page_size ):
@@ -150,6 +131,7 @@ def sales_chart(skip , page_size ):
     count = len(chart["sales_chart"])
         
     return {"count":count , "results":res}
+
 
 def home_page(page_size ):
     c=CRUDCategory()

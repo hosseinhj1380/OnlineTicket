@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends , Query
 from fastapi.responses import JSONResponse
 from schemas.movies import Movies, MovieUpdate
-from crud.movies_crud import CRUDmovies , sales_chart , process_sales_chart ,home_page
+from crud.movies_crud import CRUDmovies , sales_chart  ,home_page
 from core.auth.oauth2 import oauth2_scheme, is_admin
 import base64
-
+from core.jobs.daily.sales_chart import process_sales_chart
 from apscheduler.schedulers.background import BackgroundScheduler
 
 
@@ -135,6 +135,7 @@ def sales_chart_box(page_size: int,page: int = Query(default=1, description="Pag
                 "next": next,
                 "results": result["results"],
             },
+
         )
         
 @router.get("/home")
@@ -143,3 +144,4 @@ def movie_homepage(page_size : int):
     return JSONResponse(status_code=200 , content=home_page(page_size=page_size))
     
     
+
