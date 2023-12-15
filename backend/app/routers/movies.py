@@ -1,19 +1,24 @@
 from fastapi import APIRouter, Depends , Query
 from fastapi.responses import JSONResponse
-from schemas.movies import Movies, MovieUpdate
+from schemas.movies import Movies, MovieUpdate , Rate
 from crud.movies_crud import CRUDmovies , sales_chart  ,home_page
 from core.auth.oauth2 import oauth2_scheme, is_admin
 import base64
 from core.jobs.daily.sales_chart import process_sales_chart
+from core.jobs.daily.rate import process_movie_rate
 from apscheduler.schedulers.background import BackgroundScheduler
 
 
 
 
 scheduler = BackgroundScheduler()
+
 scheduler.add_job(process_sales_chart, "cron", hour=00, minute=22)
+scheduler.add_job(process_movie_rate, "cron", hour=4, minute=31)
 
 scheduler.start()
+
+
 
 router = APIRouter(prefix="/api/movie")
 
@@ -144,4 +149,14 @@ def movie_homepage(page_size : int):
     return JSONResponse(status_code=200 , content=home_page(page_size=page_size))
     
     
-
+@router.post("/rate" )
+def rate_cinema(movieID: int ,rate :Rate , token: str = Depends(oauth2_scheme)):
+    if rate:
+        r =CRUDmovies()
+        
+        result=r.new_rate(movieID=movieID , rate=rate.rate) 
+        if result is not None:
+            return JSONResponse (status_code=200 , content=result)
+        else:
+            return JSONResponse(status_code=404 ,content="movie not found ")
+        
