@@ -148,15 +148,16 @@ def new_session(
             and is_valid_time_format(session.start_at)
         ):
             s = CRUDsession()
-            result = s.create(cinemaID, hallID, session.dict())
-            if result is not None:
-                return JSONResponse(status_code=200, content=result)
+            if s.check_not_two_session_in_a_time(start_at=session.start_at[:2],cinemaID=cinemaID,movie_id=session.movieID):
+                result = s.create(cinemaID, hallID, session.dict())
+                if result is not None:
+                    return JSONResponse(status_code=200, content=result)
 
-            else:
-                return HTTPException(
-                    status_code=status.HTTP_404_NOT_FOUND,
-                    detail="invalid cinemaID or hallID ",
-                )
+                else:
+                    return HTTPException(
+                        status_code=status.HTTP_404_NOT_FOUND,
+                        detail="invalid cinemaID or hallID ",
+                    )
         else:
             return JSONResponse(status_code=406, content="wrong format datetime ")
 
