@@ -301,7 +301,17 @@ class CRUDsession:
 
         else:
             return None
-
+        
+    def check_not_two_session_in_a_time(self , movie_id , cinemaID , start_at):
+        sess=session_collection.find_one({"cinemaID":cinemaID,"movie.movie_id":movie_id} , {"_id":False})
+        if sess:
+            if int(sess["start_at"][:2]) == start_at:
+                return False
+            else:
+                return True
+        
+        return True       
+        
     def delete_session(self, sessionID):
         pass
     
