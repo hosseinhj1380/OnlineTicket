@@ -5,7 +5,9 @@ from crud.movies_crud import CRUDmovies , sales_chart  ,home_page
 from core.auth.oauth2 import oauth2_scheme, is_admin
 import base64
 from core.jobs.daily.sales_chart import process_sales_chart
+
 from core.jobs.daily.rate import process_movie_rate
+
 from apscheduler.schedulers.background import BackgroundScheduler
 
 

@@ -1,3 +1,4 @@
+
 from databases import cinema_collection, rate_collection , movie_collection_info
 
 
@@ -64,4 +65,5 @@ def process_movie_rate():
                                                                                       "rates_count": count}}})
 
             except Exception as e:
+
                 print(f"rate process problem {e}")
