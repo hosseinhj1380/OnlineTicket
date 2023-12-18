@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel , Field
 from typing import List
 
 
@@ -21,3 +21,6 @@ class Movies(BaseModel):
 
 class MovieUpdate(Movies):
     movie_id: int
+    
+class Rate(BaseModel):
+    rate :int  = Field(..., ge=0, le=5)

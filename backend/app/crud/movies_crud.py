@@ -1,4 +1,4 @@
-from databases import movie_collection_info, sales_chart_collection
+from databases import movie_collection_info, sales_chart_collection , rate_collection
 from .genres_crud import check_genres
 from .category_crud import check_category
 from .persons_crud import check_user_ID
@@ -118,6 +118,12 @@ class CRUDmovies:
             else:
                 return int(infoID)
         return result
+    
+    def new_rate(self , movieID , rate):
+        if movie_collection_info.find_one({"movie_id":movieID} , {"_id": False}):
+            rate_collection.insert_one({"movie_id":movieID ,"rate":rate})
+            return "success" 
+        else: return None  
 
 
 
