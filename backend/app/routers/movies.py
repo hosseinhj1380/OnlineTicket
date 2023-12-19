@@ -9,6 +9,8 @@ from core.jobs.daily.sales_chart import process_sales_chart
 from core.jobs.daily.rate import process_movie_rate
 
 from apscheduler.schedulers.background import BackgroundScheduler
+# import aioredis
+from aioredis import Redis
 
 
 
@@ -20,7 +22,11 @@ scheduler.add_job(process_movie_rate, "cron", hour=4, minute=31)
 
 scheduler.start()
 
-
+async def get_redis():
+    redis = await Redis.from_url("redis://localhost",encoding="utf8", decode_responses=True)
+    yield redis
+    redis.close()
+    await redis.wait_closed()
 
 router = APIRouter(prefix="/api/movie")
 
@@ -146,9 +152,12 @@ def sales_chart_box(page_size: int,page: int = Query(default=1, description="Pag
         )
         
 @router.get("/home")
-def movie_homepage(page_size : int):
-    
-    return JSONResponse(status_code=200 , content=home_page(page_size=page_size))
+def movie_homepage(page_size : int, redis: Redis = Depends(get_redis)):
+    value = redis.get("home")
+    if value:
+        return {"value": value }
+    else:
+        return JSONResponse(status_code=200 , content=home_page(page_size=page_size))
     
     
 @router.post("/rate" )
@@ -162,3 +171,16 @@ def rate_cinema(movieID: int ,rate :Rate , token: str = Depends(oauth2_scheme)):
         else:
             return JSONResponse(status_code=404 ,content="movie not found ")
         
+        
+
+
+@router.get("/get_from_cache/{key}")
+async def get_from_cache(key: str, redis: Redis = Depends(get_redis)):
+    value = await redis.get(key)
+    return {"key": key, "value": value if value else None}
+
+@router.post("/add_to_cache")
+async def add_to_cache(redis: Redis = Depends(get_redis)):
+    value=await home_page(page_size=15)
+    
+    
