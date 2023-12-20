@@ -1,5 +1,6 @@
 from databases import movie_collection_info ,sales_chart_collection
 from datetime import datetime
+import redis
 
 def process_sales_chart():
     pipeline = [
@@ -20,3 +21,6 @@ def process_sales_chart():
     sales_chart_collection.insert_one(
         {"sales_chart": result, "process_date": str(datetime.now())}
     )
+    
+        
+

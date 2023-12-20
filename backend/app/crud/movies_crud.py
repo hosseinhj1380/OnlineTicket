@@ -139,7 +139,7 @@ def sales_chart(skip , page_size ):
     return {"count":count , "results":res}
 
 
-async def home_page(page_size ):
+def home_page(page_size ):
     c=CRUDCategory()
     
     res =[]
