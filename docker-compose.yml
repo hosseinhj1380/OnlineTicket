@@ -11,7 +11,7 @@ services:
     volumes:
       - .:/app
     environment:
-      - DATABASE_HOST=mongodb://mongo:27017/mydatabase:27017  # Adjust the database name as needed
+      - DATABASE_HOST=mongodb://mongo:27017/mydatabase:27017  
 
   mongo:
     image: mongo
