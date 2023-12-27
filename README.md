@@ -1,5 +1,5 @@
 # OnlineTicket
-a web app for buy tickets and select cinemas and etc with fastapi based on cinematicket.org 
+a web app for buy tickets and select cinemas and etc with fastapi based on cinematicket.org \n
 this apps is contain some diffrent endpoints and apis for handelling requests and return proper response 
 this project has two side as backend and frontend which in bavkend its used diffrent technologies 
 to have a well  result in developing and quality and performances in this side .
