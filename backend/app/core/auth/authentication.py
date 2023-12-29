@@ -16,8 +16,8 @@ router = APIRouter()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 # Replace these with your own values from the Google Developer Console
-GOOGLE_CLIENT_ID = "670828547454-jsui80lil4jb28597qlevcdj9i7oc5ho.apps.googleusercontent.com"
-GOOGLE_CLIENT_SECRET = "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"
+GOOGLE_CLIENT_ID = ""
+GOOGLE_CLIENT_SECRET = ""
 GOOGLE_REDIRECT_URI = "http://127.0.0.1:8000/"
 
 @router.get("/login/google")
