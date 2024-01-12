@@ -4,10 +4,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-*.env
 *.json
 
 *.bat
 
 */venv/*
 
+.env
