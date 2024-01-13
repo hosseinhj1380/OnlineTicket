@@ -13,7 +13,7 @@ print(host)
 def connection():
     client = Elasticsearch(
     os.environ.get("ELASTIC_HOST"),
-    ca_certs="http_ca.crt",
+    ca_certs=os.environ.get("PATH_TO_HTTP_CA"),
     basic_auth=(os.environ.get("ELASTIC_USERNAME"), ELASTIC_PASSWORD)
 )   
     return client , os.environ.get("ELASTIC_DOCUMENT")
