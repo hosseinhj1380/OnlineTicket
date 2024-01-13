@@ -40,7 +40,7 @@ def index_movies_info():
 
         response = index_movies_data(
             **{
-                "name": res["name"],
+                "name": res["movie_info"]["is_active"],
                 "is_active": res["is_active"],
                 "id": id,
                 "url": f"/api/movie_datails/{id}",

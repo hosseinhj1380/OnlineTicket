@@ -70,6 +70,7 @@ class CRUDmovies:
                     "movie_rate": movie_rate,
                     "thread": thread,
                     "has_been_sold": 0,
+                    "is_active":True
                 }
             )
             return {"status": "Success", "message": "movie created successfully "}

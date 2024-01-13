@@ -264,6 +264,7 @@ class CRUDsession:
                             "can_order": True,
                             "cinemaID": info["cinemaID"],
                             "hallID": info["hallID"],
+                            "is_active":True
                         }
                     )
 
