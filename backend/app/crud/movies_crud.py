@@ -125,6 +125,9 @@ class CRUDmovies:
             return "success" 
         else: return None  
 
+    def get_movie_Ids(self):
+        lst = movie_collection_info.find({},{"_id":False,"movie_id":True})
+        return lst 
 
 
 

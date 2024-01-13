@@ -65,6 +65,13 @@ class CRUDcinema:
 
     def get(self, cinemaID):
         return cinema_collection.find_one({"cinemaID": cinemaID}, {"_id": False})
+    
+
+    def get_all_ids(self):
+        lst=[]
+        lst = cinema_collection.find({},{"_id":False,"cinemaID":True})
+        return lst
+    
 
     def get_a_cinema_details(self, cinemaID):
         cinema = cinema_collection.find_one(
