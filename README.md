@@ -66,15 +66,24 @@ and then write :
 
 -------------------------------------------------------------
 
+
+CONNECT ELASTIC SEARCH TO PROJECT 
+
+ 
+"docker run -d -p 9200:9200 -p 9300:9300 --name elasticsearch_1 -e "discovery.type=single-node" -e "ELASTIC_PASSWORD=elastic" docker.elastic.co/elasticsearch/elasticsearch:8.11.3"
+"docker run -d -p 5601:5601  --name kibana kibana:8.11.3"
+"docker exec -it <token>"
+"docker exec -it <verificant code>"
+"docker cp elasticsearch_1:/usr/share/elasticsearch/config/certs/http_ca.crt ."
+
+
+-------------------------------------------------------------
+
  ❗ this project is not completed as well and not recommend to use on real products but its features and properties can run properly and work without problen ❗
 
 
 ❗❗ NOTE ME IF THERE IS ANY BUG OR ISSUE OR ENHERITANCEMENT YOU NEED BY ISSUES ON GITHUB ❗❗
 
 
+--------------------------------------------------------------
 
-"docker run -d -p 9200:9200 -p 9300:9300 --name elasticsearch_1 -e "discovery.type=single-node" -e "ELASTIC_PASSWORD=elastic" docker.elastic.co/elasticsearch/elasticsearch:8.11.3"
-"docker run -d -p 5601:5601  --name kibana kibana:8.11.3"
-"docker exec -it <token>"
-"docker exec -it <verificant code>"
-"docker cp elasticsearch_1:/usr/share/elasticsearch/config/certs/http_ca.crt ."
