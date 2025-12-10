@@ -92,6 +92,6 @@ CONNECT ELASTIC SEARCH TO PROJECT
 
 ❗❗ NOTE ME IF THERE IS ANY BUG OR ISSUE OR ENHERITANCEMENT YOU NEED BY ISSUES ON GITHUB ❗❗
 
-
+thanks                    
 --------------------------------------------------------------
 
